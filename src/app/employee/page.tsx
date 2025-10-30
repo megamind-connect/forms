@@ -1,15 +1,10 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import apiClient from "@/lib/api";
-import { SplashScreen } from "@/components/shared/SplashScreen";
-import { StepIndicator } from "@/components/shared/StepIndicator";
-import { StepTextQuestion } from "@/components/shared/StepTextQuestion";
-import { Button } from "@/components/ui/Button";
-import { Input } from "@/components/ui/Input";
-import { IntroStep } from "@/components/shared/IntroStep";
+import { useState } from "react";
 
+import Image from "next/image";
 
+import DynamicField from "@/components/shared/DynamicField";
 
 interface FormField {
   id: string;
@@ -17,209 +12,174 @@ interface FormField {
   label: string;
   fieldType: string;
   options?: string[] | null;
+  placeholder?: string;
 }
 
 export default function Employee() {
-  const [step, setStep] = useState(1);
-  const [subStep, setSubStep] = useState(1);
-  const [showSplash, setShowSplash] = useState(true);
   const [formData, setFormData] = useState<Record<string, any>>({});
-  const [hasStarted, setHasStarted] = useState(false);
 
-  // Splash delay
-  useEffect(() => {
-    const timer = setTimeout(() => setShowSplash(false), 900);
-    return () => clearTimeout(timer);
-  }, []);
+ 
+  
 
-  // Step 2 fields (Static)
-  const step2Fields: FormField[] = [
-    { id: "1", name: "name", label: "Name", fieldType: "text" },
-    { id: "2", name: "manager_name", label: "Manager's Name", fieldType: "text" },
-    {
-      id: "3",
-      name: "project_brief_shared",
-      label: "Are project briefs shared before work?",
-      fieldType: "dropdown",
-      options: ["Always", "Often", "Sometimes", "Rarely", "Never"],
-    },
-    {
-      id: "4",
-      name: "brief_clarity",
-      label: "Are briefs usually clear?",
-      fieldType: "dropdown",
-      options: ["Always clear", "Sometimes clear", "Often unclear"],
-    },
-    {
-      id: "5",
-      name: "manager_clarifies",
-      label: "Does your manager clarify unclear briefs quickly?",
-      fieldType: "dropdown",
-      options: ["Always", "Sometimes", "Rarely", "Not applicable"],
-    },
-    {
-      id: "6",
-      name: "comfortable_feedback",
-      label: "Do you feel comfortable suggesting creative inputs?",
-      fieldType: "dropdown",
-      options: ["Always", "Usually", "Not really", "Avoid it"],
-    },
-    {
-      id: "7",
-      name: "timeline_quality_balance",
-      label: "Does your manager balance timelines and quality?",
-      fieldType: "dropdown",
-      options: ["Balanced", "Quality focused", "Speed focused", "Rushed"],
-    },
-    {
-      id: "8",
-      name: "feedback_frequency",
-      label: "How often do you receive helpful feedback?",
-      fieldType: "dropdown",
-      options: ["Very often", "Sometimes", "Rarely", "Never"],
-    },
-  ];
+const step2Fields: FormField[] = [
+  { id: "1", name: "name", label: "Your Name", fieldType: "short" },
+  { id: "2", name: "manager_name", label: "Manager's Name", fieldType: "short" },
 
-  // Step 3 Text Questions
-  const step3Questions = [
-    {
-      name: "manager_strength",
-      title: "What is one thing your manager does well?",
-      placeholder: "Write your response…",
-    },
-    {
-      name: "manager_improvement",
-      title: "One thing your manager could improve?",
-      placeholder: "Write your response…",
-    },
-    {
-      name: "process_improvement",
-      title: "What process could improve your workflow?",
-      placeholder: "Write your response…",
-    },
-  ];
+  {
+    id: "3",
+    name: "brief_shared_before_work",
+    label: "Are project briefs shared with you before the start of the work, with all key details (objectives, references, deliverables, timeline)?",
+    fieldType: "dropdown",
+    options: ["Always", "Often", "Sometimes", "Rarely", "Never"],
+  },
+  {
+    id: "4",
+    name: "brief_clarity",
+    label: "Are the briefs usually clear and easy to understand, or do they often require clarification?",
+    fieldType: "dropdown",
+    options: ["Always clear", "Sometimes need clarity", "Often unclear", "Usually incomplete"],
+  },
+  {
+    id: "5",
+    name: "manager_clarifies_brief",
+    label: "When a brief is unclear, does your manager take responsibility to clarify it quickly?",
+    fieldType: "dropdown",
+    options: ["Always", "Sometimes", "Rarely", "Not applicable"],
+  },
+  {
+    id: "6",
+    name: "comfort_speaking_up",
+    label: "Do you feel comfortable raising creative suggestions or concerns directly with your manager?",
+    fieldType: "dropdown",
+    options: ["Always", "Usually", "Not really", "Avoid it"],
+  },
+  {
+    id: "7",
+    name: "quality_vs_speed",
+    label: "Does your manager balance timelines and creative quality, or is the focus usually on fast delivery?",
+    fieldType: "dropdown",
+    options: ["Balanced", "Leans toward quality", "Leans toward speed", "Always rushed"],
+  },
+  {
+    id: "8",
+    name: "feedback_frequency",
+    label: "How frequently do you receive feedback that helps you grow creatively?",
+    fieldType: "dropdown",
+    options: ["Very often", "Sometimes", "Rarely", "Never"],
+  },
+  {
+    id: "9",
+    name: "deadline_clarity",
+    label: "Do you receive deadlines in a timely and clear manner?",
+    fieldType: "dropdown",
+    options: ["Always", "Usually", "Sometimes last-minute", "Rarely on time"],
+  },
+  {
+    id: "10",
+    name: "source_last_minute_work",
+    label: "When there's last-minute work, do you know whether it's due to the client or internal planning?",
+    fieldType: "dropdown",
+    options: ["Mostly from client", "Mostly from internal team", "A mix of both", "Not communicated"],
+  },
+  {
+    id: "11",
+    name: "support_in_urgent",
+    label: "Do you feel supported in managing urgent turnarounds (e.g., prioritization, rescheduling, backup)?",
+    fieldType: "dropdown",
+    options: ["Yes, fully supported", "Sometimes", "Rarely", "No support"],
+  },
+  {
+    id: "12",
+    name: "workload_balance",
+    label: "Is your workload generally managed in a way that avoids burnout or constant rush?",
+    fieldType: "dropdown",
+    options: ["Yes", "Sometimes", "No", "Often overwhelmed"],
+  },
+  {
+    id: "13",
+    name: "idea_acknowledgement",
+    label: "Are your efforts or creative ideas acknowledged in final outcomes or team meetings?",
+    fieldType: "dropdown",
+    options: ["Always", "Sometimes", "Rarely", "Never"],
+  },
+  {
+    id: "14",
+    name: "manager_strength",
+    label: "What is one thing your manager does well that you appreciate?",
+    fieldType: "short",
+    placeholder: "Write your response…",
+  },
+  {
+    id: "15",
+    name: "manager_improvement",
+    label: "What is one thing your manager could improve to support your creative process?",
+    fieldType: "short",
+    placeholder: "Write your response…",
+  },
+  {
+    id: "16",
+    name: "process_improvement",
+    label: "What process or system could be improved to help you do better work? (e.g., brief quality, review flow, communication)",
+    fieldType: "short",
+    placeholder: "Write your response…",
+  },
+ {
+  id: "17",
+  name: "expected_support",
+  label: "What support do you expect from managers?",
+  fieldType: "short",
+  placeholder: "Write your response…",
+},
+];
 
-  const stepStructure: Record<number, number> = {
-    1: 1,
-    2: 1,
-    3: step3Questions.length,
-  };
 
-  const totalSteps = Object.keys(stepStructure).length;
-
-  const handleChange = (e: any) => {
-    const { name, value } = e.target;
-    setFormData((p) => ({ ...p, [name]: value }));
-  };
-
-  const handleNext = async (newData?: Record<string, any>) => {
-    if (newData) {
-      setFormData((prev) => ({ ...prev, ...newData }));
-    }
-
-    if (!hasStarted) setHasStarted(true);
-
-    const maxSub = stepStructure[step];
-
-    if (subStep < maxSub) {
-      setSubStep((prev) => prev + 1);
-    } else if (step < totalSteps) {
-      setStep((prev) => prev + 1);
-      setSubStep(1);
-    } else {
-      await apiClient.post("/api/v1/hr/employee-feedback", formData);
-    }
-  };
-
-  const handleStepClick = (n: number) => {
-    setStep(n);
-    setSubStep(1);
-  };
-
-  const getStepProgress = (n: number) => {
-    if (!hasStarted) return 0;
-    if (n < step) return 100;
-    if (n > step) return 0;
-    return subStep > 1 ? (subStep / stepStructure[n]) * 100 : 0;
-  };
-  console.log(formData);
+  const month = new Date().toLocaleString("en-US", { month: "long" });
   return (
-    <div className="relative min-h-screen flex flex-col justify-center bg-[#FFFBFB] overflow-hidden">
-      {showSplash ? (
-        <SplashScreen />
-      ) : (
-        <>
-          <StepIndicator step={step} stepStructure={stepStructure} getStepProgress={getStepProgress} handleStepClick={handleStepClick} />
+    <div className="relative min-h-screen flex flex-col  justify-center bg-[#F9F9F9] overflow-hidden">
+      <div className="max-w-6xl mx-auto py-10">
+        <div className="w-full relative flex  px-6 justify-center items-center mb-6">
+          <Image
+            src="/images/feedBackImage.png" // <-- your image here
+            alt="Feedback Banner"
+            width={1400}
+            height={300}
+            className="w-full object-cover rounded-md"
+          />
 
-          {step === 1 && (
-            <IntroStep
-              title="Employee Feedback"
-              description="Your experiences help us improve."
-              onNext={() => handleNext()}
-              buttonClassName="!bg-[#E31313] !font-bold !text-lg"
-            />
-          )}
+          {/* ✅ Month Name Overlaid */}
+          <div className="absolute left-16 top-[30%] -translate-y-1/2">
+            <h1 className="text-xl lg:text-[80px] font-bold text-[#E31313]">{month}</h1>
+               <h1 className="text-base lg:text-3xl font-semibold text-[#E31313]">Q2 Feedback Form</h1>
+          </div>
+        </div>
+        <form
+          className="flex flex-col items-center px-6 overflow-y-auto  space-y-4"
+          onSubmit={(e) => {
+            e.preventDefault();
+            console.log("Form submitted:", formData);
+            // await apiClient.post("/employee-feedback", formData);
+          }}
+        >
+          <div className="space-y-6 w-full  ">
+            {step2Fields.map((field) => (
+              <DynamicField
+                key={field.id}
+                field={field}
+                value={formData[field.name] || ""}
+                onChange={(val) => setFormData((p) => ({ ...p, [field.name]: val }))}
+              />
+            ))}
 
-          {step === 2 && (
-            <form
-              className="flex flex-col items-center flex-1 px-6 overflow-y-auto max-h-[80vh] space-y-4"
-              onSubmit={(e) => {
-                e.preventDefault();
-                handleNext();
-              }}
+            <button
+              type="submit"
+              className=" text-center cursor-pointer mx-auto px-5 py-2 bg-[#F43F46] text-white text-[17px] rounded-full font-semibold  gap-2 flex items-center justify-center"
             >
-              <div className="space-y-6 px-4 md:px-0 w-full max-w-lg mx-auto">
-                {step2Fields.map((field) => (
-                  <div key={field.id} className="w-full">
-                    <label className="block text-base font-medium mb-2 text-[#57534E]">{field.label}</label>
-
-                    {field.fieldType === "text" && (
-                      <Input
-                        type="text"
-                        name={field.name}
-                        value={formData[field.name] || ""}
-                        onChange={handleChange}
-                        placeholder={field.label}
-                        className="w-full border border-[#D9D9D9] !bg-[#FFFBFB] rounded-md p-2 !text-sm"
-                      />
-                    )}
-                    {field.fieldType === "dropdown" && field.options && (
-                      <div className="space-y-1 w-full">
-                        {field.options.map((option, i) => (
-                          <label key={i} className="flex items-center gap-2 !text-sm cursor-pointer select-none">
-                            <input
-                              type="radio"
-                              name={field.name}
-                              value={option}
-                              checked={formData[field.name] === option}
-                              onChange={handleChange}
-                              className="accent-red"
-                            />
-                            {option}
-                          </label>
-                        ))}
-                      </div>
-                    )}
-                  </div>
-                ))}
-
-                <Button type="submit" className="w-full !bg-[#E31313] text-white !text-lg rounded-md !font-bold !max-w-lg mx-auto block">
-                  Next &gt;
-                </Button>
-              </div>
-            </form>
-          )}
-
-          {step === 3 && (
-            <StepTextQuestion
-              question={step3Questions[subStep - 1]}
-              onNext={handleNext}
-              isLast={subStep === stepStructure[3]}
-              value={formData[step3Questions[subStep - 1].name] || ""}
-            />
-          )}
-        </>
-      )}
+              <Image width={20} height={20} alt="submitlogo" src="/svgs/submit-logo.svg" />
+              Submit
+            </button>
+          </div>
+        </form>
+      </div>
     </div>
   );
 }
