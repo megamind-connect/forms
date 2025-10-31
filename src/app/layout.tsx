@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { redHatDisplay } from "@/utils/fonts/font";
+import { Toaster } from "react-hot-toast";
 
 
 export const metadata: Metadata = {
@@ -65,6 +66,7 @@ export default function RootLayout({
       <body
         className={`${redHatDisplay.variable} antialiased font-redhat`}
       >
+          <Toaster position="top-center" />
         {children}
       </body>
     </html>
