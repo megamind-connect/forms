@@ -269,6 +269,9 @@ export default function Manager() {
             <h1 className="text-base lg:text-3xl font-semibold text-[#E31313]">Feedback Form</h1>
           </div>
         </div>
+
+
+        
         <form
           className="flex flex-col items-center px-6 overflow-y-auto  space-y-4"
           onSubmit={(e) => {
