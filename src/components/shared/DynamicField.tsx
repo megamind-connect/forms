@@ -62,8 +62,8 @@ export default function DynamicField({ field, value, onChange }: DynamicFieldPro
 
         <input
           type="text"
-          className="border-b border-gray-300 text-[#202020] focus:border-gray-800 outline-none py-1 text-lg font-medium"
-          placeholder="Search employee name..."
+          className="border-b border-gray-300 text-[#202020] placeholder:text-[#202020] placeholder:text-sm md:placeholder:text-base focus:border-gray-800 outline-none py-1 text-lg font-medium"
+          placeholder={`Search ${label}`}
           value={search}
           onChange={(e) => {
             setSearch(e.target.value);
@@ -72,7 +72,7 @@ export default function DynamicField({ field, value, onChange }: DynamicFieldPro
         />
 
         {showDropdown && results.length > 0 && (
-          <ul className="absolute top-full left-0 w-full bg-white border border-gray-300 rounded-md shadow-md max-h-56 overflow-auto z-20">
+          <ul className="absolute top-full left-0 text-secondary w-full bg-white border border-gray-300 rounded-md shadow-md max-h-56 overflow-auto z-20">
             {results.map((user) => {
               const fullName = `${user.first_name} ${user.last_name}`;
 
@@ -86,7 +86,7 @@ export default function DynamicField({ field, value, onChange }: DynamicFieldPro
                     setShowDropdown(false);
                   }}
                 >
-                  {fullName} — <span className="text-gray-500">{user.position}</span>
+                  {fullName} — <span className="text-secondary/80">{user.position}</span>
                 </li>
               );
             })}
