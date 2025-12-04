@@ -31,7 +31,7 @@ export default function ClientPage() {
   } = useOnboarding();
 
   // ----------------------------
-  // Step 4 Fields (Previously Step 3)
+  // Step 4 Sub-step 1 fields (Previously Step 3)
   // ----------------------------
  const step3Fields = [
   {
@@ -58,10 +58,13 @@ export default function ClientPage() {
     label: "Delivery Time of Services",
     fieldType: "dropdownselect",
     options: [
-      { label: "Within 24 Hours", value: "24h" },
-      { label: "1–3 Days", value: "1_3_days" },
-      { label: "3–7 Days", value: "3_7_days" },
-      { label: "More than a week", value: "1_week_plus" },
+      { label: "Very Late", value: "very_late" },
+      { label: "Late", value: "late" },
+      { label: "On Time (Occasionally Late)", value: "on_time_occasionally_late" },
+      { label: "On Time", value: "on_time" },
+       { label: "Mostly On Time", value: "mostly_on_time" },
+      { label: "Always On Time", value: "always_on_time" },
+     
     ],
   },
   {
@@ -96,6 +99,10 @@ export default function ClientPage() {
       { label: "Video Editing", value: "video_editing" },
       { label: "Social Media Management", value: "smm" },
       { label: "Social Media Marketing", value: "smm_marketing" },
+      { label: "Website Development", value: "website_development" },
+            { label: "Software Development", value: "software_development" },
+      
+
       { label: "Others…", value: "others" },
     ],
   },
@@ -128,7 +135,7 @@ export default function ClientPage() {
   {
     id: "rate_s5_3",
     name: "feedback_understanding_rating",
-    label: "Did we understand and incorporate your feedback?",
+    label: "Do you feel your feedback and requests were understood and incorporated into the work? ",
     fieldType: "rating5",
     options: [
       { value: 1, label: "Never" },
@@ -194,7 +201,7 @@ const step7Fields = [
   {
     id: "rate_s8_1",
     name: "service_continuation_rating",
-    label: "How likely are you to continue using our service?",
+    label: "How likely are you to continue using our service in the coming months?",
     fieldType: "rating5",
     options: [
       { value: 1, label: "Definitely yes" },
@@ -207,7 +214,7 @@ const step7Fields = [
   {
     id: "rate_s8_2",
     name: "recommendation_likelihood_rating",
-    label: "How likely are you to recommend Megamind?",
+    label: "How likely are you to recommend Megamind to others? ",
     fieldType: "rating5",
     options: [
       { value: 1, label: "Definitely yes" },
@@ -225,7 +232,6 @@ const step7Fields = [
     placeholder: "Enter your suggestions…",
   },
 ];
-
 
   return (
     <div className="relative min-h-screen !bg-[#FFFBFB] flex flex-col py-10 justify-center overflow-hidden">
@@ -277,18 +283,45 @@ const step7Fields = [
             />
           )}
 
-          {/* STEP 4 (OLD STEP 3) */}
+          {/* STEP 4 - Combined (3 sub-steps) */}
           {step === 4 && (
-            <div className="px-4 max-w-2xl pb-3 mx-auto md:px-0">
-              <h2 className="text-[32px] font-medium text-primary mt-4 mb-6">Overall Experience </h2>
-              {step3Fields.map((field) => (
-                <DynamicField
-                  key={field.id}
-                  field={field}
-                  value={formData[field.name] || ""}
-                  onChange={(val) => updateFormData({ [field.name]: val })}
-                />
-              ))}
+            <div className="px-4 max-w-2xl w-full pb-3 mx-auto md:px-0">
+              <h2 className="text-[32px] font-medium text-primary mt-4 mb-6">
+                {subStep === 1 && "Overall Experience"}
+                {subStep === 2 && "Services Provided"}
+                {subStep === 3 && "Service Performance"}
+              </h2>
+
+              {subStep === 1 &&
+                step3Fields.map((field) => (
+                  <DynamicField
+                    key={field.id}
+                    field={field}
+                    value={formData[field.name] || ""}
+                    onChange={(val) => updateFormData({ [field.name]: val })}
+                  />
+                ))}
+
+              {subStep === 2 &&
+                step4Fields.map((field) => (
+                  <DynamicField
+                    key={field.id}
+                    field={field}
+                    value={formData[field.name] || ""}
+                    onChange={(val) => updateFormData({ [field.name]: val })}
+                  />
+                ))}
+
+              {subStep === 3 &&
+                step5Fields.map((field) => (
+                  <DynamicField
+                    key={field.id}
+                    field={field}
+                    value={formData[field.name] || ""}
+                    onChange={(val) => updateFormData({ [field.name]: val })}
+                  />
+                ))}
+
               <Button
                 onClick={handleNext}
                 className="!bg-[#FFFBFB] !text-red border-red border !text-lg w-full max-w-2xl mx-auto"
@@ -298,50 +331,8 @@ const step7Fields = [
             </div>
           )}
 
-          {/* STEP 5 (OLD STEP 4) */}
+          {/* STEP 5 (long text questions - was old Step 7) */}
           {step === 5 && (
-            <div className="px-4 max-w-2xl mx-auto md:px-0">
-              <h2 className="text-[32px] font-medium text-primary mt-4 mb-6">Services Provided </h2>
-              {step4Fields.map((field) => (
-                <DynamicField
-                  key={field.id}
-                  field={field}
-                  value={formData[field.name] || ""}
-                  onChange={(val) => updateFormData({ [field.name]: val })}
-                />
-              ))}
-              <Button
-                onClick={handleNext}
-                className="!bg-[#FFFBFB] !text-red border-red border !text-lg w-full max-w-2xl mx-auto"
-              >
-                Next &gt;
-              </Button>
-            </div>
-          )}
-
-          {/* STEP 6 (OLD STEP 5) */}
-          {step === 6 && (
-            <div className="px-4 max-w-2xl  mx-auto md:px-0">
-              <h2 className="text-[32px] font-medium text-primary mt-4 mb-6">Service Performance </h2>
-              {step5Fields.map((field) => (
-                <DynamicField
-                  key={field.id}
-                  field={field}
-                  value={formData[field.name] || ""}
-                  onChange={(val) => updateFormData({ [field.name]: val })}
-                />
-              ))}
-              <Button
-                onClick={handleNext}
-                className="!bg-[#FFFBFB] !text-red border-red border !text-lg w-full max-w-2xl mx-auto"
-              >
-                Next &gt;
-              </Button>
-            </div>
-          )}
-
-          {/* STEP 7 (OLD STEP 6 – long text questions) */}
-          {step === 7 && (
             <StepTextQuestion
               question={step6Questions[subStep - 1]}
               onNext={handleNext}
@@ -353,9 +344,9 @@ const step7Fields = [
             />
           )}
 
-          {/* STEP 8 (OLD STEP 7 – final review) */}
-          {step === 8 && (
-            <div className="px-4 max-w-2xl mx-auto md:px-0 space-y-8">
+          {/* STEP 6 (final review/submit - was old Step 8) */}
+          {step === 6 && (
+            <div className="px-4 max-w-2xl w-full mx-auto md:px-0 space-y-8">
               <h2 className="text-[32px] font-medium text-primary mt-4 mb-6">Scope for Improvement</h2>
               {step7Fields.map((field) => (
                 <DynamicField

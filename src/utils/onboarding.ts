@@ -1,18 +1,24 @@
  export const commonPersonalFields = [
     
     { id: "1", name: "name", label: "Name", fieldType: "text" },
-    { id: "4", name: "brand_name", label: "Brand Name", fieldType: "text" },
+    { id: "4", name: "organisation_name", label: "Organisation Name", fieldType: "text" },
  
     {
       id: "15",
       name: "role_in_organisation",
       label: "Role in the Organisation",
       fieldType: "dropdown",
-      options: [
-        { label: "Owner", value: "owner" },
-        { label: "Manager", value: "manager" },
+      options:[
+  { label: "Managing Director", value: "managing_director" },
+  { label: "Marketing Director", value: "marketing_director" },
+  { label: "CEO / Founder", value: "ceo_founder" },
+  { label: "CMO / Head of Marketing", value: "cmo_head_marketing" },
+  { label: "Marketing Manager", value: "marketing_manager" },
+  { label: "Marketing POC / Coordinator", value: "marketing_coordinator" },
+  { label: "Brand Manager", value: "brand_manager" },
+  { label: "PR Head", value: "pr_head" },
+]
 
-      ],
     },
     
   ];

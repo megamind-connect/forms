@@ -2,10 +2,12 @@
 import { Button } from "@/components/ui/Button";
 import { Textarea } from "@/components/ui/Textarea";
 import { FormDataValues } from "@/types/onboarding";
+import Image from "next/image";
 
 interface QuestionProps {
   question: { name: string; title: string; placeholder: string };
   onNext: (data?: FormDataValues) => void;
+  image: string;
  
   value: string;
   updateFormData: (updates: FormDataValues) => void;
@@ -14,7 +16,7 @@ interface QuestionProps {
   markFieldTouched: (fieldName: string) => void;
 }
 
-export function StepTextQuestion({ question, onNext, value, updateFormData, validateField, isTouched, markFieldTouched }: QuestionProps) {
+export function StepTextQuestion({ question, onNext, value, updateFormData, validateField, isTouched, markFieldTouched ,image}: QuestionProps) {
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const newVal = e.target.value;
     updateFormData({ [question.name]: newVal });
@@ -36,6 +38,7 @@ export function StepTextQuestion({ question, onNext, value, updateFormData, vali
 
   return (
     <div className="flex flex-col px-4 md:px-0 w-full max-w-2xl  justify-center items-center mx-auto py-10 space-y-6">
+      <Image src={question.image} alt="" width={400} height={400}/>
       <h2 className="text-[28px] max-w-2xl w-full  font-medium text-primary ">{question.title}</h2>
       <Textarea
         required

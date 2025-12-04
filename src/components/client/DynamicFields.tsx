@@ -25,7 +25,7 @@ export default function DynamicField({ field, value, onChange }: DynamicFieldPro
     return (
       <div className="w-full space-y-3   rounded-md pb-5 md:pb-10">
         <label className="text-base md:text-[24px] font-medium text-[#202020]">
-          {label} <span className="text-red-500">*</span>
+          {label}
         </label>
 
        <div className="flex flex-wrap items-center justify-center gap-6 md:gap-20 mt-5 md:mt-12 max-w-full">
@@ -68,7 +68,7 @@ if (fieldType === "rating5") {
   return (
     <div className="w-full max-w-2xl mx-auto pb-5 md:pb-10">
       <label className="text-base md:text-[24px] font-medium text-[#202020]">
-        {label} <span className="text-red-500">*</span>
+        {label} 
       </label>
 
       <div className="flex items-start justify-center gap-6 mt-6">
@@ -102,7 +102,7 @@ if (fieldType === "rating5") {
     return (
       <div className="w-full flex flex-col  rounded-md gap-2 pb-5 md:pb-10">
         <label className="text-base md:text-[24px] font-medium text-[#202020]">
-          {label} <span className="text-red-500">*</span>
+          {label} 
         </label>
 
         <div className="relative w-full">
@@ -156,7 +156,7 @@ if (fieldType === "rating5") {
     return (
       <div className="w-full flex flex-col  rounded-md gap-4 pb-5 md:pb-10">
         <label className="text-base md:text-[24px] font-medium text-[#202020]">
-          {label} <span className="text-red-500"></span>
+          {label} 
         </label>
 
         <div className="flex flex-col gap-4 mt-4">
@@ -205,7 +205,7 @@ if (fieldType === "rating5") {
     return (
       <div className="w-full flex flex-col  rounded-sm gap-2 pb-5 md:pb-10">
         <label className="text-base md:text-[24px] font-medium text-[#202020]">
-          {label} <span className="text-red-500">*</span>
+          {label} 
         </label>
 
         <input
