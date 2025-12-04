@@ -167,6 +167,7 @@ export function useOnboarding() {
         surprised_deliverables: formData.pleasant_surprise,
         working_relationship_description: formData.experience_description,
         additional_services_improvements: formData.additional_services,
+other_service_description: formData.services_provided?.other_service_description || "",
 
         likelihood_to_continue: formData.service_continuation_rating,
         likelihood_to_recommend:
@@ -176,7 +177,7 @@ export function useOnboarding() {
       };
 
       try {
-        const res = await fetch("https://staging-api.megamind.studio/api/v1/client-feedback", {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/v1/client-feedback`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(payload),

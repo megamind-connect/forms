@@ -139,17 +139,24 @@ if (fieldType === "rating5") {
 
   /* ---------------------------- CHECKBOX GROUP ---------------------------- */
   /* ---------------------------- CHECKBOX GROUP (OTHER input always visible) ---------------------------- */
+/* ---------------------------- CHECKBOX GROUP ---------------------------- */
 if (fieldType === "checkbox_group" && options) {
   const selected = value?.list || [];
 
+  // FIXED LOGIC → preserves other_service_description
   const toggleItem = (val: string) => {
     let updated = [...selected];
+
     if (updated.includes(val)) {
       updated = updated.filter((v) => v !== val);
     } else {
       updated.push(val);
     }
-    onChange({ list: updated, other: value?.other || "" });
+
+    onChange({
+      list: updated,
+      other_service_description: value?.other_service_description || "",
+    });
   };
 
   return (
@@ -161,51 +168,47 @@ if (fieldType === "checkbox_group" && options) {
       <div className="flex flex-col gap-4 mt-4">
 
         {options.map((opt) => {
-          // --------------------------------------------
-          // SPECIAL CASE: ALWAYS SHOW INPUT BOX FOR OTHER
-          // --------------------------------------------
-       /* SPECIAL CASE: OTHER → INLINE INPUT */
-if (opt.value === "other") {
-  return (
-    <div key="other-input" className="flex items-center gap-3">
 
-      {/* Checkbox */}
-      <div
-        onClick={() => toggleItem("other")}
-        className={`w-5 h-5 border-2 rounded-md ${
-          selected.includes("other")
-            ? "border-[#E31212] bg-[#E31212]"
-            : "border-[#E31212] bg-white"
-        } flex items-center justify-center cursor-pointer transition-all`}
-      >
-        {selected.includes("other") && (
-          <span className="text-white text-sm font-bold">✓</span>
-        )}
-      </div>
+          /* ---------------------------- OTHER OPTION (INLINE INPUT) ---------------------------- */
+          if (opt.value === "other") {
+            return (
+              <div key="other-input" className="flex items-center gap-3">
 
-      {/* Input — Inline */}
-      <input
-        type="text"
-        placeholder="Others..."
-        className="flex-1 border-b border-gray-400 outline-none text-sm md:text-lg py-1 placeholder:text-gray-400"
-        value={value?.other || ""}
-        onChange={(e) =>
-          onChange({
-            list: selected.includes("other")
-              ? selected
-              : [...selected, "other"], // auto-select
-            other: e.target.value,
-          })
-        }
-      />
-    </div>
-  );
-}
+                {/* Checkbox */}
+                <div
+                  onClick={() => toggleItem("other")}
+                  className={`w-5 h-5 border-2 rounded-md ${
+                    selected.includes("other")
+                      ? "border-[#E31212] bg-[#E31212]"
+                      : "border-[#E31212] bg-white"
+                  } flex items-center justify-center cursor-pointer transition-all`}
+                >
+                  {selected.includes("other") && (
+                    <span className="text-white text-sm font-bold">✓</span>
+                  )}
+                </div>
 
+                {/* Always-visible input */}
+                <input
+                  type="text"
+                  placeholder="Others..."
+                  className="flex-1 border-b border-gray-400 outline-none text-sm md:text-lg py-1 placeholder:text-gray-400"
+                  value={value?.other_service_description || ""}
+                  onChange={(e) =>
+                    onChange({
+                      list: selected.includes("other")
+                        ? selected
+                        : [...selected, "other"],
 
-          // --------------------------------------------
-          // NORMAL CHECKBOX OPTIONS
-          // --------------------------------------------
+                      other_service_description: e.target.value,
+                    })
+                  }
+                />
+              </div>
+            );
+          }
+
+          /* ---------------------------- NORMAL CHECKBOX OPTIONS ---------------------------- */
           return (
             <div key={opt.value} className="flex flex-col">
               <label className="flex items-center gap-3 cursor-pointer text-[#202020]">
