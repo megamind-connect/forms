@@ -1,4 +1,3 @@
-// components/hooks/useOnboarding.ts
 import { useState, useEffect } from "react";
 import { commonPersonalFields } from "@/utils/onboarding";
 
@@ -17,11 +16,10 @@ export function useOnboarding() {
   const [formFields] = useState(commonPersonalFields);
 
   const [formData, setFormData] = useState<FormData>({
-    full_name: "John Doe",
-    company: "Tech Pvt Ltd",
-    phone: "9876543210",
-    email: "demo@email.com",
-    // ... all other dummy data
+    full_name: "",
+    company: "",
+    phone: "",
+    email: "",
   });
 
   const [touchedStep2, setTouchedStep2] = useState<Record<string, boolean>>({});
@@ -32,39 +30,57 @@ export function useOnboarding() {
     return () => clearTimeout(timer);
   }, []);
 
+  // UPDATED: Step Structure now includes 8 steps
   const stepStructure: Record<number, number> = {
-    1: 1, 2: 1, 3: 1, 4: 1, 5: 1,
-    6: step6Questions.length + 1,
-    7: 1,
+    1: 1,
+    2: 1,
+    3: 1, // NEW INTRO STEP
+    4: 1,
+    5: 1,
+    6: 1,
+    7: step6Questions.length + 1, // long text questions
+    8: 1, // final review
   };
 
-  const totalSteps = 7;
+  const totalSteps = 8;
 
-  // Validation per step
+  // VALIDATION LOGIC (unchanged)
   const validateCurrentStep = () => {
     if (step === 2) {
-      const missing = formFields.filter(f => !formData[f.name]);
+      const missing = formFields.filter((f) => !formData[f.name]);
       return missing.length === 0;
     }
-    if (step === 6) {
-      const fieldName = step6Questions[subStep - 1].name;
-      return !!(formData[fieldName]?.trim());
-    }
-    if ([3, 4, 5, 7].includes(step)) {
-      const requiredFields = {
-        3: ["delivery_time", "on_time_delivery_rating", "services_provided", "creative_strength_text"],
-        4: ["services_provided_step4", "delivery_time_step4", "creative_strength_text_step4"],
-        5: ["understands_brief_rating", "on_time_delivery_rating_step5"],
-        7: ["recommendation_rating", "future_projects"],
-      }[step];
 
-      return requiredFields.every(field => {
-        const val = formData[field];
-        if (field.includes("services")) return val?.list?.length > 0;
-        if (field.includes("text")) return val?.trim();
-        return !!val;
-      });
+    if (step === 4) {
+      const required = ["team_rating10", "team_rating1", "team_rating2", "delivery_time", "team_rating4"];
+      return required.every((field) => !!formData[field]);
     }
+
+    if (step === 5) {
+      const services = formData["services_provided_step4"];
+      if (!services || !services.list || services.list.length === 0) return false;
+      const requiredRatings = ["team_rating4114", "team_rating411", "team_rating41132"];
+      return requiredRatings.every((f) => !!formData[f]);
+    }
+
+    if (step === 6) {
+      const required = ["team_ratreing4114", "team_rrewating411", "team_rarewrting41132"];
+      return required.every((f) => !!formData[f]);
+    }
+
+    if (step === 8) {
+      return (
+        !!formData["team_rrewating411"] &&
+        !!formData["team_rarewrting41132"] &&
+        !!formData["feedback"]?.trim()
+      );
+    }
+
+    if (step === 7) {
+      const fieldName = step6Questions[subStep - 1].name;
+      return !!formData[fieldName]?.trim();
+    }
+
     return true;
   };
 
@@ -74,25 +90,23 @@ export function useOnboarding() {
       return;
     }
 
-    // Step 6 sub-steps
-    if (step === 6 && subStep < step6Questions.length) {
-      setSubStep(prev => prev + 1);
+    if (step === 7 && subStep < step6Questions.length) {
+      setSubStep((prev) => prev + 1);
       return;
     }
 
-    if (step === 6 && subStep === step6Questions.length) {
-      setStep(7);
+    if (step === 7 && subStep === step6Questions.length) {
+      setStep(8);
       setSubStep(1);
       return;
     }
 
     if (step < totalSteps) {
-      setStep(prev => prev + 1);
+      setStep((prev) => prev + 1);
       setSubStep(1);
     } else {
-      console.log("FINAL SUBMISSION:", formData);
+      console.log("FINAL FORM DATA:", formData);
       alert("Thank you! Your review has been submitted.");
-      // await fetch("/api/submit", { method: "POST", body: JSON.stringify(formData) });
     }
   };
 
@@ -106,16 +120,16 @@ export function useOnboarding() {
   const getStepProgress = (num: number) => {
     if (num < step) return 100;
     if (num > step) return 0;
-    if (num === 6) return ((subStep - 1) / step6Questions.length) * 100;
+    if (num === 7) return ((subStep - 1) / step6Questions.length) * 100;
     return 100;
   };
 
   const updateFormData = (updates: FormData) => {
-    setFormData(prev => ({ ...prev, ...updates }));
+    setFormData((prev) => ({ ...prev, ...updates }));
   };
 
   const markStep2FieldTouched = (name: string) => {
-    setTouchedStep2(prev => ({ ...prev, [name]: true }));
+    setTouchedStep2((prev) => ({ ...prev, [name]: true }));
   };
 
   const markAllStep2FieldsTouched = () => {
@@ -124,7 +138,7 @@ export function useOnboarding() {
   };
 
   const markStep6FieldTouched = (name: string) => {
-    setTouchedStep6(prev => ({ ...prev, [name]: true }));
+    setTouchedStep6((prev) => ({ ...prev, [name]: true }));
   };
 
   return {

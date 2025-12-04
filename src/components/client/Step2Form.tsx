@@ -58,8 +58,8 @@ export function Step2Form({
   const errors = validateFields(formData);
 
   return (
-    <div className="flex flex-col items-center max-w-2xl w-full mx-auto flex-1 px-4 md:px-0 scrollbar-hidden overflow-y-auto max-h-[80vh] space-y-4">
-      <h2 className="text-[32px] font-medium text-primary mb-4">General Information</h2>
+    <div className="flex flex-col items-center max-w-2xl w-full mt-5 mx-auto flex-1 px-4 md:px-0 scrollbar-hidden overflow-y-auto max-h-[80vh] space-y-4">
+      <h2 className="text-[44px] font-medium w-full  text-primary mb-4">General Information</h2>
       {formFields.map((field, index) => {
         const isPartnerField = field.name === "partner_name" || field.name === "partner_occupation" || field.name === "partner_contact_number";
 

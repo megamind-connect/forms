@@ -6,7 +6,7 @@ import { FormDataValues } from "@/types/onboarding";
 interface QuestionProps {
   question: { name: string; title: string; placeholder: string };
   onNext: (data?: FormDataValues) => void;
-  isLast: boolean;
+ 
   value: string;
   updateFormData: (updates: FormDataValues) => void;
   validateField: (fieldName: string, value: string) => string;
