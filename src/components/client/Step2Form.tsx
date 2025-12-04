@@ -58,7 +58,7 @@ export function Step2Form({
   const errors = validateFields(formData);
 
   return (
-    <div className="flex flex-col items-center max-w-2xl w-full mt-5 mx-auto flex-1 px-4 md:px-0 scrollbar-hidden overflow-y-auto max-h-[80vh] space-y-4">
+    <div className="flex flex-col justify-betwee h-[80vh] items-center max-w-2xl w-full mt-5 mx-auto flex-1 px-4 md:px-0 scrollbar-hidden overflow-y-auto max-h-[80vh] space-y-4">
       <h2 className="text-[44px] font-medium w-full  text-primary mb-4">General Information</h2>
       {formFields.map((field, index) => {
         const isPartnerField = field.name === "partner_name" || field.name === "partner_occupation" || field.name === "partner_contact_number";
@@ -174,20 +174,15 @@ export function Step2Form({
           </div>
         );
       })}
+
+
       <Button onClick={handleSubmit} className="w-full !bg-red border-none text-white  !font-normal !text-lg max-w-2xl mt-4">
         Proceed
       </Button>
 
       {/* Snackbar Toast */}
-      {snackbar && (
-        <div
-          className={`fixed bottom-5 left-1/2 transform -translate-x-1/2 px-6 py-3 rounded-lg shadow-lg text-white text-sm font-medium transition-all duration-300 ${
-            snackbar.type === "error" ? "bg-red-600" : "bg-green-600"
-          }`}
-        >
-          {snackbar.message}
-        </div>
-      )}
+
+    
     </div>
   );
 }
