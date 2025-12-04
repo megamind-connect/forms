@@ -49,8 +49,10 @@ export function StepTextQuestion({ question, onNext, value, updateFormData, vali
         onBlur={handleBlur}
       />
       {isTouched && error && <p className="text-red-600 text-xs mt-1 self-start max-w-2xl">{error}</p>}
-      <Button onClick={handleSubmit} className="!bg-[#FFFBFB] !text-red border !text-lg !border-red px-6  rounded-sm w-full max-w-2xl">
-        Next 
+      <Button onClick={handleSubmit} className="!bg-[#FFFBFB] !text-red inline-flex gap-2 border !text-lg !border-red px-6  rounded-sm w-full max-w-2xl">
+              Next <svg width="8" height="13" viewBox="0 0 8 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M-4.86374e-05 11.2687L1.11245 12.375L7.2937 6.1875L1.1062 0L-4.86374e-05 1.10625L5.0812 6.1875L-4.86374e-05 11.2687Z" fill="#E31313"/>
+</svg>
       </Button>
     </div>
   );

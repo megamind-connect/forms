@@ -138,29 +138,75 @@ if (fieldType === "rating5") {
   }
 
   /* ---------------------------- CHECKBOX GROUP ---------------------------- */
-  if (fieldType === "checkbox_group" && options) {
-    const selected = value?.list || [];
+  /* ---------------------------- CHECKBOX GROUP (OTHER input always visible) ---------------------------- */
+if (fieldType === "checkbox_group" && options) {
+  const selected = value?.list || [];
 
-    const toggleItem = (val: string) => {
-      let updated = [...selected];
-      if (updated.includes(val)) {
-        updated = updated.filter((v) => v !== val);
-      } else {
-        updated.push(val);
-      }
-      onChange({ list: updated, other: value?.other || "" });
-    };
+  const toggleItem = (val: string) => {
+    let updated = [...selected];
+    if (updated.includes(val)) {
+      updated = updated.filter((v) => v !== val);
+    } else {
+      updated.push(val);
+    }
+    onChange({ list: updated, other: value?.other || "" });
+  };
 
-    const hasOthers = selected.includes("others");
+  return (
+    <div className="w-full flex flex-col rounded-md gap-4 pb-5 md:pb-10">
+      <label className="text-base md:text-[24px] font-medium text-[#202020]">
+        {label}
+      </label>
 
-    return (
-      <div className="w-full flex flex-col  rounded-md gap-4 pb-5 md:pb-10">
-        <label className="text-base md:text-[24px] font-medium text-[#202020]">
-          {label} 
-        </label>
+      <div className="flex flex-col gap-4 mt-4">
 
-        <div className="flex flex-col gap-4 mt-4">
-          {options.map((opt) => (
+        {options.map((opt) => {
+          // --------------------------------------------
+          // SPECIAL CASE: ALWAYS SHOW INPUT BOX FOR OTHER
+          // --------------------------------------------
+       /* SPECIAL CASE: OTHER → INLINE INPUT */
+if (opt.value === "other") {
+  return (
+    <div key="other-input" className="flex items-center gap-3">
+
+      {/* Checkbox */}
+      <div
+        onClick={() => toggleItem("other")}
+        className={`w-5 h-5 border-2 rounded-md ${
+          selected.includes("other")
+            ? "border-[#E31212] bg-[#E31212]"
+            : "border-[#E31212] bg-white"
+        } flex items-center justify-center cursor-pointer transition-all`}
+      >
+        {selected.includes("other") && (
+          <span className="text-white text-sm font-bold">✓</span>
+        )}
+      </div>
+
+      {/* Input — Inline */}
+      <input
+        type="text"
+        placeholder="Others..."
+        className="flex-1 border-b border-gray-400 outline-none text-sm md:text-lg py-1 placeholder:text-gray-400"
+        value={value?.other || ""}
+        onChange={(e) =>
+          onChange({
+            list: selected.includes("other")
+              ? selected
+              : [...selected, "other"], // auto-select
+            other: e.target.value,
+          })
+        }
+      />
+    </div>
+  );
+}
+
+
+          // --------------------------------------------
+          // NORMAL CHECKBOX OPTIONS
+          // --------------------------------------------
+          return (
             <div key={opt.value} className="flex flex-col">
               <label className="flex items-center gap-3 cursor-pointer text-[#202020]">
                 <div
@@ -176,29 +222,18 @@ if (fieldType === "rating5") {
                   )}
                 </div>
 
-                <span className="text-sm text-[#8F8881] md:text-lg">{opt.label}</span>
+                <span className="text-sm text-[#8F8881] md:text-lg">
+                  {opt.label}
+                </span>
               </label>
-
-              {opt.value === "others" && hasOthers && (
-                <input
-                  type="text"
-                  placeholder="Please specify..."
-                  className="ml-8 mt-2 border-b border-gray-400 outline-none text-sm md:text-lg py-1 placeholder:text-gray-400"
-                  value={value?.other || ""}
-                  onChange={(e) =>
-                    onChange({
-                      list: selected,
-                      other: e.target.value,
-                    })
-                  }
-                />
-              )}
             </div>
-          ))}
-        </div>
+          );
+        })}
       </div>
-    );
-  }
+    </div>
+  );
+}
+
 
   /* ---------------------------- SHORT INPUT ---------------------------- */
   if (fieldType === "short") {

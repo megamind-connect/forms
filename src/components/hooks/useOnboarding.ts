@@ -4,9 +4,27 @@ import { commonPersonalFields } from "@/utils/onboarding";
 type FormData = Record<string, any>;
 
 const step6Questions = [
-  { image:"/images/steps/3.png", name: "pleasant_surprise", title: "Were any deliverables a pleasant surprise?", placeholder: "If Yes , we would love to know which ones and what made them stand out for you. " },
-  { image:"/images/steps/4.png", name: "experience_description", title: "How would you describe your overall experience with our team?", placeholder: "Please specify any areas where we fell short" },
-  { image:"/images/steps/5.png", name: "additional_services", title: "Are there any additional services or improvements you would like to see in the coming months?", placeholder: "If Yes , we would love to know which ones and what made them stand out for you." },
+  {
+    image: "/images/steps/3.png",
+    name: "pleasant_surprise",
+    title: "Were any deliverables a pleasant surprise?",
+    placeholder:
+      "If Yes , we would love to know which ones and what made them stand out for you. ",
+  },
+  {
+    image: "/images/steps/4.png",
+    name: "experience_description",
+    title: "How would you describe your overall experience with our team?",
+    placeholder: "Please specify any areas where we fell short",
+  },
+  {
+    image: "/images/steps/5.png",
+    name: "additional_services",
+    title:
+      "Are there any additional services or improvements you would like to see in the coming months?",
+    placeholder:
+      "If Yes , we would love to know which ones and what made them stand out for you.",
+  },
 ];
 
 export function useOnboarding() {
@@ -30,26 +48,27 @@ export function useOnboarding() {
     return () => clearTimeout(timer);
   }, []);
 
-  // UPDATED: Step Structure now includes 6 steps (4 is combined with 3 sub-steps)
+  // Step config
   const stepStructure: Record<number, number> = {
     1: 1,
     2: 1,
-    3: 1, // intro
-    4: 3, // combined: sub-step1 (experience), sub-step2 (services), sub-step3 (performance)
-    5: step6Questions.length, // long text questions (multi-substep)
-    6: 1, // final review / submit
+    3: 1,
+    4: 3,
+    5: step6Questions.length,
+    6: 1,
   };
 
   const totalSteps = 6;
 
-  // VALIDATION LOGIC
+  // ---------------------------
+  // VALIDATION
+  // ---------------------------
   const validateCurrentStep = () => {
     if (step === 2) {
       const missing = formFields.filter((f) => !formData[f.name]);
       return missing.length === 0;
     }
 
-    // Combined step 4 validation depends on subStep
     if (step === 4) {
       if (subStep === 1) {
         const required = [
@@ -59,12 +78,13 @@ export function useOnboarding() {
           "delivery_time_option",
           "strategy_alignment_rating",
         ];
-        return required.every((field) => !!formData[field]);
+        return required.every((f) => !!formData[f]);
       }
 
       if (subStep === 2) {
         const services = formData["services_provided"];
-        if (!services || !services.list || services.list.length === 0) return false;
+        if (!services || !services.list || services.list.length === 0)
+          return false;
 
         const requiredRatings = [
           "goal_alignment_rating",
@@ -84,7 +104,6 @@ export function useOnboarding() {
       }
     }
 
-    // long text questions (now step 5)
     if (step === 5) {
       const fieldName = step6Questions[subStep - 1].name;
       return !!formData[fieldName]?.trim();
@@ -101,57 +120,116 @@ export function useOnboarding() {
     return true;
   };
 
+  // ---------------------------
+  // HANDLE NEXT
+  // ---------------------------
   const handleNext = async () => {
     if (!validateCurrentStep()) {
       alert("Please complete all required fields.");
       return;
     }
 
-    // If we're in combined Step 4, move between its sub-steps first
+    // Handle substeps for step 4
     if (step === 4 && subStep < 3) {
       setSubStep((prev) => prev + 1);
       return;
     }
 
-    // If we're in long-text step (now step 5) and have more sub-questions
+    // Handle long text questions (step 5)
     if (step === 5 && subStep < step6Questions.length) {
       setSubStep((prev) => prev + 1);
       return;
     }
 
-    // If we're at step 4 and subStep === 3, or step 5 completed, advance to next major step
+    // Final step → SUBMIT
+    if (step === totalSteps) {
+      const payload = {
+        name: formData.name,
+        brand_name: formData.organisation_name,
+        position_role: formData.role_in_organisation,
+
+        overall_experience: formData.overall_experience_rating,
+        impact_assessment: formData.service_impact_rating,
+        quality_of_services: formData.service_quality_rating,
+        delivery_time: formData.delivery_time_option,
+        brand_strategy_alignment: formData.strategy_alignment_rating,
+
+        services_provided: formData.services_provided?.list || [],
+
+        services_align_with_goals: formData.goal_alignment_rating,
+        meet_deadlines_rating: formData.deadline_efficiency_rating,
+        feedback_understood_rating: formData.feedback_understanding_rating,
+
+        digital_marketing_results: formData.marketing_results_rating,
+        content_creation_rating: formData.brand_representation_rating,
+        team_responsiveness: formData.responsiveness_rating,
+
+        surprised_deliverables: formData.pleasant_surprise,
+        working_relationship_description: formData.experience_description,
+        additional_services_improvements: formData.additional_services,
+
+        likelihood_to_continue: formData.service_continuation_rating,
+        likelihood_to_recommend:
+          formData.recommendation_likelihood_rating,
+
+        other_comments: formData.final_feedback_text,
+      };
+
+      try {
+        const res = await fetch("https://staging-api.megamind.studio/api/v1/client-feedback", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload),
+        });
+
+        if (!res.ok) throw new Error("Failed to submit");
+
+        alert("Thank you! Your feedback has been submitted.");
+        console.log("SUBMITTED PAYLOAD:", payload);
+      } catch (err) {
+        console.error(err);
+        alert("Something went wrong. Please try again.");
+      }
+
+      return;
+    }
+
+    // Move to next major step
     if (step < totalSteps) {
       setStep((prev) => prev + 1);
       setSubStep(1);
       return;
     }
-
-    // final submit (step === totalSteps)
-    console.log("FINAL FORM DATA:", formData);
-    alert("Thank you! Your review has been submitted.");
   };
 
+  // ---------------------------
+  // STEP CLICK NAVIGATION
+  // ---------------------------
   const handleStepClick = (target: number) => {
-    // allow going back freely, going forward only if current step valid
     if (target < step || validateCurrentStep()) {
       setStep(target);
       setSubStep(1);
     }
   };
 
+  // ---------------------------
+  // STEP PROGRESS (Visual)
+  // ---------------------------
   const getStepProgress = (num: number) => {
     if (num < step) return 100;
     if (num > step) return 0;
 
-    // For combined step 4 show sub-step progress
     if (num === 4) return ((subStep - 1) / 3) * 100;
 
-    // For multi-question long text step (now step 5)
-    if (num === 5) return ((subStep - 1) / step6Questions.length) * 100;
+    if (num === 5)
+      return ((subStep - 1) / step6Questions.length) * 100;
 
     return 100;
   };
 
+  // ---------------------------
+  // HELPERS
+  // ---------------------------
   const updateFormData = (updates: FormData) => {
     setFormData((prev) => ({ ...prev, ...updates }));
   };
@@ -161,7 +239,10 @@ export function useOnboarding() {
   };
 
   const markAllStep2FieldsTouched = () => {
-    const touched = formFields.reduce((acc, f) => ({ ...acc, [f.name]: true }), {});
+    const touched = formFields.reduce(
+      (acc, f) => ({ ...acc, [f.name]: true }),
+      {}
+    );
     setTouchedStep2(touched);
   };
 

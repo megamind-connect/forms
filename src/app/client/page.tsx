@@ -33,24 +33,45 @@ export default function ClientPage() {
   // ----------------------------
   // Step 4 Sub-step 1 fields (Previously Step 3)
   // ----------------------------
- const step3Fields = [
+const step3Fields = [
   {
     id: "rate1",
     name: "overall_experience_rating",
     label: "How would you rate your overall experience with Megamind?",
     fieldType: "rating5",
+    options: [
+      { value: "very_poor", label: "Very Poor" },
+      { value: "poor", label: "Poor" },
+      { value: "average", label: "Average" },
+      { value: "good", label: "Good" },
+      { value: "excellent", label: "Excellent" },
+    ],
   },
   {
     id: "rate2",
     name: "service_impact_rating",
     label: "How would you assess the impact and results of our services on your brand?",
     fieldType: "rating5",
+    options: [
+      { value: "very_poor", label: "Very Poor" },
+      { value: "poor", label: "Poor" },
+      { value: "average", label: "Average" },
+      { value: "good", label: "Good" },
+      { value: "excellent", label: "Excellent" },
+    ],
   },
   {
     id: "rate3",
     name: "service_quality_rating",
     label: "Quality of services provided",
     fieldType: "rating5",
+    options: [
+      { value: "very_poor", label: "Very Poor" },
+      { value: "poor", label: "Poor" },
+      { value: "average", label: "Average" },
+      { value: "good", label: "Good" },
+      { value: "excellent", label: "Excellent" },
+    ],
   },
   {
     id: "delivery_time",
@@ -62,9 +83,8 @@ export default function ClientPage() {
       { label: "Late", value: "late" },
       { label: "On Time (Occasionally Late)", value: "on_time_occasionally_late" },
       { label: "On Time", value: "on_time" },
-       { label: "Mostly On Time", value: "mostly_on_time" },
+      { label: "Mostly On Time", value: "mostly_on_time" },
       { label: "Always On Time", value: "always_on_time" },
-     
     ],
   },
   {
@@ -73,20 +93,21 @@ export default function ClientPage() {
     label: "How would you rate our Brand Strategy in terms of aligning with your business?",
     fieldType: "rating5",
     options: [
-      { value: 1, label: "Not Aligned" },
-      { value: 2, label: "" },
-      { value: 3, label: "Moderately Aligned" },
-      { value: 4, label: "" },
-      { value: 5, label: "Perfectly Aligned" },
+      { value: "not_aligned", label: "Not Aligned" },
+      { value: "slightly_aligned", label: "" },
+      { value: "moderately_aligned", label: "Moderately Aligned" },
+      { value: "well_aligned", label: "" },
+      { value: "perfectly_aligned", label: "Perfectly Aligned" },
     ],
   },
 ];
 
 
+
   // ----------------------------
   // Step 5 Fields (Previously Step 4)
   // ----------------------------
- const step4Fields = [
+const step4Fields = [
   {
     id: "200b",
     name: "services_provided",
@@ -95,15 +116,13 @@ export default function ClientPage() {
     options: [
       { label: "Graphic Design", value: "graphic_design" },
       { label: "PPC", value: "ppc" },
-      { label: "Video Shoot / Production", value: "video_shoot" },
+      { label: "Video Shoot / Production", value: "video_shoot_production" },
       { label: "Video Editing", value: "video_editing" },
-      { label: "Social Media Management", value: "smm" },
-      { label: "Social Media Marketing", value: "smm_marketing" },
+      { label: "Social Media Management", value: "social_media_management" },
+      { label: "Social Media Marketing", value: "social_media_marketing" },
       { label: "Website Development", value: "website_development" },
-            { label: "Software Development", value: "software_development" },
-      
-
-      { label: "Others…", value: "others" },
+      { label: "Software Development", value: "software_development" },
+      { label: "Others…", value: "other" },
     ],
   },
   {
@@ -112,11 +131,11 @@ export default function ClientPage() {
     label: "How well do our services align with your business goals this month?",
     fieldType: "rating5",
     options: [
-      { value: 1, label: "Extremely well" },
-      { value: 2, label: "" },
-      { value: 3, label: "Neutral" },
-      { value: 4, label: "" },
-      { value: 5, label: "Extremely not well" },
+      { value: "extremely_well", label: "Extremely well" },
+      { value: "somewhat_well", label: "" },
+      { value: "neutral", label: "Neutral" },
+      { value: "somewhat_not_well", label: "" },
+      { value: "extremely_not_well", label: "Extremely not well" },
     ],
   },
   {
@@ -125,27 +144,28 @@ export default function ClientPage() {
     label: "How would you rate our ability to meet deadlines this month?",
     fieldType: "rating5",
     options: [
-      { value: 1, label: "Never" },
-      { value: 2, label: "" },
-      { value: 3, label: "Sometimes" },
-      { value: 4, label: "" },
-      { value: 5, label: "Always" },
+      { value: "never", label: "Never" },
+      { value: "rarely", label: "" },
+      { value: "sometimes", label: "Sometimes" },
+      { value: "usually", label: "" },
+      { value: "always", label: "Always" },
     ],
   },
   {
     id: "rate_s5_3",
     name: "feedback_understanding_rating",
-    label: "Do you feel your feedback and requests were understood and incorporated into the work? ",
+    label: "Do you feel your feedback and requests were understood?",
     fieldType: "rating5",
     options: [
-      { value: 1, label: "Never" },
-      { value: 2, label: "" },
-      { value: 3, label: "Sometimes" },
-      { value: 4, label: "" },
-      { value: 5, label: "Always" },
+      { value: "never", label: "Never" },
+      { value: "rarely", label: "" },
+      { value: "sometimes", label: "Sometimes" },
+      { value: "usually", label: "" },
+      { value: "always", label: "Always" },
     ],
   },
 ];
+
 
 
   // ----------------------------
@@ -158,11 +178,11 @@ const step5Fields = [
     label: "How would you rate our digital marketing results?",
     fieldType: "rating5",
     options: [
-      { value: 1, label: "Significant Results" },
-      { value: 2, label: "" },
-      { value: 3, label: "Moderate Results" },
-      { value: 4, label: "" },
-      { value: 5, label: "No Results" },
+      { value: "significant_results", label: "Significant Results" },
+      { value: "strong_results", label: "" },
+      { value: "moderate_results", label: "Moderate Results" },
+      { value: "minimal_results", label: "" },
+      { value: "no_results", label: "No Results" },
     ],
   },
   {
@@ -171,11 +191,11 @@ const step5Fields = [
     label: "How well does our content represent your brand?",
     fieldType: "rating5",
     options: [
-      { value: 1, label: "Excellent" },
-      { value: 2, label: "" },
-      { value: 3, label: "Average" },
-      { value: 4, label: "" },
-      { value: 5, label: "Very Poor" },
+      { value: "excellent", label: "Excellent" },
+      { value: "good", label: "" },
+      { value: "average", label: "Average" },
+      { value: "poor", label: "" },
+      { value: "very_poor", label: "Very Poor" },
     ],
   },
   {
@@ -184,14 +204,15 @@ const step5Fields = [
     label: "How well did our team respond to your enquiries?",
     fieldType: "rating5",
     options: [
-      { value: 1, label: "Extremely Responsive" },
-      { value: 2, label: "" },
-      { value: 3, label: "Neutral" },
-      { value: 4, label: "" },
-      { value: 5, label: "Very Slow" },
+      { value: "extremely_responsive", label: "Extremely Responsive" },
+      { value: "responsive", label: "" },
+      { value: "neutral", label: "Neutral" },
+      { value: "slow", label: "" },
+      { value: "very_slow", label: "Very Slow" },
     ],
   },
 ];
+
 
 
   // ----------------------------
@@ -201,27 +222,27 @@ const step7Fields = [
   {
     id: "rate_s8_1",
     name: "service_continuation_rating",
-    label: "How likely are you to continue using our service in the coming months?",
+    label: "How likely are you to continue using our service?",
     fieldType: "rating5",
     options: [
-      { value: 1, label: "Definitely yes" },
-      { value: 2, label: "" },
-      { value: 3, label: "Not sure" },
-      { value: 4, label: "" },
-      { value: 5, label: "Definitely not" },
+      { value: "definitely_yes", label: "Definitely yes" },
+      { value: "probably_yes", label: "" },
+      { value: "not_sure", label: "Not sure" },
+      { value: "probably_not", label: "" },
+      { value: "definitely_not", label: "Definitely not" },
     ],
   },
   {
     id: "rate_s8_2",
     name: "recommendation_likelihood_rating",
-    label: "How likely are you to recommend Megamind to others? ",
+    label: "How likely are you to recommend Megamind?",
     fieldType: "rating5",
     options: [
-      { value: 1, label: "Definitely yes" },
-      { value: 2, label: "" },
-      { value: 3, label: "Not sure" },
-      { value: 4, label: "" },
-      { value: 5, label: "Definitely not" },
+      { value: "definitely_yes", label: "Definitely yes" },
+      { value: "probably_yes", label: "" },
+      { value: "not_sure", label: "Not sure" },
+      { value: "probably_not", label: "" },
+      { value: "definitely_not", label: "Definitely not" },
     ],
   },
   {
@@ -232,6 +253,7 @@ const step7Fields = [
     placeholder: "Enter your suggestions…",
   },
 ];
+
 
   return (
     <div className="relative min-h-screen !bg-[#FFFBFB] flex flex-col py-10 justify-center overflow-hidden">
@@ -324,9 +346,12 @@ const step7Fields = [
 
               <Button
                 onClick={handleNext}
-                className="!bg-[#FFFBFB] !text-red border-red border !text-lg w-full max-w-2xl mx-auto"
+                className="!bg-[#FFFBFB] !text-red border-red inline-flex gap-2 border !text-lg w-full max-w-2xl mx-auto"
               >
-                Next &gt;
+                Next <svg width="8" height="13" viewBox="0 0 8 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M-4.86374e-05 11.2687L1.11245 12.375L7.2937 6.1875L1.1062 0L-4.86374e-05 1.10625L5.0812 6.1875L-4.86374e-05 11.2687Z" fill="#E31313"/>
+</svg>
+
               </Button>
             </div>
           )}
