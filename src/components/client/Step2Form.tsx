@@ -58,7 +58,7 @@ export function Step2Form({
   const errors = validateFields(formData);
 
   return (
-    <div className="flex flex-col items-center max-w-lg w-full mx-auto flex-1 px-4 md:px-0 scrollbar-hidden overflow-y-auto max-h-[80vh] space-y-4">
+    <div className="flex flex-col items-center max-w-2xl w-full mx-auto flex-1 px-4 md:px-0 scrollbar-hidden overflow-y-auto max-h-[80vh] space-y-4">
       <h2 className="text-[32px] font-medium text-primary mb-4">General Information</h2>
       {formFields.map((field, index) => {
         const isPartnerField = field.name === "partner_name" || field.name === "partner_occupation" || field.name === "partner_contact_number";
@@ -77,7 +77,7 @@ export function Step2Form({
         const isTouched = touched[field.name] || false;
 
         return (
-          <div key={index} className="space-y-1 w-full max-w-lg text-left">
+          <div key={index} className="space-y-1 w-full max-w-2xl text-left">
             <label className="text-base font-medium text-[#57534E]">{field.label}</label>
             {isJobRoleField ? (
               <Input
@@ -158,7 +158,7 @@ export function Step2Form({
           </div>
         );
       })}
-      <Button onClick={handleSubmit} className="w-full !bg-red border-none text-white  !font-normal !text-lg max-w-lg mt-4">
+      <Button onClick={handleSubmit} className="w-full !bg-red border-none text-white  !font-normal !text-lg max-w-2xl mt-4">
         Proceed
       </Button>
     </div>

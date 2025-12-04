@@ -13,7 +13,7 @@ interface IntroStepProps {
 
 export function IntroStep({ title, description, buttonLabel = "Continue", onNext, buttonClassName, img }: IntroStepProps) {
   return (
-    <div className="flex flex-col px-4 md:px-0 w-full max-w-lg mx-auto justify-center  items-center text-center  py-10 space-y-4">
+    <div className="flex flex-col px-4 md:px-0 w-full max-w-2xl mx-auto justify-center  items-center text-center  py-10 space-y-4">
       <Image src={img} alt="Logo" width={1000} height={1000} />
       <h2 className="text-[44px]  text-start  font-medium  text-primary">{title}</h2>
       <p className="text-base text-start font-normal text-secondary max-w-lg mb-8">{description}</p>

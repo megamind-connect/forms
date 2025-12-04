@@ -7,7 +7,7 @@ interface StepIndicatorProps {
 
 export function StepIndicator({ step, stepStructure, getStepProgress, handleStepClick }: StepIndicatorProps) {
   return (
-    <div className="flex justify-between items-center px-4 md:px-0 w-full max-w-lg mx-auto gap-3  py-4 relative z-10">
+    <div className="flex justify-between items-center px-4 md:px-0 w-full max-w-2xl mx-auto gap-3  py-4 relative z-10">
       <img src="/svgs/MM-logo-black-small.svg" className="w-10 h-10 sm:w-12 sm:h-12" />
       <div className="flex items-center gap-2">
         {Object.keys(stepStructure).map((key) => {

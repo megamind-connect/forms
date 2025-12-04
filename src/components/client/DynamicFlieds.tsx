@@ -21,7 +21,7 @@ export default function DynamicField({ field, value, onChange }: DynamicFieldPro
     const handleSelect = (val: string) => onChange(val);
 
     return (
-      <div className="w-full space-y-3 bg-white rounded-md p-5 md:p-10">
+      <div className="w-full space-y-3  max-w-2xl mx-auto rounded-md pb-5 md:pb-10">
         <label className="text-base md:text-[24px] font-medium text-[#202020]">
           {label} <span className="text-red-500">*</span>
         </label>
@@ -54,7 +54,7 @@ export default function DynamicField({ field, value, onChange }: DynamicFieldPro
   /* ---------------------------- NORMAL SELECT ---------------------------- */
   if (fieldType === "dropdownselect" && options) {
     return (
-      <div className="w-full flex flex-col rounded-md gap-2 bg-white p-5 md:p-10">
+      <div className="w-full flex flex-col max-w-2xl mx-auto rounded-md gap-2 pb-5 md:pb-10">
         <label className="text-base md:text-[24px] font-medium text-[#202020]">
           {label} <span className="text-red-500">*</span>
         </label>
@@ -65,7 +65,7 @@ export default function DynamicField({ field, value, onChange }: DynamicFieldPro
             value={value || ""}
             required
             onChange={(e) => onChange(e.target.value)}
-            className="w-full border border-[#D9D9D9] rounded-md p-3 text-sm focus:outline-none appearance-none bg-white pr-10"
+            className="w-full border border-[#D9D9D9] rounded-md p-3 text-sm focus:outline-none appearance-none pr-10"
             style={{
               WebkitAppearance: "none",
               MozAppearance: "none",
@@ -105,7 +105,7 @@ export default function DynamicField({ field, value, onChange }: DynamicFieldPro
     const hasOthers = selected.includes("others");
 
     return (
-      <div className="w-full flex flex-col rounded-md gap-4 bg-white p-5 md:p-10">
+      <div className="w-full flex flex-col max-w-2xl mx-auto rounded-md gap-4 pb-5 md:pb-10">
         <label className="text-base md:text-[24px] font-medium text-[#202020]">
           {label} <span className="text-red-500">*</span>
         </label>
@@ -154,7 +154,7 @@ export default function DynamicField({ field, value, onChange }: DynamicFieldPro
   /* ---------------------------- SHORT INPUT ---------------------------- */
   if (fieldType === "short") {
     return (
-      <div className="w-full flex flex-col rounded-sm gap-2 bg-white p-5 md:p-10">
+      <div className="w-full flex flex-col max-w-2xl mx-auto rounded-sm gap-2 pb-5 md:pb-10">
         <label className="text-base md:text-[24px] font-medium text-[#202020]">
           {label} <span className="text-red-500">*</span>
         </label>

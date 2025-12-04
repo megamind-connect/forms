@@ -14,7 +14,7 @@ interface QuestionProps {
   markFieldTouched: (fieldName: string) => void;
 }
 
-export function StepTextQuestion({ question, onNext, isLast, value, updateFormData, validateField, isTouched, markFieldTouched }: QuestionProps) {
+export function StepTextQuestion({ question, onNext, value, updateFormData, validateField, isTouched, markFieldTouched }: QuestionProps) {
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const newVal = e.target.value;
     updateFormData({ [question.name]: newVal });
@@ -47,7 +47,7 @@ export function StepTextQuestion({ question, onNext, isLast, value, updateFormDa
       />
       {isTouched && error && <p className="text-red-600 text-xs mt-1 self-start max-w-lg">{error}</p>}
       <Button onClick={handleSubmit} className="!bg-[#FFFBFB] !text-red border !text-lg !border-red px-6  rounded-sm w-full max-w-lg">
-        {isLast ? "Submit" : "Next >"}
+        Next 
       </Button>
     </div>
   );
