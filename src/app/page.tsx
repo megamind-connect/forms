@@ -7,11 +7,7 @@ export default function Page() {
   const router = useRouter();
 
   useEffect(() => {
-    if (window.history.length > 1) {
-      router.back();
-    } else {
-      router.replace("/manager");
-    }
+    router.replace("/manager");
   }, [router]);
 
   return null;
