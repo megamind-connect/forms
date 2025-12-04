@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { commonPersonalFields } from "@/utils/onboarding";
+import toast from "react-hot-toast";
 
 type FormData = Record<string, any>;
 
@@ -120,12 +121,41 @@ export function useOnboarding() {
     return true;
   };
 
+  // Validation function for Step 2 that returns error messages
+  const validateStep2Fields = (data: FormData): Record<string, string> => {
+    const errors: Record<string, string> = {};
+    
+    formFields.forEach((field) => {
+      const value = data[field.name];
+      
+      // Skip validation for partner fields if not married
+      const isPartnerField = field.name === "partner_name" || 
+                            field.name === "partner_occupation" || 
+                            field.name === "partner_contact_number";
+      if (isPartnerField && data.marital_status !== "married") {
+        return;
+      }
+      
+      // Skip validation for number_of_children if not married
+      if (field.name === "number_of_children" && data.marital_status !== "married") {
+        return;
+      }
+      
+      // Check if field is empty
+      if (!value || (typeof value === "string" && !value.trim())) {
+        errors[field.name] = `${field.label} is required`;
+      }
+    });
+    
+    return errors;
+  };
+
   // ---------------------------
   // HANDLE NEXT
   // ---------------------------
   const handleNext = async () => {
     if (!validateCurrentStep()) {
-      alert("Please complete all required fields.");
+      toast.error("Please complete all required fields.");
       return;
     }
 
@@ -185,11 +215,15 @@ other_service_description: formData.services_provided?.other_service_description
 
         if (!res.ok) throw new Error("Failed to submit");
 
-        alert("Thank you! Your feedback has been submitted.");
-        console.log("SUBMITTED PAYLOAD:", payload);
+        toast.success("Thank you! Your feedback has been submitted.");
+       setFormData({});
+    setTouchedStep2({});
+    setTouchedStep6({});
+    setStep(1);
+    setSubStep(1);
       } catch (err) {
         console.error(err);
-        alert("Something went wrong. Please try again.");
+        toast.error("Something went wrong. Please try again.");
       }
 
       return;
@@ -266,6 +300,7 @@ other_service_description: formData.services_provided?.other_service_description
     getStepProgress,
     updateFormData,
     validateCurrentStep,
+    validateStep2Fields,
     markStep2FieldTouched,
     markAllStep2FieldsTouched,
     markStep6FieldTouched,

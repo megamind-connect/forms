@@ -5,7 +5,7 @@ import { FormDataValues } from "@/types/onboarding";
 import Image from "next/image";
 
 interface QuestionProps {
-  question: { name: string; title: string; placeholder: string };
+  question: { name: string; title: string; placeholder: string; image: string };
   onNext: (data?: FormDataValues) => void;
   image: string;
  

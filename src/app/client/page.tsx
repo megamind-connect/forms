@@ -25,6 +25,7 @@ export default function ClientPage() {
     getStepProgress,
     updateFormData,
     validateCurrentStep,
+    validateStep2Fields,
     markStep2FieldTouched,
     markAllStep2FieldsTouched,
     markStep6FieldTouched,
@@ -41,9 +42,9 @@ const step3Fields = [
     fieldType: "rating5",
     options: [
       { value: "very_poor", label: "Very Poor" },
-      { value: "poor", label: "Poor" },
+      { value: "poor", label: "" },
       { value: "average", label: "Average" },
-      { value: "good", label: "Good" },
+      { value: "good", label: "" },
       { value: "excellent", label: "Excellent" },
     ],
   },
@@ -54,9 +55,9 @@ const step3Fields = [
     fieldType: "rating5",
     options: [
       { value: "very_poor", label: "Very Poor" },
-      { value: "poor", label: "Poor" },
+      { value: "poor", label: "" },
       { value: "average", label: "Average" },
-      { value: "good", label: "Good" },
+      { value: "good", label: "" },
       { value: "excellent", label: "Excellent" },
     ],
   },
@@ -67,9 +68,9 @@ const step3Fields = [
     fieldType: "rating5",
     options: [
       { value: "very_poor", label: "Very Poor" },
-      { value: "poor", label: "Poor" },
+      { value: "poor", label: "" },
       { value: "average", label: "Average" },
-      { value: "good", label: "Good" },
+      { value: "good", label: "" },
       { value: "excellent", label: "Excellent" },
     ],
   },
@@ -287,7 +288,7 @@ const step7Fields = [
               formData={formData}
               onNext={handleNext}
               updateFormData={updateFormData}
-              validateFields={validateCurrentStep}
+              validateFields={validateStep2Fields}
               touched={touchedStep2}
               markFieldTouched={markStep2FieldTouched}
               markAllFieldsTouched={markAllStep2FieldsTouched}
@@ -360,6 +361,7 @@ const step7Fields = [
           {step === 5 && (
             <StepTextQuestion
               question={step6Questions[subStep - 1]}
+              image={step6Questions[subStep - 1].image}
               onNext={handleNext}
               value={formData[step6Questions[subStep - 1].name] || ""}
               updateFormData={updateFormData}
