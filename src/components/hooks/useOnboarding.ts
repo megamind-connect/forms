@@ -45,44 +45,60 @@ export function useOnboarding() {
   const totalSteps = 8;
 
   // VALIDATION LOGIC (unchanged)
-  const validateCurrentStep = () => {
-    if (step === 2) {
-      const missing = formFields.filter((f) => !formData[f.name]);
-      return missing.length === 0;
-    }
+const validateCurrentStep = () => {
+  if (step === 2) {
+    const missing = formFields.filter((f) => !formData[f.name]);
+    return missing.length === 0;
+  }
 
-    if (step === 4) {
-      const required = ["team_rating10", "team_rating1", "team_rating2", "delivery_time", "team_rating4"];
-      return required.every((field) => !!formData[field]);
-    }
+  if (step === 4) {
+    const required = [
+      "overall_experience_rating",
+      "service_impact_rating",
+      "service_quality_rating",
+      "delivery_time_option",
+      "strategy_alignment_rating",
+    ];
+    return required.every((field) => !!formData[field]);
+  }
 
-    if (step === 5) {
-      const services = formData["services_provided_step4"];
-      if (!services || !services.list || services.list.length === 0) return false;
-      const requiredRatings = ["team_rating4114", "team_rating411", "team_rating41132"];
-      return requiredRatings.every((f) => !!formData[f]);
-    }
+  if (step === 5) {
+    const services = formData["services_provided"];
+    if (!services || !services.list || services.list.length === 0) return false;
 
-    if (step === 6) {
-      const required = ["team_ratreing4114", "team_rrewating411", "team_rarewrting41132"];
-      return required.every((f) => !!formData[f]);
-    }
+    const requiredRatings = [
+      "goal_alignment_rating",
+      "deadline_efficiency_rating",
+      "feedback_understanding_rating",
+    ];
+    return requiredRatings.every((f) => !!formData[f]);
+  }
 
-    if (step === 8) {
-      return (
-        !!formData["team_rrewating411"] &&
-        !!formData["team_rarewrting41132"] &&
-        !!formData["feedback"]?.trim()
-      );
-    }
+  if (step === 6) {
+    const required = [
+      "marketing_results_rating",
+      "brand_representation_rating",
+      "responsiveness_rating",
+    ];
+    return required.every((f) => !!formData[f]);
+  }
 
-    if (step === 7) {
-      const fieldName = step6Questions[subStep - 1].name;
-      return !!formData[fieldName]?.trim();
-    }
+  if (step === 8) {
+    return (
+      !!formData["service_continuation_rating"] &&
+      !!formData["recommendation_likelihood_rating"] &&
+      !!formData["final_feedback_text"]?.trim()
+    );
+  }
 
-    return true;
-  };
+  if (step === 7) {
+    const fieldName = step6Questions[subStep - 1].name;
+    return !!formData[fieldName]?.trim();
+  }
+
+  return true;
+};
+
 
   const handleNext = async () => {
     if (!validateCurrentStep()) {

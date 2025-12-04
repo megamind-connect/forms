@@ -5,14 +5,13 @@
  
     {
       id: "15",
-      name: "gender",
-      label: "Gender",
+      name: "role_in_organisation",
+      label: "Role in the Organisation",
       fieldType: "dropdown",
       options: [
-        { label: "Male", value: "male" },
-        { label: "Female", value: "female" },
-        { label: "Other", value: "other" },
-        { label: "Prefer not to say", value: "prefer_not_to_say" },
+        { label: "Owner", value: "owner" },
+        { label: "Manager", value: "manager" },
+
       ],
     },
     

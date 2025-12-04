@@ -86,7 +86,7 @@ if (fieldType === "rating5") {
                 checked:after:bg-[#F43F46] checked:border-[#F43F46] transition-all"
             />
 
-            <span className="text-xs md:text-sm font-medium text-gray-600 text-center w-full mt-2 leading-tight">
+            <span className="text-xs md:text-sm font-medium text-[#8F8881] text-center w-full mt-2 leading-tight">
               {opt.label || "\u00A0"}
             </span>
           </div>
@@ -156,7 +156,7 @@ if (fieldType === "rating5") {
     return (
       <div className="w-full flex flex-col  rounded-md gap-4 pb-5 md:pb-10">
         <label className="text-base md:text-[24px] font-medium text-[#202020]">
-          {label} <span className="text-red-500">*</span>
+          {label} <span className="text-red-500"></span>
         </label>
 
         <div className="flex flex-col gap-4 mt-4">
@@ -176,7 +176,7 @@ if (fieldType === "rating5") {
                   )}
                 </div>
 
-                <span className="text-sm md:text-lg">{opt.label}</span>
+                <span className="text-sm text-[#8F8881] md:text-lg">{opt.label}</span>
               </label>
 
               {opt.value === "others" && hasOthers && (
