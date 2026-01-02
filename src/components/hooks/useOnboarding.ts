@@ -9,8 +9,7 @@ const step6Questions = [
     image: "/images/steps/3.png",
     name: "pleasant_surprise",
     title: "Were any deliverables a pleasant surprise?",
-    placeholder:
-      "If Yes , we would love to know which ones and what made them stand out for you. ",
+    placeholder: "If Yes , we would love to know which ones and what made them stand out for you. ",
   },
   {
     image: "/images/steps/4.png",
@@ -21,10 +20,8 @@ const step6Questions = [
   {
     image: "/images/steps/5.png",
     name: "additional_services",
-    title:
-      "Are there any additional services or improvements you would like to see in the coming months?",
-    placeholder:
-      "If Yes , we would love to know which ones and what made them stand out for you.",
+    title: "Are there any additional services or improvements you would like to see in the coming months?",
+    placeholder: "If Yes , we would love to know which ones and what made them stand out for you.",
   },
 ];
 
@@ -84,23 +81,14 @@ export function useOnboarding() {
 
       if (subStep === 2) {
         const services = formData["services_provided"];
-        if (!services || !services.list || services.list.length === 0)
-          return false;
+        if (!services || !services.list || services.list.length === 0) return false;
 
-        const requiredRatings = [
-          "goal_alignment_rating",
-          "deadline_efficiency_rating",
-          "feedback_understanding_rating",
-        ];
+        const requiredRatings = ["goal_alignment_rating", "deadline_efficiency_rating", "feedback_understanding_rating"];
         return requiredRatings.every((f) => !!formData[f]);
       }
 
       if (subStep === 3) {
-        const required = [
-          "marketing_results_rating",
-          "brand_representation_rating",
-          "responsiveness_rating",
-        ];
+        const required = ["marketing_results_rating", "brand_representation_rating", "responsiveness_rating"];
         return required.every((f) => !!formData[f]);
       }
     }
@@ -111,11 +99,7 @@ export function useOnboarding() {
     }
 
     if (step === 6) {
-      return (
-        !!formData["pleasant_surprise"] &&
-        !!formData["experience_description"] &&
-        !!formData["additional_services"]?.trim()
-      );
+      return !!formData["pleasant_surprise"] && !!formData["experience_description"] && !!formData["additional_services"]?.trim();
     }
 
     return true;
@@ -124,29 +108,27 @@ export function useOnboarding() {
   // Validation function for Step 2 that returns error messages
   const validateStep2Fields = (data: FormData): Record<string, string> => {
     const errors: Record<string, string> = {};
-    
+
     formFields.forEach((field) => {
       const value = data[field.name];
-      
+
       // Skip validation for partner fields if not married
-      const isPartnerField = field.name === "partner_name" || 
-                            field.name === "partner_occupation" || 
-                            field.name === "partner_contact_number";
+      const isPartnerField = field.name === "partner_name" || field.name === "partner_occupation" || field.name === "partner_contact_number";
       if (isPartnerField && data.marital_status !== "married") {
         return;
       }
-      
+
       // Skip validation for number_of_children if not married
       if (field.name === "number_of_children" && data.marital_status !== "married") {
         return;
       }
-      
+
       // Check if field is empty
       if (!value || (typeof value === "string" && !value.trim())) {
         errors[field.name] = `${field.label} is required`;
       }
     });
-    
+
     return errors;
   };
 
@@ -197,11 +179,10 @@ export function useOnboarding() {
         surprised_deliverables: formData.pleasant_surprise,
         working_relationship_description: formData.experience_description,
         additional_services_improvements: formData.additional_services,
-other_service_description: formData.services_provided?.other_service_description || "",
+        other_service_description: formData.services_provided?.other_service_description || "",
 
         likelihood_to_continue: formData.service_continuation_rating,
-        likelihood_to_recommend:
-          formData.recommendation_likelihood_rating,
+        likelihood_to_recommend: formData.recommendation_likelihood_rating,
 
         other_comments: formData.final_feedback_text,
       };
@@ -209,18 +190,21 @@ other_service_description: formData.services_provided?.other_service_description
       try {
         const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/v1/client-feedback`, {
           method: "POST",
-          headers: { "Content-Type": "application/json" },
+          headers: {
+            "Content-Type": "application/json",
+            "x-api-key": process.env.NEXT_PUBLIC_INTERNAL_API_KEY || "",
+          },
           body: JSON.stringify(payload),
         });
 
         if (!res.ok) throw new Error("Failed to submit");
 
         toast.success("Thank you! Your feedback has been submitted.");
-       setFormData({});
-    setTouchedStep2({});
-    setTouchedStep6({});
-    setStep(1);
-    setSubStep(1);
+        setFormData({});
+        setTouchedStep2({});
+        setTouchedStep6({});
+        setStep(1);
+        setSubStep(1);
       } catch (err) {
         console.error(err);
         toast.error("Something went wrong. Please try again.");
@@ -256,8 +240,7 @@ other_service_description: formData.services_provided?.other_service_description
 
     if (num === 4) return ((subStep - 1) / 3) * 100;
 
-    if (num === 5)
-      return ((subStep - 1) / step6Questions.length) * 100;
+    if (num === 5) return ((subStep - 1) / step6Questions.length) * 100;
 
     return 100;
   };
@@ -274,10 +257,7 @@ other_service_description: formData.services_provided?.other_service_description
   };
 
   const markAllStep2FieldsTouched = () => {
-    const touched = formFields.reduce(
-      (acc, f) => ({ ...acc, [f.name]: true }),
-      {}
-    );
+    const touched = formFields.reduce((acc, f) => ({ ...acc, [f.name]: true }), {});
     setTouchedStep2(touched);
   };
 

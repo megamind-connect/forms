@@ -40,7 +40,11 @@ export default function DynamicField({ field, value, onChange }: DynamicFieldPro
       }
 
       try {
-        const res = await apiClient.get(`/api/v1/users/search?name=${search}`);
+        const res = await apiClient.get(`/api/v1/users/search?name=${search}`, {
+          headers: {
+            "x-api-key": process.env.NEXT_PUBLIC_INTERNAL_API_KEY,
+          },
+        });
         const data = res.data?.users || res.data?.data || res.data || [];
         setResults(Array.isArray(data) ? data : []);
       } catch (err) {

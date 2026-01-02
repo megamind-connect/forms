@@ -231,7 +231,14 @@ const submitHandler = async () => {
 
 
   try {
-    const res = await apiClient.post(`/api/v1/feedback/employee-to-manager`, payload);
+    const res = await apiClient.post(`/api/v1/feedback/employee-to-manager`, 
+      payload,
+      {
+         headers: {
+            "x-api-key": process.env.NEXT_PUBLIC_INTERNAL_API_KEY,
+          },
+      }
+    );
 
     router.push("/employee/thank-you");
     setFormData({});
