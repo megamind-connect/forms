@@ -188,7 +188,7 @@ export function useOnboarding() {
       };
 
       try {
-        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/v1/client-feedback`, {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}api/v1/client-feedback`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
