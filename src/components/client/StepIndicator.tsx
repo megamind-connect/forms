@@ -18,11 +18,17 @@ export function StepIndicator({ step, stepStructure, getStepProgress, handleStep
               key={n}
               onClick={() => handleStepClick(n)}
               className={`relative rounded-full transition-all duration-300 overflow-hidden ${
-                n === step ? "w-8 sm:w-14 h-2 rounded-full bg-[#FFCED4]" : "w-2 h-2 rounded-full"
+                n === step ? "w-12 sm:w-20 h-2 bg-[#FFCED4]" : "w-2 h-2"
               } ${n < step ? "bg-[#931C2A]" : "bg-[#FFCED4]"}`}
             >
               {n === step && (
-                <div className="absolute top-0 left-0 h-full bg-[#931C2A] transition-all duration-500" style={{ width: `${fillPercent}%` }}></div>
+                <div 
+                  style={{ 
+                    backgroundImage: "linear-gradient(to right, #931C2A, #E31313, #FFCED4)", 
+                    width: `${fillPercent}%` 
+                  }} 
+                  className="absolute top-0 left-0 h-full transition-all duration-500"
+                ></div>
               )}
             </button>
           );
