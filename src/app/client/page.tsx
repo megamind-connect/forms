@@ -14,7 +14,7 @@ export default function ClientPage() {
     step,
     subStep,
     showSplash,
-    formFields,
+    generalFormFields,
     formData,
     step6Questions,
     stepStructure,
@@ -284,7 +284,7 @@ const step7Fields = [
           {/* STEP 2 */}
           {step === 2 && (
             <Step2Form
-              formFields={formFields}
+              formFields={generalFormFields}
               formData={formData}
               onNext={handleNext}
               updateFormData={updateFormData}
@@ -292,6 +292,7 @@ const step7Fields = [
               touched={touchedStep2}
               markFieldTouched={markStep2FieldTouched}
               markAllFieldsTouched={markAllStep2FieldsTouched}
+              isClientPage={true}
             />
           )}
 
