@@ -242,28 +242,28 @@ export function Step2Form({
          }
 
          if (field.fieldType === "radio") {
-              const selectedValue = formData[field.name] || "";
-              return (
-                  <div key={index} className="space-y-2 w-full max-w-2xl text-left">
-                      <label className="text-lg font-normal text-[#57534E]">{field.label}</label>
-                      <div className="flex items-center gap-6">
-                          {field.options?.map((option, idx) => (
-                              <label key={idx} className="flex items-center gap-2 cursor-pointer">
-                                  <input
-                                      type="radio"
-                                      name={field.name}
-                                      value={option.value}
-                                      checked={selectedValue === option.value}
-                                      onChange={(e) => updateFormData({ [field.name]: e.target.value })}
-                                      className="w-4 h-4 text-[#E31212] focus:ring-[#E31212]"
-                                  />
-                                  <span className="text-sm text-gray-700">{option.label}</span>
-                              </label>
-                          ))}
-                      </div>
-                      {isTouched && fieldError && <p className="text-red-600 text-xs mt-1">{fieldError}</p>}
-                  </div>
-              )
+            const selectedValue = formData[field.name] != null ? String(formData[field.name]) : "";
+            return (
+              <div key={index} className="space-y-2 w-full max-w-2xl text-left">
+                <label className="text-lg font-normal text-[#57534E]">{field.label}</label>
+                <div className="flex items-center gap-6">
+                  {field.options?.map((option, idx) => (
+                    <label key={idx} className="flex items-center gap-2 cursor-pointer">
+                      <input
+                        type="radio"
+                        name={field.name}
+                        value={String(option.value)}
+                        checked={selectedValue === String(option.value)}
+                        onChange={(e) => updateFormData({ [field.name]: e.target.value })}
+                        className="w-4 h-4 text-[#E31212] focus:ring-[#E31212]"
+                      />
+                      <span className="text-sm text-gray-700">{option.label}</span>
+                    </label>
+                  ))}
+                </div>
+                {isTouched && fieldError && <p className="text-red-600 text-xs mt-1">{fieldError}</p>}
+              </div>
+            )
          }
 
          if (field.fieldType === "checkbox_single") {
@@ -370,14 +370,23 @@ export function Step2Form({
             
             {field.fieldType === "dropdown" && field.options && (
               <div className="relative w-full">
-                <CustomSelect
-                  name={field.name}
-                  value={formData[field.name] != null ? String(formData[field.name]) : ""}
-                  options={field.options}
-                  placeholder={placeholderText}
-                  onChange={handleChange}
-                  onBlur={() => handleBlur(field.name)}
-                />
+                {(() => {
+                  const selectOptions = field.options?.map(opt => ({
+                    label: opt.label,
+                    value: String(opt.value)
+                  }));
+
+                    return (
+                    <CustomSelect
+                      name={field.name}
+                      value={formData[field.name] != null ? String(formData[field.name]) : ""}
+                      options={selectOptions}
+                      placeholder={placeholderText}
+                      onChange={(e) => updateFormData({ [field.name]: e.target.value })}
+                      onBlur={() => handleBlur(field.name)}
+                    />
+                  );
+                })()}
               </div>
             )}
             
