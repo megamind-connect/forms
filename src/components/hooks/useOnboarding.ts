@@ -1,6 +1,21 @@
 import { useState, useEffect } from "react";
 import { usePathname } from "next/navigation";
-import { generalFields, clientPageGeneralFields, financialLegalFields, contactFields, brandIdentityFields, marketAudienceFields, projectScopeFields, socialPlatformFields, socialMediaAccessFields, assetTypesFields, websiteDetailsFields, accountDetailsFields, businessVerificationFields, commonPersonalFields } from "@/utils/onboarding";
+import {
+  generalFields,
+  clientPageGeneralFields,
+  financialLegalFields,
+  contactFields,
+  brandIdentityFields,
+  marketAudienceFields,
+  projectScopeFields,
+  socialPlatformFields,
+  socialMediaAccessFields,
+  assetTypesFields,
+  websiteDetailsFields,
+  accountDetailsFields,
+  businessVerificationFields,
+  commonPersonalFields,
+} from "@/utils/onboarding";
 import toast from "react-hot-toast";
 
 type FormData = Record<string, any>;
@@ -74,11 +89,33 @@ export function useOnboarding() {
     return () => clearTimeout(timer);
   }, []);
 
-  const stepStructure: Record<number, number> = isClientOnboarding ? {
-    1: 1, 2: 1, 3: 1, 4: 1, 5: 1, 6: 1, 7: 1, 8: 1, 9: 1, 10: 1, 11: 1, 12: 1, 13: 1, 14: 1, 15: 1, 16: 1
-  } : {
-    1: 1, 2: 1, 3: 1, 4: 3, 5: step6Questions.length, 6: 1,
-  };
+  const stepStructure: Record<number, number> = isClientOnboarding
+    ? {
+        1: 1,
+        2: 1,
+        3: 1,
+        4: 1,
+        5: 1,
+        6: 1,
+        7: 1,
+        8: 1,
+        9: 1,
+        10: 1,
+        11: 1,
+        12: 1,
+        13: 1,
+        14: 1,
+        15: 1,
+        16: 1,
+      }
+    : {
+        1: 1,
+        2: 1,
+        3: 1,
+        4: 3,
+        5: step6Questions.length,
+        6: 1,
+      };
 
   const totalSteps = isClientOnboarding ? 16 : 6;
 
@@ -86,11 +123,27 @@ export function useOnboarding() {
     const errors: Record<string, string> = {};
     fields.forEach((field) => {
       const value = data[field.name];
-      const optionalFields = ["gstin", "whatsapp_business_number", "whatsapp_business_link", "website_url", "certificate_of_incorporation", "gst_registration_certificate", "pan_card", "signed_contract_agreement", "signed_nda", "alternate_contact_name", "alternate_contact_email", "alternate_contact_phone", "hosting_server_details", "current_website_management", "third_party_tools_integration"];
+      const optionalFields = [
+        "gstin",
+        "whatsapp_business_number",
+        "whatsapp_business_link",
+        "website_url",
+        "certificate_of_incorporation",
+        "gst_registration_certificate",
+        "pan_card",
+        "signed_contract_agreement",
+        "signed_nda",
+        "alternate_contact_name",
+        "alternate_contact_email",
+        "alternate_contact_phone",
+        "hosting_server_details",
+        "current_website_management",
+        "third_party_tools_integration",
+      ];
       if (optionalFields.includes(field.name) || field.fieldType === "header" || field.fieldType === "subheader") return;
       if (field.fieldType === "toggle_input" || field.fieldType === "checkbox_single") return;
       if (field.fieldType === "array") {
-        if (!Array.isArray(value) || value.length === 0 || value.every(v => !v || !v.toString().trim())) {
+        if (!Array.isArray(value) || value.length === 0 || value.every((v) => !v || !v.toString().trim())) {
           errors[field.name] = `${field.label} is required`;
         }
         return;
@@ -100,7 +153,7 @@ export function useOnboarding() {
       }
     });
     return errors;
-  }
+  };
 
   const validateStep2Fields = (data: FormData) => validateFieldsHelper(data, generalFormFields);
   const validateStep3Fields = (data: FormData) => validateFieldsHelper(data, financialFields);
@@ -132,13 +185,20 @@ export function useOnboarding() {
       if (step === 16) return Object.keys(validateStep16Fields(formData)).length === 0;
     } else {
       if (step === 4) {
-        if (subStep === 1) return ["overall_experience_rating", "service_impact_rating", "service_quality_rating", "delivery_time_option", "strategy_alignment_rating"].every(f => !!formData[f]);
+        if (subStep === 1)
+          return [
+            "overall_experience_rating",
+            "service_impact_rating",
+            "service_quality_rating",
+            "delivery_time_option",
+            "strategy_alignment_rating",
+          ].every((f) => !!formData[f]);
         if (subStep === 2) {
           const services = formData["services_provided"];
           if (!services || !services.list || services.list.length === 0) return false;
-          return ["goal_alignment_rating", "deadline_efficiency_rating", "feedback_understanding_rating"].every(f => !!formData[f]);
+          return ["goal_alignment_rating", "deadline_efficiency_rating", "feedback_understanding_rating"].every((f) => !!formData[f]);
         }
-        if (subStep === 3) return ["marketing_results_rating", "brand_representation_rating", "responsiveness_rating"].every(f => !!formData[f]);
+        if (subStep === 3) return ["marketing_results_rating", "brand_representation_rating", "responsiveness_rating"].every((f) => !!formData[f]);
       }
       if (step === 5) return !!formData[step6Questions[subStep - 1].name]?.trim();
       if (step === 6) return !!formData["pleasant_surprise"] && !!formData["experience_description"] && !!formData["additional_services"]?.trim();
@@ -152,31 +212,70 @@ export function useOnboarding() {
       return;
     }
     if (isClientOnboarding) {
-      if (step === 16) { /* submit handled later */ }
+      if (step === 16) {
+        /* submit handled later */
+      }
     } else {
-      if (step === 4 && subStep < 3) { setSubStep(prev => prev + 1); return; }
-      if (step === 5 && subStep < step6Questions.length) { setSubStep(prev => prev + 1); return; }
+      if (step === 4 && subStep < 3) {
+        setSubStep((prev) => prev + 1);
+        return;
+      }
+      if (step === 5 && subStep < step6Questions.length) {
+        setSubStep((prev) => prev + 1);
+        return;
+      }
     }
 
     if (step === totalSteps) {
-      const payload = { ...formData }; // Simplified payload for brevity in this thought process, but keep mapping in real code
+      const payload = {
+        ...formData,
+        name: formData.full_name,
+        position_role: formData.role_in_organisation,
+        overall_experience: formData.overall_experience_rating,
+        impact_assessment: formData.service_impact_rating,
+        quality_of_services: formData.service_quality_rating,
+        delivery_time: formData.delivery_time_option,
+        brand_strategy_alignment: formData.strategy_alignment_rating,
+        services_provided: formData.services_provided?.list || [],
+        other_service_description: formData.services_provided?.other_service_description,
+        services_align_with_goals: formData.goal_alignment_rating,
+        meet_deadlines_rating: formData.deadline_efficiency_rating,
+        feedback_understood_rating: formData.feedback_understanding_rating,
+        digital_marketing_results: formData.marketing_results_rating,
+        content_creation_rating: formData.brand_representation_rating,
+        surprised_deliverables: formData.pleasant_surprise,
+        team_responsiveness: formData.responsiveness_rating,
+        working_relationship_description: formData.experience_description,
+        additional_services_improvements: formData.additional_services,
+        likelihood_to_continue: formData.service_continuation_rating,
+        likelihood_to_recommend: formData.recommendation_likelihood_rating,
+        other_comments: formData.final_feedback_text,
+      };
       try {
-        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}api/v1/client-feedback`, {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/v1/client-feedback`, {
           method: "POST",
           headers: { "Content-Type": "application/json", "x-api-key": process.env.NEXT_PUBLIC_INTERNAL_API_KEY || "" },
           body: JSON.stringify(payload),
         });
         if (!res.ok) throw new Error("Failed to submit");
         toast.success("Thank you! Your feedback has been submitted.");
-        setStep(1); setFormData({});
-      } catch (err) { console.error(err); toast.error("Something went wrong. Please try again."); }
+        setStep(1);
+        setFormData({});
+      } catch (err) {
+        console.error(err);
+        toast.error("Something went wrong. Please try again.");
+      }
       return;
     }
-    setStep(prev => prev + 1); setSubStep(1);
+    setStep((prev) => prev + 1);
+    setSubStep(1);
   };
 
   const handleStepClick = (target: number) => {
-    if (target < step || validateCurrentStep()) { setStep(target); setSubStep(1); }
+    if (target < step || validateCurrentStep()) {
+      setStep(target);
+      setSubStep(1);
+    }
   };
 
   const getStepProgress = (num: number) => {
@@ -189,24 +288,59 @@ export function useOnboarding() {
     return 100;
   };
 
-  const updateFormData = (updates: FormData) => { setFormData(prev => ({ ...prev, ...updates })); };
+  const updateFormData = (updates: FormData) => {
+    setFormData((prev) => ({ ...prev, ...updates }));
+  };
 
   return {
-    step, subStep, showSplash, formFields, generalFormFields, financialFields, contactFormFields, formData, step6Questions, stepStructure,
-    touchedStep2, touchedStep3, touchedStep4, touchedStep6, touchedStep7, touchedStep8, touchedStep9, touchedStep11, touchedStep13, touchedStep15, touchedStep16,
-    handleNext, handleStepClick, getStepProgress, updateFormData, validateCurrentStep,
-    validateStep2Fields, validateStep3Fields, validateStep4Fields, validateStep6Fields, validateStep7Fields, validateStep8Fields, validateStep9Fields, validateStep11Fields, validateStep13Fields, validateStep15Fields, validateStep16Fields,
-    markStep2FieldTouched: (name: string) => setTouchedStep2(prev => ({ ...prev, [name]: true })),
-    markStep3FieldTouched: (name: string) => setTouchedStep3(prev => ({ ...prev, [name]: true })),
-    markStep4FieldTouched: (name: string) => setTouchedStep4(prev => ({ ...prev, [name]: true })),
-    markStep6FieldTouched: (name: string) => setTouchedStep6(prev => ({ ...prev, [name]: true })),
-    markStep7FieldTouched: (name: string) => setTouchedStep7(prev => ({ ...prev, [name]: true })),
-    markStep8FieldTouched: (name: string) => setTouchedStep8(prev => ({ ...prev, [name]: true })),
-    markStep9FieldTouched: (name: string) => setTouchedStep9(prev => ({ ...prev, [name]: true })),
-    markStep11FieldTouched: (name: string) => setTouchedStep11(prev => ({ ...prev, [name]: true })),
-    markStep13FieldTouched: (name: string) => setTouchedStep13(prev => ({ ...prev, [name]: true })),
-    markStep15FieldTouched: (name: string) => setTouchedStep15(prev => ({ ...prev, [name]: true })),
-    markStep16FieldTouched: (name: string) => setTouchedStep16(prev => ({ ...prev, [name]: true })),
+    step,
+    subStep,
+    showSplash,
+    formFields,
+    generalFormFields,
+    financialFields,
+    contactFormFields,
+    formData,
+    step6Questions,
+    stepStructure,
+    touchedStep2,
+    touchedStep3,
+    touchedStep4,
+    touchedStep6,
+    touchedStep7,
+    touchedStep8,
+    touchedStep9,
+    touchedStep11,
+    touchedStep13,
+    touchedStep15,
+    touchedStep16,
+    handleNext,
+    handleStepClick,
+    getStepProgress,
+    updateFormData,
+    validateCurrentStep,
+    validateStep2Fields,
+    validateStep3Fields,
+    validateStep4Fields,
+    validateStep6Fields,
+    validateStep7Fields,
+    validateStep8Fields,
+    validateStep9Fields,
+    validateStep11Fields,
+    validateStep13Fields,
+    validateStep15Fields,
+    validateStep16Fields,
+    markStep2FieldTouched: (name: string) => setTouchedStep2((prev) => ({ ...prev, [name]: true })),
+    markStep3FieldTouched: (name: string) => setTouchedStep3((prev) => ({ ...prev, [name]: true })),
+    markStep4FieldTouched: (name: string) => setTouchedStep4((prev) => ({ ...prev, [name]: true })),
+    markStep6FieldTouched: (name: string) => setTouchedStep6((prev) => ({ ...prev, [name]: true })),
+    markStep7FieldTouched: (name: string) => setTouchedStep7((prev) => ({ ...prev, [name]: true })),
+    markStep8FieldTouched: (name: string) => setTouchedStep8((prev) => ({ ...prev, [name]: true })),
+    markStep9FieldTouched: (name: string) => setTouchedStep9((prev) => ({ ...prev, [name]: true })),
+    markStep11FieldTouched: (name: string) => setTouchedStep11((prev) => ({ ...prev, [name]: true })),
+    markStep13FieldTouched: (name: string) => setTouchedStep13((prev) => ({ ...prev, [name]: true })),
+    markStep15FieldTouched: (name: string) => setTouchedStep15((prev) => ({ ...prev, [name]: true })),
+    markStep16FieldTouched: (name: string) => setTouchedStep16((prev) => ({ ...prev, [name]: true })),
     markAllStep2FieldsTouched: () => setTouchedStep2(generalFormFields.reduce((acc, f) => ({ ...acc, [f.name]: true }), {})),
     markAllStep3FieldsTouched: () => setTouchedStep3(financialFields.reduce((acc, f) => ({ ...acc, [f.name]: true }), {})),
     markAllStep4FieldsTouched: () => setTouchedStep4(contactFormFields.reduce((acc, f) => ({ ...acc, [f.name]: true }), {})),
@@ -218,6 +352,14 @@ export function useOnboarding() {
     markAllStep13FieldsTouched: () => setTouchedStep13(websiteFields.reduce((acc, f) => ({ ...acc, [f.name]: true }), {})),
     markAllStep15FieldsTouched: () => setTouchedStep15(accountFields.reduce((acc, f) => ({ ...acc, [f.name]: true }), {})),
     markAllStep16FieldsTouched: () => setTouchedStep16(businessVerificationFields_state.reduce((acc, f) => ({ ...acc, [f.name]: true }), {})),
-    brandIdFields, marketFields, scopeFields, socialFields, socialAccessFields, assetFields, websiteFields, accountFields, businessVerificationFields: businessVerificationFields_state,
+    brandIdFields,
+    marketFields,
+    scopeFields,
+    socialFields,
+    socialAccessFields,
+    assetFields,
+    websiteFields,
+    accountFields,
+    businessVerificationFields: businessVerificationFields_state,
   };
 }
