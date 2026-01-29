@@ -14,238 +14,291 @@ interface FormField {
   name: string;
   label: string;
   fieldType: string;
-  options?: string[] | null;
+  type?: string;
+  options?: any[] | null;
   placeholder?: string;
 }
 
 export default function Employee() {
   const [formData, setFormData] = useState<Record<string, any>>({});
 
-   const router = useRouter();
+  const router = useRouter();
 
   const step2Fields = [
     { id: "1", name: "submitted_by_id", label: "Your Name", fieldType: "searchable" },
     { id: "2", name: "submitted_for_id", label: "Manager's Name", fieldType: "searchable" },
 
+    // Actions
     {
       id: "3",
       name: "brief_shared_rating",
-      label:
-        "Are project briefs shared with you before the start of the work, with all key details (objectives, references, deliverables, timeline)?",
+      label: "My manager clearly explains expectations and goals.",
       fieldType: "dropdown",
+      type: "Actions",
       options: [
-        { label: "Always", value: "always" },
-        { label: "Often", value: "often" },
-        { label: "Sometimes", value: "sometimes" },
-        { label: "Rarely", value: "rarely" },
-        { label: "Never", value: "never" },
+        { label: "5", value: "5" },
+        { label: "4", value: "4" },
+        { label: "3", value: "3" },
+        { label: "2", value: "2" },
+        { label: "1", value: "1" },
       ],
     },
     {
       id: "4",
       name: "brief_understandability_rating",
-      label: "Are the briefs usually clear and easy to understand, or do they often require clarification?",
+      label: "My manager provides timely guidance when needed.",
       fieldType: "dropdown",
+      type: "Actions",
       options: [
-        { label: "Always clear", value: "always_clear" },
-        { label: "Sometimes need clarity", value: "sometimes_need_clarity" },
-        { label: "Often unclear", value: "often_unclear" },
-        { label: "Usually incomplete", value: "usually_incomplete" },
+        { label: "5", value: "5" },
+        { label: "4", value: "4" },
+        { label: "3", value: "3" },
+        { label: "2", value: "2" },
+        { label: "1", value: "1" },
       ],
     },
     {
       id: "5",
       name: "manager_clarifies_brief_rating",
-      label: "When a brief is unclear, does your manager take responsibility to clarify it quickly?",
+      label: "My manager follows up on work constructively.",
       fieldType: "dropdown",
+      type: "Actions",
       options: [
-        { label: "Always", value: "always" },
-        { label: "Sometimes", value: "sometimes" },
-        { label: "Rarely", value: "rarely" },
-        { label: "Not applicable", value: "not_applicable" },
+        { label: "5", value: "5" },
+        { label: "4", value: "4" },
+        { label: "3", value: "3" },
+        { label: "2", value: "2" },
+        { label: "1", value: "1" },
       ],
     },
+
+    // Behaviour
     {
       id: "6",
       name: "creative_comfort_rating",
-      label: "Do you feel comfortable raising creative suggestions or concerns directly with your manager?",
+      label: "My manager listens to my concerns.",
       fieldType: "dropdown",
+      type: "Behaviour",
       options: [
-        { label: "Always", value: "always" },
-        { label: "Usually", value: "usually" },
-        { label: "Not really", value: "not_really" },
-        { label: "Avoid it", value: "avoid_it" },
+        { label: "5", value: "5" },
+        { label: "4", value: "4" },
+        { label: "3", value: "3" },
+        { label: "2", value: "2" },
+        { label: "1", value: "1" },
       ],
     },
     {
       id: "7",
       name: "balance_rating",
-      label: "Does your manager balance timelines and creative quality, or is the focus usually on fast delivery?",
+      label: "My manager treats the team members fairly.",
       fieldType: "dropdown",
+      type: "Behaviour",
       options: [
-        { label: "Balanced", value: "balanced" },
-        { label: "Leans toward quality", value: "leans_quality" },
-        { label: "Leans toward speed", value: "leans_speed" },
-        { label: "Always rushed", value: "always_rushed" },
+        { label: "5", value: "5" },
+        { label: "4", value: "4" },
+        { label: "3", value: "3" },
+        { label: "2", value: "2" },
+        { label: "1", value: "1" },
       ],
     },
     {
       id: "8",
       name: "growth_feedback_rating",
-      label: "How frequently do you receive feedback that helps you grow creatively?",
+      label: "My manager gives feedback in a respectful way.",
       fieldType: "dropdown",
+      type: "Behaviour",
       options: [
-        { label: "Very often", value: "very_often" },
-        { label: "Sometimes", value: "sometimes" },
-        { label: "Rarely", value: "rarely" },
-        { label: "Never", value: "never" },
+        { label: "5", value: "5" },
+        { label: "4", value: "4" },
+        { label: "3", value: "3" },
+        { label: "2", value: "2" },
+        { label: "1", value: "1" },
       ],
     },
     {
       id: "9",
       name: "deadline_clarity_rating",
-      label: "Do you receive deadlines in a timely and clear manner?",
+      label: "I feel comfortable approaching my manager.",
       fieldType: "dropdown",
+      type: "Behaviour",
       options: [
-        { label: "Always", value: "always" },
-        { label: "Usually", value: "usually" },
-        { label: "Sometimes last-minute", value: "sometimes_last_minute" },
-        { label: "Rarely on time", value: "rarely_on_time" },
+        { label: "5", value: "5" },
+        { label: "4", value: "4" },
+        { label: "3", value: "3" },
+        { label: "2", value: "2" },
+        { label: "1", value: "1" },
       ],
     },
+
+    // Competency
     {
       id: "10",
       name: "last_minute_work_reason_rating",
-      label: "When there's last-minute work, do you know whether it's due to the client or internal planning?",
+      label: "My manager has a good understanding of our work process.",
       fieldType: "dropdown",
+      type: "Competency",
       options: [
-        { label: "Mostly from client", value: "client" },
-        { label: "Mostly from internal team", value: "internal" },
-        { label: "A mix of both", value: "mix" },
-        { label: "Not communicated", value: "not_communicated" },
+        { label: "5", value: "5" },
+        { label: "4", value: "4" },
+        { label: "3", value: "3" },
+        { label: "2", value: "2" },
+        { label: "1", value: "1" },
       ],
     },
     {
       id: "11",
       name: "support_rating",
-      label: "Do you feel supported in managing urgent turnarounds (e.g., prioritization, rescheduling, backup)?",
+      label: "My manager makes informed decisions.",
       fieldType: "dropdown",
+      type: "Competency",
       options: [
-        { label: "Yes, fully supported", value: "fully_supported" },
-        { label: "Sometimes", value: "sometimes" },
-        { label: "Rarely", value: "rarely" },
-        { label: "No support", value: "no_support" },
+        { label: "5", value: "5" },
+        { label: "4", value: "4" },
+        { label: "3", value: "3" },
+        { label: "2", value: "2" },
+        { label: "1", value: "1" },
       ],
     },
     {
       id: "12",
       name: "workload_rating",
-      label: "Is your workload generally managed in a way that avoids burnout or constant rush?",
+      label: "My manager supports my learning and growth.",
       fieldType: "dropdown",
+      type: "Competency",
       options: [
-        { label: "Yes", value: "yes" },
-        { label: "Sometimes", value: "sometimes" },
-        { label: "No", value: "no" },
-        { label: "Often overwhelmed", value: "often_overwhelmed" },
+        { label: "5", value: "5" },
+        { label: "4", value: "4" },
+        { label: "3", value: "3" },
+        { label: "2", value: "2" },
+        { label: "1", value: "1" },
       ],
     },
+
+    // Results
     {
       id: "13",
       name: "acknowledgement_rating",
-      label: "Are your efforts or creative ideas acknowledged in final outcomes or team meetings?",
+      label: "My manager helps the team achieve targets.",
       fieldType: "dropdown",
+      type: "Results",
       options: [
-        { label: "Always", value: "always" },
-        { label: "Sometimes", value: "sometimes" },
-        { label: "Rarely", value: "rarely" },
-        { label: "Never", value: "never" },
+        { label: "5", value: "5" },
+        { label: "4", value: "4" },
+        { label: "3", value: "3" },
+        { label: "2", value: "2" },
+        { label: "1", value: "1" },
       ],
     },
     {
       id: "14",
-      name: "manager_does_well_text",
-      label: "What is one thing your manager does well that you appreciate?",
-      fieldType: "short",
-      placeholder: "Write your response…",
+      name: "manager_motivates_team_rating",
+      label: "My manager motivates the team effectively.",
+      fieldType: "dropdown",
+      type: "Results",
+      options: [
+        { label: "5", value: "5" },
+        { label: "4", value: "4" },
+        { label: "3", value: "3" },
+        { label: "2", value: "2" },
+        { label: "1", value: "1" },
+      ],
     },
     {
       id: "15",
-      name: "manager_could_improve_text",
-      label: "What is one thing your manager could improve to support your creative process?",
-      fieldType: "short",
-      placeholder: "Write your response…",
+      name: "manager_contributes_to_team_rating",
+      label: "My manager contributes positively to team performance.",
+      fieldType: "dropdown",
+      type: "Results",
+      options: [
+        { label: "5", value: "5" },
+        { label: "4", value: "4" },
+        { label: "3", value: "3" },
+        { label: "2", value: "2" },
+        { label: "1", value: "1" },
+      ],
     },
+
+    // Open-Ended Questions
     {
       id: "16",
-      name: "process_improvement_text",
-      label: "What process or system could be improved to help you do better work? (e.g., brief quality, review flow, communication)",
+      name: "manager_does_well_text",
+      label: "What did your manager do well?",
       fieldType: "short",
+      type: "Open-Ended Questions",
       placeholder: "Write your response…",
     },
     {
       id: "17",
-      name: "support_expect_from_manager",
-      label: "What support do you expect from managers?",
+      name: "manager_could_improve_text",
+      label: "What could your manager improve?",
       fieldType: "short",
+      type: "Open-Ended Questions",
+      placeholder: "Write your response…",
+    },
+    {
+      id: "18",
+      name: "manager_future_expectations_text",
+      label: "What do you expect your manager to do differently in the future?",
+      fieldType: "short",
+      type: "Open-Ended Questions",
       placeholder: "Write your response…",
     },
   ];
 
-const submitHandler = async () => {
+  const submitHandler = async () => {
 
     const missingFields = step2Fields.filter((f) => {
-    const value = formData[f.name];
+      const value = formData[f.name];
 
-    if (f.fieldType === "searchable") return !value?.id;
-    return !value || value === "";
-  });
+      if (f.fieldType === "searchable") return !value?.id;
+      return !value || value === "";
+    });
 
-  if (missingFields.length > 0) {
-    const firstMissing = missingFields[0];
-    toast.error(`Please fill: ${firstMissing.label}`);
-    return;
-  }
-  const payload = {
-    submitted_for_id: formData.submitted_for_id?.id,
-    submitted_by_id: formData.submitted_by_id?.id,
+    if (missingFields.length > 0) {
+      const firstMissing = missingFields[0];
+      toast.error(`Please fill: ${firstMissing.label}`);
+      return;
+    }
+    const payload = {
+      submitted_for_id: formData.submitted_for_id?.id,
+      submitted_by_id: formData.submitted_by_id?.id,
 
-    brief_shared_rating: formData.brief_shared_rating,
-    brief_understandability_rating: formData.brief_understandability_rating,
-    manager_clarifies_brief_rating: formData.manager_clarifies_brief_rating,
-    creative_comfort_rating: formData.creative_comfort_rating,
-    balance_rating: formData.balance_rating,
-    growth_feedback_rating: formData.growth_feedback_rating,
-    deadline_clarity_rating: formData.deadline_clarity_rating,
-    last_minute_work_reason_rating: formData.last_minute_work_reason_rating,
-    support_rating: formData.support_rating,
-    workload_rating: formData.workload_rating,
-    acknowledgement_rating: formData.acknowledgement_rating,
+      brief_shared_rating: formData.brief_shared_rating,
+      brief_understandability_rating: formData.brief_understandability_rating,
+      manager_clarifies_brief_rating: formData.manager_clarifies_brief_rating,
+      creative_comfort_rating: formData.creative_comfort_rating,
+      balance_rating: formData.balance_rating,
+      growth_feedback_rating: formData.growth_feedback_rating,
+      deadline_clarity_rating: formData.deadline_clarity_rating,
+      last_minute_work_reason_rating: formData.last_minute_work_reason_rating,
+      support_rating: formData.support_rating,
+      workload_rating: formData.workload_rating,
+      acknowledgement_rating: formData.acknowledgement_rating,
+      manager_motivates_team_rating: formData.manager_motivates_team_rating,
+      manager_contributes_to_team_rating: formData.manager_contributes_to_team_rating,
 
-    manager_does_well_text: formData.manager_does_well_text || "",
-    manager_could_improve_text: formData.manager_could_improve_text || "",
-    process_improvement_text: formData.process_improvement_text || "",
-    
-    // ✅ Rename to backend key
-    support_expect_from_manager: formData.support_expect_from_manager || "",
-  };
+      manager_does_well_text: formData.manager_does_well_text || "",
+      manager_could_improve_text: formData.manager_could_improve_text || "",
+      manager_future_expectations_text: formData.manager_future_expectations_text || "",
+    };
 
 
-  try {
-    const res = await apiClient.post(`/api/v1/feedback/employee-to-manager`, 
-      payload,
-      {
-         headers: {
+    try {
+      const res = await apiClient.post(`/api/v1/feedback/employee-to-manager`,
+        payload,
+        {
+          headers: {
             "x-api-key": process.env.NEXT_PUBLIC_INTERNAL_API_KEY,
           },
-      }
-    );
+        }
+      );
 
-    router.push("/employee/thank-you");
-    setFormData({});
-  } catch (err: any) {
-     toast.error("Something went wrong. Please check required fields or API schema.");
-  }
-};
+      router.push("/employee/thank-you");
+      setFormData({});
+    } catch (err: any) {
+      toast.error("Something went wrong. Please check required fields or API schema.");
+    }
+  };
 
 
   const month = new Date().toLocaleString("en-US", { month: "long" });
@@ -275,14 +328,25 @@ const submitHandler = async () => {
           }}
         >
           <div className="space-y-6 w-full  ">
-            {step2Fields.map((field) => (
-              <DynamicField
-                key={field.id}
-                field={field}
-                value={formData[field.name] || ""}
-                onChange={(val) => setFormData((p) => ({ ...p, [field.name]: val }))}
-              />
-            ))}
+            {step2Fields.map((field, index) => {
+              const prevField = index > 0 ? step2Fields[index - 1] : null;
+              const showTypeHeading = field.type && (!prevField || (prevField as any).type !== field.type);
+
+              return (
+                <div key={field.id}>
+                  {showTypeHeading && (
+                    <h3 className="text-lg font-semibold text-[#E31313] mb-3 mt-6">
+                      {field.type}
+                    </h3>
+                  )}
+                  <DynamicField
+                    field={field}
+                    value={formData[field.name] || ""}
+                    onChange={(val) => setFormData((p) => ({ ...p, [field.name]: val }))}
+                  />
+                </div>
+              );
+            })}
 
             <button
               type="submit"
