@@ -334,7 +334,7 @@ export default function MDToFinance() {
                         "x-api-key": process.env.NEXT_PUBLIC_INTERNAL_API_KEY,
                     },
                 });
-            router.push("/md-to-fin/thank-you");
+            router.push("/md-to-finance-feedback/thank-you");
 
             setFormData({});
         } catch (err: any) {

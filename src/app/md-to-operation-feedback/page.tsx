@@ -334,7 +334,7 @@ export default function MDToOperations() {
                         "x-api-key": process.env.NEXT_PUBLIC_INTERNAL_API_KEY,
                     },
                 });
-            router.push("/md-to-operation/thank-you");
+            router.push("/md-to-operation-feedback/thank-you");
 
             setFormData({});
         } catch (err: any) {

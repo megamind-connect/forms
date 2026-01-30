@@ -1,16 +1,16 @@
 "use client";
-
 import { useState } from "react";
 import DynamicField from "@/components/client/DynamicFields";
 import { Step2Form } from "@/components/client/Step2Form";
 import { StepIndicator } from "@/components/client/StepIndicator";
 import { Button } from "@/components/ui/Button";
 import toast from "react-hot-toast";
+import { useParams, useRouter } from "next/navigation";
+import apiClient from "@/lib/api";
 
 // --- Field Definitions ---
 
-// Step 1: Questions 1-2
-const step1Fields = [ 
+const step1Fields = [
     {
         id: "respondent_name",
         name: "respondent_name",
@@ -37,7 +37,6 @@ const step1Fields = [
     },
 ];
 
-// Step 2: Questions 3-6
 const step2Fields = [
     {
         id: "initial_expectations",
@@ -52,10 +51,9 @@ const step2Fields = [
         label: "4. Do you feel our team understood your business and what you’re trying to achieve?",
         fieldType: "radio",
         options: [
-            { value: "yes", label: "Yes" },
-            { value: "no", label: "No" },
-            { value: "maybe", label: "Maybe" },
-            { value: "other", label: "Other" },
+            { value: "Yes", label: "Yes" },
+            { value: "No", label: "No" },
+            { value: "Maybe", label: "Maybe" },
         ],
     },
     {
@@ -64,11 +62,11 @@ const step2Fields = [
         label: "5. How effective was Megamind’s strategic guidance and planning in meeting your marketing needs?",
         fieldType: "radio_row",
         options: [
-            { value: "very_effective", label: "Very effective" },
-            { value: "somewhat_effective", label: "Somewhat effective" },
-            { value: "neither", label: "Neither effective nor ineffective" },
-            { value: "somewhat_ineffective", label: "Somewhat ineffective" },
-            { value: "very_ineffective", label: "Very ineffective" },
+            { value: "Very effective", label: "Very effective" },
+            { value: "Somewhat effective", label: "Somewhat effective" },
+            { value: "Neither", label: "Neither" },
+            { value: "Somewhat ineffective", label: "Somewhat ineffective" },
+            { value: "Very ineffective", label: "Very ineffective" },
         ],
     },
     {
@@ -77,123 +75,114 @@ const step2Fields = [
         label: "6. Were the delivered services aligned with your brand?",
         fieldType: "radio",
         options: [
-            { value: "yes", label: "Yes" },
-            { value: "no", label: "No" },
-            { value: "maybe", label: "Maybe" },
+            { value: "Yes", label: "Yes" },
+            { value: "No", label: "No" },
+            { value: "Maybe", label: "Maybe" },
         ],
     },
 ];
 
-// Step 3: Questions 7-8
-// Q7 is a grid, broken down here into individual fields for data capture
 const step3Fields = [
-    {
-        id: "q7_header", // Helper text for the grid
-        name: "q7_header",
-        label: "7. Please rate your overall satisfaction with the following services",
-        fieldType: "description_only", // Assuming your component supports a label without input, otherwise handle in render
-    },
     {
         id: "sat_social_media",
         name: "satisfaction_social_media",
-        label: "Social Media Management",
-        fieldType: "radio", // Rendered as row in UI, logic here
+        label: "7. Please rate your overall satisfaction: Social Media Management",
+        fieldType: "radio_row",
         options: [
-            { value: "excellent", label: "Excellent" },
-            { value: "good", label: "Good" },
-            { value: "average", label: "Average" },
-            { value: "fair", label: "Fair" },
-            { value: "poor", label: "Poor" },
+            { value: "Excellent", label: "Excellent" },
+            { value: "Good", label: "Good" },
+            { value: "Average", label: "Average" },
+            { value: "Fair", label: "Fair" },
+            { value: "Poor", label: "Poor" },
         ],
     },
     {
         id: "sat_graphic_design",
         name: "satisfaction_graphic_design",
         label: "Graphic Design",
-        fieldType: "radio",
+        fieldType: "radio_row",
         options: [
-            { value: "excellent", label: "Excellent" },
-            { value: "good", label: "Good" },
-            { value: "average", label: "Average" },
-            { value: "fair", label: "Fair" },
-            { value: "poor", label: "Poor" },
+            { value: "Excellent", label: "Excellent" },
+            { value: "Good", label: "Good" },
+            { value: "Average", label: "Average" },
+            { value: "Fair", label: "Fair" },
+            { value: "Poor", label: "Poor" },
         ],
     },
     {
         id: "sat_video_prod",
         name: "satisfaction_video_production",
         label: "Video Production",
-        fieldType: "radio",
+        fieldType: "radio_row",
         options: [
-            { value: "excellent", label: "Excellent" },
-            { value: "good", label: "Good" },
-            { value: "average", label: "Average" },
-            { value: "fair", label: "Fair" },
-            { value: "poor", label: "Poor" },
+            { value: "Excellent", label: "Excellent" },
+            { value: "Good", label: "Good" },
+            { value: "Average", label: "Average" },
+            { value: "Fair", label: "Fair" },
+            { value: "Poor", label: "Poor" },
         ],
     },
     {
         id: "sat_video_editing",
         name: "satisfaction_video_editing",
         label: "Video Editing",
-        fieldType: "radio",
+        fieldType: "radio_row",
         options: [
-            { value: "excellent", label: "Excellent" },
-            { value: "good", label: "Good" },
-            { value: "average", label: "Average" },
-            { value: "fair", label: "Fair" },
-            { value: "poor", label: "Poor" },
+            { value: "Excellent", label: "Excellent" },
+            { value: "Good", label: "Good" },
+            { value: "Average", label: "Average" },
+            { value: "Fair", label: "Fair" },
+            { value: "Poor", label: "Poor" },
         ],
     },
     {
         id: "sat_ppc",
         name: "satisfaction_ppc",
         label: "PPC Execution",
-        fieldType: "radio",
+        fieldType: "radio_row",
         options: [
-            { value: "excellent", label: "Excellent" },
-            { value: "good", label: "Good" },
-            { value: "average", label: "Average" },
-            { value: "fair", label: "Fair" },
-            { value: "poor", label: "Poor" },
+            { value: "Excellent", label: "Excellent" },
+            { value: "Good", label: "Good" },
+            { value: "Average", label: "Average" },
+            { value: "Fair", label: "Fair" },
+            { value: "Poor", label: "Poor" },
         ],
     },
     {
         id: "sat_strategy",
         name: "satisfaction_strategy",
         label: "Strategy",
-        fieldType: "radio",
+        fieldType: "radio_row",
         options: [
-            { value: "excellent", label: "Excellent" },
-            { value: "good", label: "Good" },
-            { value: "average", label: "Average" },
-            { value: "fair", label: "Fair" },
-            { value: "poor", label: "Poor" },
+            { value: "Excellent", label: "Excellent" },
+            { value: "Good", label: "Good" },
+            { value: "Average", label: "Average" },
+            { value: "Fair", label: "Fair" },
+            { value: "Poor", label: "Poor" },
         ],
     },
     {
         id: "sat_content",
         name: "satisfaction_content_writing",
         label: "Content Writing",
-        fieldType: "radio",
+        fieldType: "radio_row",
         options: [
-            { value: "excellent", label: "Excellent" },
-            { value: "good", label: "Good" },
-            { value: "average", label: "Average" },
-            { value: "fair", label: "Fair" },
-            { value: "poor", label: "Poor" },
+            { value: "Excellent", label: "Excellent" },
+            { value: "Good", label: "Good" },
+            { value: "Average", label: "Average" },
+            { value: "Fair", label: "Fair" },
+            { value: "Poor", label: "Poor" },
         ],
     },
     {
         id: "challenges_issues",
         name: "specific_challenges",
-        label: "8. Did you experience any specific challenges or issues with our services (e.g., delays, quality concerns, reporting gaps)? Please describe.",
+        label: "8. Did you experience any specific challenges or issues with our services?",
         placeholder: "Enter your answer",
         fieldType: "text",
     },
 ];
 
-// Step 4: Questions 9-12
 const step4Fields = [
     {
         id: "deadlines_met",
@@ -201,11 +190,11 @@ const step4Fields = [
         label: "9. Were project deadlines and commitments consistently met?",
         fieldType: "radio",
         options: [
-            { value: "always", label: "Always" },
-            { value: "often", label: "Often" },
-            { value: "sometimes", label: "Sometimes" },
-            { value: "rarely", label: "Rarely" },
-            { value: "never", label: "Never" },
+            { value: "Always", label: "Always" },
+            { value: "Often", label: "Often" },
+            { value: "Sometimes", label: "Sometimes" },
+            { value: "Rarely", label: "Rarely" },
+            { value: "Never", label: "Never" },
         ],
     },
     {
@@ -214,77 +203,76 @@ const step4Fields = [
         label: "10. How would you rate the communication and responsiveness of our project manager and team?",
         fieldType: "radio",
         options: [
-            { value: "excellent", label: "Excellent" },
-            { value: "good", label: "Good" },
-            { value: "average", label: "Average" },
-            { value: "poor", label: "Poor" },
-            { value: "fair", label: "Fair" },
+            { value: "Excellent", label: "Excellent" },
+            { value: "Good", label: "Good" },
+            { value: "Average", label: "Average" },
+            { value: "Poor", label: "Poor" },
+            { value: "Fair", label: "Fair" },
         ],
     },
     {
         id: "comm_examples",
         name: "communication_examples",
-        label: "11. Please share examples of communication strengths or any gaps you experienced during the engagement.",
+        label: "11. Please share examples of communication strengths or any gaps you experienced.",
         placeholder: "Enter your answer",
         fieldType: "text",
     },
     {
         id: "felt_heard",
         name: "felt_heard_valued",
-        label: "12. Did you feel heard, valued, and that your feedback and concerns were acknowledged and acted upon throughout the project?",
+        label: "12. Did you feel heard, valued, and that your feedback was acted upon?",
         fieldType: "radio",
         options: [
-            { value: "always", label: "Always" },
-            { value: "often", label: "Often" },
-            { value: "sometimes", label: "Sometimes" },
-            { value: "rarely", label: "Rarely" },
-            { value: "never", label: "Never" },
+            { value: "Always", label: "Always" },
+            { value: "Often", label: "Often" },
+            { value: "Sometimes", label: "Sometimes" },
+            { value: "Rarely", label: "Rarely" },
+            { value: "Never", label: "Never" },
         ],
     },
 ];
 
-// Step 5: Questions 13-20
 const step5Fields = [
     {
         id: "fall_short",
         name: "where_fell_short",
-        label: "13. Where did Megamind fall short of your past experiences or expectations?",
+        label: "13. Where did Megamind fall short of your expectations?",
         placeholder: "Enter your answer",
         fieldType: "text",
     },
     {
         id: "stand_out",
         name: "where_stood_out",
-        label: "14. Compared to other agencies or freelancers you have worked with, where did Megamind stand out most?",
+        label: "14. Where did Megamind stand out most compared to others?",
         placeholder: "Enter your answer",
         fieldType: "text",
     },
     {
         id: "appreciate_most",
         name: "appreciate_most",
-        label: "15. What did you appreciate most about working with the Megamind team?",
+        label: "15. What did you appreciate most about working with us?",
         placeholder: "Enter your answer",
         fieldType: "text",
     },
     {
         id: "frustrations",
         name: "frustrations_disappointment",
-        label: "16. What aspects of our work or process caused the most frustration or disappointment?",
+        label: "16. What aspects caused the most frustration or disappointment?",
         placeholder: "Enter your answer",
         fieldType: "text",
     },
     {
         id: "key_change",
         name: "key_change_suggestion",
-        label: "17. What is one key change Megamind could have made that might have convinced you to continue working with us?",
+        label: "17. What key change might have convinced you to continue?",
         placeholder: "Enter your answer",
         fieldType: "text",
     },
     {
         id: "reasons_ending",
         name: "reasons_ending_service",
-        label: "18. What are the main reasons you decided to end service with Megamind?",
-        fieldType: "checkbox_group", // Squares in photo indicate checkbox (multiple selection)
+        label: "18. Main reasons you decided to end service?",
+        fieldType: "checkbox_group",
         options: [
             { label: "Service quality issues", value: "Service quality issues" },
             { label: "Missed deadlines", value: "Missed deadlines" },
@@ -300,28 +288,31 @@ const step5Fields = [
     {
         id: "recommend",
         name: "recommend_megamind",
-        label: "19. Would you recommend Megamind to other businesses or colleagues?",
+        label: "19. Would you recommend Megamind to others?",
         fieldType: "radio",
         options: [
-            { value: "yes", label: "Yes" },
-            { value: "maybe", label: "Maybe" },
-            { value: "no", label: "No" },
+            { value: "Yes", label: "Yes" },
+            { value: "Maybe", label: "Maybe" },
+            { value: "No", label: "No" },
         ],
     },
     {
         id: "final_thoughts",
         name: "final_thoughts",
-        label: "20. Any final thoughts, suggestions, or messages for the Megamind leadership team?",
+        label: "20. Any final thoughts or suggestions for leadership?",
         placeholder: "Enter your answer",
         fieldType: "text",
     },
 ];
 
-// 5 Steps Configuration
 const STEPS_COUNT = 5;
 const stepStructure = { 1: 1, 2: 1, 3: 1, 4: 1, 5: 1 };
 
-export default function OffboardingClientPage() {
+export default function ClientExitFeedbackPage() {
+    const params = useParams();
+    const router = useRouter();
+    const id = params?.id as string;
+
     const [step, setStep] = useState(1);
     const [formData, setFormData] = useState<Record<string, any>>({});
     const [touched, setTouched] = useState<Record<string, boolean>>({});
@@ -337,7 +328,6 @@ export default function OffboardingClientPage() {
     const markAllFieldsTouched = (fields: any[]) => {
         const updates: Record<string, boolean> = {};
         fields.forEach(field => {
-            // Skip header/description fields if they exist in validation
             if (field.fieldType !== 'description_only') {
                 updates[field.name] = true;
             }
@@ -348,11 +338,8 @@ export default function OffboardingClientPage() {
     const validateFields = (fields: any[]) => {
         const errors: Record<string, string> = {};
         fields.forEach((field) => {
-            if (field.fieldType === 'description_only') return; // Skip headers
-
-            // Validation: Check if required fields are empty
+            if (field.fieldType === 'description_only') return;
             if (!formData[field.name]) {
-                // In this form, almost all fields seem required based on the red asterisk in photos
                 errors[field.name] = "This field is required";
             }
         });
@@ -369,8 +356,6 @@ export default function OffboardingClientPage() {
 
         const errors = validateFields(fields);
         markAllFieldsTouched(fields);
-
-        // Block navigation if errors exist
         return Object.keys(errors).length === 0;
     };
 
@@ -379,7 +364,6 @@ export default function OffboardingClientPage() {
             toast.error("Please fill all required fields");
             return;
         }
-
         if (step < STEPS_COUNT) {
             setStep((prev) => prev + 1);
             window.scrollTo(0, 0);
@@ -396,52 +380,63 @@ export default function OffboardingClientPage() {
     };
 
     const handleSubmit = async () => {
-        console.log("Submitting Form Data:", formData);
+        const payload = {
+            clientId: id,
+            respondent_name: formData.respondent_name,
+            position_role: formData.position_role,
+            initial_expectations: formData.initial_expectations,
+            team_understood_business: formData.team_understood_business,
+            strategic_guidance_effectiveness: formData.strategic_guidance_effectiveness,
+            services_aligned_brand: formData.services_aligned_brand,
+            satisfaction_social_media: formData.satisfaction_social_media,
+            satisfaction_graphic_design: formData.satisfaction_graphic_design,
+            satisfaction_video_production: formData.satisfaction_video_production,
+            satisfaction_video_editing: formData.satisfaction_video_editing,
+            satisfaction_ppc: formData.satisfaction_ppc,
+            satisfaction_strategy: formData.satisfaction_strategy,
+            satisfaction_content_writing: formData.satisfaction_content_writing,
+            specific_challenges: formData.specific_challenges,
+            deadlines_met: formData.deadlines_met,
+            communication_responsiveness_rating: formData.communication_responsiveness_rating,
+            communication_examples: formData.communication_examples,
+            felt_heard_valued: formData.felt_heard_valued,
+            where_fell_short: formData.where_fell_short,
+            where_stood_out: formData.where_stood_out,
+            appreciate_most: formData.appreciate_most,
+            frustrations_disappointment: formData.frustrations_disappointment,
+            key_change_suggestion: formData.key_change_suggestion,
+            reasons_ending_service: formData.reasons_ending_service?.list || [],
+            recommend_megamind: formData.recommend_megamind,
+            final_thoughts: formData.final_thoughts,
+        };
+
         try {
-            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/v1/client-feedback`, {
-                method: "POST",
-                headers: { "Content-Type": "application/json", "x-api-key": process.env.NEXT_PUBLIC_INTERNAL_API_KEY || "" },
-                body: JSON.stringify({
-                    ...formData,
-                    form_type: "offboarding-client"
-                }),
+            await apiClient.post(`/api/v1/feedback/client-exit`, payload, {
+                headers: {
+                    "x-api-key": process.env.NEXT_PUBLIC_INTERNAL_API_KEY,
+                },
             });
-            if (!res.ok) throw new Error("Failed to submit");
-            toast.success("Thank you! Your feedback has been submitted.");
-            setStep(1);
+            toast.success("Thank you for your valuable feedback!");
+            router.push("/client-exit-feedback/thank-you");
             setFormData({});
+            setStep(1);
         } catch (err) {
             console.error("Submission error:", err);
             toast.error("Something went wrong. Please try again.");
         }
     };
 
-    const getStepProgress = (n: number) => {
-        if (n < step) return 100;
-        if (n === step) return 50;
-        return 0;
-    };
-
-    const handleStepClick = (n: number) => {
-        if (n < step) {
-            setStep(n);
-        }
-    };
-
-    // Helper to render the Title for each section
     const renderSectionHeader = (title: string) => (
         <h2 className="text-[32px] font-medium text-[#E31313] mt-4 mb-6">{title}</h2>
     );
 
-    // Render logic helpers
     const renderStepFields = (fields: any[]) => (
         <div className="px-4 max-w-2xl w-full pb-3 mx-auto md:px-0">
-            {/* Dynamic Headers based on Step */}
             {step === 1 && renderSectionHeader("Respondent Details")}
             {step === 2 && renderSectionHeader("Expectations & Strategic Alignment")}
             {step === 3 && renderSectionHeader("Service Quality & Performance")}
-            {step === 4 && renderSectionHeader("Timelines, Communication & Responsiveness")}
-            {step === 5 && renderSectionHeader("Overall Experience & Final Feedback")}
+            {step === 4 && renderSectionHeader("Communication & Responsiveness")}
+            {step === 5 && renderSectionHeader("Overall Experience")}
 
             {fields.map((field) => (
                 <DynamicField
@@ -453,17 +448,9 @@ export default function OffboardingClientPage() {
             ))}
             <div className="flex gap-4 mt-8">
                 {step > 1 && (
-                    <Button
-                        onClick={handleBack}
-                        className="!bg-white !text-black border border-gray-300 !text-lg w-full max-w-2xl mx-auto"
-                    >
-                        Back
-                    </Button>
+                    <Button onClick={handleBack} className="!bg-white !text-black border border-gray-300 !text-lg w-full max-w-2xl mx-auto">Back</Button>
                 )}
-                <Button
-                    onClick={handleNext}
-                    className="!bg-[#E31313] !text-white !font-bold !text-lg w-full max-w-2xl mx-auto"
-                >
+                <Button onClick={handleNext} className="!bg-[#E31313] !text-white !font-bold !text-lg w-full max-w-2xl mx-auto">
                     {step === STEPS_COUNT ? "Submit" : "Next"}
                 </Button>
             </div>
@@ -472,16 +459,7 @@ export default function OffboardingClientPage() {
 
     return (
         <div className="relative min-h-screen !bg-[#FFFBFB] flex flex-col py-10 justify-center overflow-hidden">
-
-            {/* Step Progress Indicator */}
-            <StepIndicator
-                step={step}
-                stepStructure={stepStructure}
-                getStepProgress={getStepProgress}
-                handleStepClick={handleStepClick}
-            />
-
-            {/* Render Current Step */}
+            <StepIndicator step={step} stepStructure={stepStructure} getStepProgress={(n) => n < step ? 100 : n === step ? 50 : 0} handleStepClick={(n) => n < step && setStep(n)} />
             {step === 1 && (
                 <Step2Form
                     formFields={step1Fields}
@@ -492,16 +470,15 @@ export default function OffboardingClientPage() {
                     touched={touched}
                     markFieldTouched={markFieldTouched}
                     markAllFieldsTouched={() => markAllFieldsTouched(step1Fields)}
-                    headerTitle="Respondent Details" // Passing title directly for Step 1
+                    headerTitle="Respondent Details"
                     isClientPage={true}
                 />
             )}
-
-            {step === 2 && renderStepFields(step2Fields)}
-            {step === 3 && renderStepFields(step3Fields)}
-            {step === 4 && renderStepFields(step4Fields)}
-            {step === 5 && renderStepFields(step5Fields)}
-
+            {step >= 2 && renderStepFields(
+                step === 2 ? step2Fields :
+                    step === 3 ? step3Fields :
+                        step === 4 ? step4Fields : step5Fields
+            )}
         </div>
     );
 }

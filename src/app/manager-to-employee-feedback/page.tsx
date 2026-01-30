@@ -334,7 +334,7 @@ export default function Manager() {
             "x-api-key": process.env.NEXT_PUBLIC_INTERNAL_API_KEY,
           },
         });
-      router.push("/manager/thank-you");
+      router.push("/manager-to-employee-feedback/thank-you");
 
       setFormData({});
     } catch (err: any) {

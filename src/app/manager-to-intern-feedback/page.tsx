@@ -27,7 +27,7 @@ export default function ManagerToIntern() {
 
     const step2Fields = [
         { id: "submitted_by", name: "submitted_by_id", label: "Your Name", fieldType: "searchable" },
-        { id: "submitted_for", name: "submitted_for_id", label: "Employee's Name", fieldType: "searchable" },
+        { id: "submitted_for", name: "submitted_for_id", label: "Intern's Name", fieldType: "searchable" },
 
         // Work & Actions
         {
@@ -334,7 +334,7 @@ export default function ManagerToIntern() {
                         "x-api-key": process.env.NEXT_PUBLIC_INTERNAL_API_KEY,
                     },
                 });
-            router.push("/manager-to-intern/thank-you");
+            router.push("/manager-to-intern-feedback/thank-you");
 
             setFormData({});
         } catch (err: any) {

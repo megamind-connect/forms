@@ -314,6 +314,9 @@ export default function Manager() {
             creative_strength_text: formData.creative_strength_text || "",
             improvement_area_text: formData.improvement_area_text || "",
             process_limitation_text: formData.process_limitation_text || "",
+            what_went_well_text: formData.what_went_well_text || "",
+            what_needs_improvement_text: formData.what_needs_improvement_text || "",
+            what_should_be_done_differently_text: formData.what_should_be_done_differently_text || "",
         };
 
 
@@ -324,7 +327,7 @@ export default function Manager() {
                         "x-api-key": process.env.NEXT_PUBLIC_INTERNAL_API_KEY,
                     },
                 });
-            router.push("/manager/thank-you");
+            router.push("/fin-hr-op-to-md-feedback/thank-you");
 
             setFormData({});
         } catch (err: any) {

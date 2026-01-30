@@ -319,7 +319,7 @@ export function Step2Form({
                 value={formData[field.name] != null ? String(formData[field.name]) : ""}
                 placeholder={placeholderText}
                 className="!border-[#D9D9D9] placeholder:text-[#8F8881]"
-                required={!["gstin", "whatsapp_business_number", "whatsapp_business_link", "website_url"].includes(field.name)}
+                required={!isClientPage && !["gstin", "whatsapp_business_number", "whatsapp_business_link", "website_url"].includes(field.name)}
                 onChange={handleChange}
                 onBlur={() => handleBlur(field.name)}
               />

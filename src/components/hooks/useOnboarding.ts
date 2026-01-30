@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { usePathname } from "next/navigation";
+import { usePathname, useParams } from "next/navigation";
 import {
   generalFields,
   clientPageGeneralFields,
@@ -17,6 +17,7 @@ import {
   commonPersonalFields,
 } from "@/utils/onboarding";
 import toast from "react-hot-toast";
+import apiClient from "@/lib/api";
 
 type FormData = Record<string, any>;
 
@@ -43,8 +44,10 @@ const step6Questions = [
 
 export function useOnboarding() {
   const pathname = usePathname();
-  const isClientOnboarding = pathname === "/client/onboarding";
-  const isBrandIdentityPage = pathname === "/client/brand-idendity";
+  const params = useParams();
+  const clientId = params?.id as string;
+  const isBrandIdentityPage = pathname.includes("/brand-discovery");
+  const isClientOnboarding = pathname.includes("/client/onboarding") && !isBrandIdentityPage;
 
   const [step, setStep] = useState(1);
   const [subStep, setSubStep] = useState(1);
@@ -92,7 +95,7 @@ export function useOnboarding() {
 
   const stepStructure: Record<number, number> = isClientOnboarding
     ? {
-      1: 1, 2: 1, 3: 1, 4: 1, 5: 1, 6: 1, 7: 1, 8: 1, 9: 1, 10: 1, 11: 1, 12: 1, 13: 1, 14: 1, 15: 1, 16: 1,
+      1: 1, 2: 1, 3: 1, 4: 1, 5: 1, 6: 1, 7: 1, 8: 1, 9: 1, 10: 1, 11: 1, 12: 1,
     }
     : isBrandIdentityPage
       ? {
@@ -110,98 +113,31 @@ export function useOnboarding() {
         6: 1,
       };
 
-  const totalSteps = isClientOnboarding ? 16 : isBrandIdentityPage ? 4 : 6;
+  const totalSteps = isClientOnboarding ? 12 : isBrandIdentityPage ? 4 : 6;
 
   const validateFieldsHelper = (data: FormData, fields: any[]): Record<string, string> => {
-    const errors: Record<string, string> = {};
-    fields.forEach((field) => {
-      const value = data[field.name];
-      const optionalFields = [
-        "gstin",
-        "whatsapp_business_number",
-        "whatsapp_business_link",
-        "website_url",
-        "certificate_of_incorporation",
-        "gst_registration_certificate",
-        "pan_card",
-        "signed_contract_agreement",
-        "signed_nda",
-        "alternate_contact_name",
-        "alternate_contact_email",
-        "alternate_contact_phone",
-        "hosting_server_details",
-        "current_website_management",
-        "third_party_tools_integration",
-      ];
-      if (optionalFields.includes(field.name) || field.fieldType === "header" || field.fieldType === "subheader") return;
-      if (field.fieldType === "toggle_input" || field.fieldType === "checkbox_single") return;
-      if (field.fieldType === "array") {
-        if (!Array.isArray(value) || value.length === 0 || value.every((v) => !v || !v.toString().trim())) {
-          errors[field.name] = `${field.label} is required`;
-        }
-        return;
-      }
-      if (!value || (typeof value === "string" && !value.trim())) {
-        errors[field.name] = `${field.label} is required`;
-      }
-    });
-    return errors;
+    // Making all fields optional as per request
+    return {};
   };
 
-  const validateStep2Fields = (data: FormData) => validateFieldsHelper(data, generalFormFields);
-  const validateStep3Fields = (data: FormData) => validateFieldsHelper(data, financialFields);
-  const validateStep4Fields = (data: FormData) => validateFieldsHelper(data, contactFormFields);
-  const validateStep6Fields = (data: FormData) => validateFieldsHelper(data, brandIdFields);
-  const validateStep7Fields = (data: FormData) => validateFieldsHelper(data, marketFields);
-  const validateStep8Fields = (data: FormData) => validateFieldsHelper(data, scopeFields);
-  const validateStep9Fields = (data: FormData) => validateFieldsHelper(data, assetFields);
-  const validateStep11Fields = (data: FormData) => validateFieldsHelper(data, [...socialFields, ...socialAccessFields]);
-  const validateStep13Fields = (data: FormData) => validateFieldsHelper(data, websiteFields);
-  const validateStep15Fields = (data: FormData) => validateFieldsHelper(data, accountFields);
-  const validateStep16Fields = (data: FormData) => validateFieldsHelper(data, businessVerificationFields_state);
+  const validateStep2Fields = (data: FormData) => {
+    return {};
+  };
+  const validateStep3Fields = (data: FormData) => ({});
+  const validateStep4Fields = (data: FormData) => ({});
+  const validateStep6Fields = (data: FormData) => ({});
+  const validateStep7Fields = (data: FormData) => ({});
+  const validateStep8Fields = (data: FormData) => ({});
+  const validateStep9Fields = (data: FormData) => ({});
+  const validateStep11Fields = (data: FormData) => ({});
+  const validateStep13Fields = (data: FormData) => ({});
+  const validateStep15Fields = (data: FormData) => ({});
+  const validateStep16Fields = (data: FormData) => ({});
 
   const validateCurrentStep = () => {
-    if (isClientOnboarding) {
-      if (step === 2) return Object.keys(validateStep2Fields(formData)).length === 0;
-      if (step === 3) return Object.keys(validateStep3Fields(formData)).length === 0;
-      if (step === 4) return Object.keys(validateStep4Fields(formData)).length === 0;
-      if (step === 6) return Object.keys(validateStep6Fields(formData)).length === 0;
-      if (step === 7) return Object.keys(validateStep7Fields(formData)).length === 0;
-      if (step === 8) return Object.keys(validateStep8Fields(formData)).length === 0;
-      if (step === 9) return Object.keys(validateStep9Fields(formData)).length === 0;
-      if (step === 10) return true; // Intro
-      if (step === 11) return Object.keys(validateStep11Fields(formData)).length === 0;
-      if (step === 12) return true; // Intro
-      if (step === 13) return Object.keys(validateStep13Fields(formData)).length === 0;
-      if (step === 14) return true; // Intro
-      if (step === 15) return Object.keys(validateStep15Fields(formData)).length === 0;
-      if (step === 16) return Object.keys(validateStep16Fields(formData)).length === 0;
-    } else if (isBrandIdentityPage) {
-      if (step === 2) return Object.keys(validateStep6Fields(formData)).length === 0;
-      if (step === 3) return Object.keys(validateStep7Fields(formData)).length === 0;
-      if (step === 4) return Object.keys(validateStep8Fields(formData)).length === 0;
-    } else {
-      if (step === 4) {
-        if (subStep === 1)
-          return [
-            "overall_experience_rating",
-            "service_impact_rating",
-            "service_quality_rating",
-            "delivery_time_option",
-            "strategy_alignment_rating",
-          ].every((f) => !!formData[f]);
-        if (subStep === 2) {
-          const services = formData["services_provided"];
-          if (!services || !services.list || services.list.length === 0) return false;
-          return ["goal_alignment_rating", "deadline_efficiency_rating", "feedback_understanding_rating"].every((f) => !!formData[f]);
-        }
-        if (subStep === 3) return ["marketing_results_rating", "brand_representation_rating", "responsiveness_rating"].every((f) => !!formData[f]);
-      }
-      if (step === 5) return !!formData[step6Questions[subStep - 1].name]?.trim();
-      if (step === 6) return !!formData["pleasant_surprise"] && !!formData["experience_description"] && !!formData["additional_services"]?.trim();
-    }
     return true;
   };
+
 
   const handleNext = async () => {
     if (!validateCurrentStep()) {
@@ -230,9 +166,109 @@ export function useOnboarding() {
     if (step === totalSteps) {
       let payload: any = {
         ...formData,
+        client_id: clientId,
       };
 
-      if (!isClientOnboarding && !isBrandIdentityPage) {
+      if (isClientOnboarding) {
+        payload = {
+          clientId: clientId,
+          brandName: formData.brand_name,
+          legalName: formData.registered_legal_name,
+          industryCategory: formData.industry_category,
+          gstin: formData.gstin,
+          registeredBusinessAddress: formData.registered_business_address,
+          officialBillingAddress: formData.official_billing_address,
+          businessEmail: formData.business_email_id,
+          landlineNumbers: Array.isArray(formData.business_landline_numbers) ? formData.business_landline_numbers : [],
+          mobileNumbers: Array.isArray(formData.business_mobile_numbers) ? formData.business_mobile_numbers : [],
+          whatsappBusiness: formData.whatsapp_business_number,
+          whatsappApiLink: formData.whatsapp_business_link,
+          websiteUrl: formData.website_url,
+          yearOfEstablishment: formData.year_of_establishment,
+          companyPan: formData.company_pan_number,
+          companyTan: formData.company_tan_number,
+          companyRegNumber: formData.company_registration_number,
+          onboardingFiles: {
+            certificate_of_incorporation: formData.certificate_of_incorporation,
+            gst_registration_certificate: formData.gst_registration_certificate,
+            pan_card: formData.pan_card,
+            signed_contract_agreement: formData.signed_contract_agreement,
+            signed_nda: formData.signed_nda
+          },
+          contactInfo: {
+            primary: {
+              name: formData.primary_contact_name,
+              email: formData.primary_contact_email,
+              phone: formData.primary_contact_phone
+            },
+            alternate: {
+              name: formData.alternate_contact_name,
+              email: formData.alternate_contact_email,
+              phone: formData.alternate_contact_phone
+            },
+            finance: {
+              name: formData.finance_contact_name,
+              email: formData.finance_contact_email,
+              phone: formData.finance_contact_phone
+            }
+          },
+          assetTypes: {
+            brand_logo_files: formData.brand_logo_files,
+            brand_guidelines: formData.brand_guidelines,
+            brochures_product_photos: formData.brochures_product_photos,
+            past_campaign_reports: formData.past_campaign_reports,
+            moodboards_videos: formData.moodboards_videos,
+            current_image_assets: formData.current_image_assets,
+            current_video_assets: formData.current_video_assets
+          },
+          socialAccounts: {
+            instagram: formData.instagram_profile_url,
+            facebook: formData.facebook_page_url,
+            linkedin: formData.linkedin_profile_url,
+            twitter: formData.twitter_profile_url,
+            youtube: formData.youtube_channel_url,
+            google_my_business: formData.google_business_url,
+            website: formData.website_url_social,
+            additional: formData.additional_platforms
+          },
+          platformAccess: {
+            meta: { email: formData.meta_email, password: formData.meta_password },
+            linkedin: { email: formData.linkedin_email, password: formData.linkedin_password },
+            twitter: { email: formData.twitter_email, password: formData.twitter_password },
+            youtube: { email: formData.youtube_email, password: formData.youtube_password },
+            google_ads: { email: formData.google_ads_email, password: formData.google_ads_password },
+            google_analytics: { email: formData.google_analytics_email, password: formData.google_analytics_password },
+            google_tag_manager: { email: formData.google_tag_manager_email, password: formData.google_tag_manager_password },
+            google_search_console: { email: formData.google_search_console_email, password: formData.google_search_console_password }
+          },
+          websiteTechDetails: {
+            hasDomain: formData.has_domain,
+            hasCmsPlatform: formData.has_cms_platform,
+            hasThirdPartyPlatform: formData.has_third_party_platform,
+            formDataStorage: formData.form_data_storage,
+            hostingServerDetails: formData.hosting_server_details,
+            sourceCodeStorage: formData.source_code_storage,
+            currentWebsiteManagement: formData.current_website_management,
+            googleAnalyticsGa4: formData.google_analytics_ga4,
+            googleTagManager: formData.google_tag_manager,
+            googleSearchConsole: formData.google_search_console,
+            thirdPartyToolsIntegration: formData.third_party_tools_integration
+          },
+          verificationFiles: {
+            certificate_of_incorporation: formData.certificate_of_incorporation,
+            pan_card_company: formData.pan_card_company,
+            pan_card_proprietor: formData.pan_card_proprietor,
+            driving_license_proprietor: formData.driving_license_proprietor,
+            gst_registration_certificate: formData.gst_registration_certificate
+          },
+          customerContact: {
+            contact_number_customer_query: formData.contact_number_customer_query,
+            email_customer_id: formData.email_customer_id,
+            contact_number_business: formData.contact_number_business,
+            email_business: formData.email_business
+          }
+        };
+      } else if (!isBrandIdentityPage) {
         payload = {
           ...payload,
           name: formData.full_name,
@@ -257,17 +293,43 @@ export function useOnboarding() {
           likelihood_to_recommend: formData.recommendation_likelihood_rating,
           other_comments: formData.final_feedback_text,
         };
+      } else if (isBrandIdentityPage) {
+        payload = {
+          clientId: clientId,
+          foundingVision: formData.founding_vision,
+          brandInspiration: formData.inspiration_origin,
+          coreValues: formData.brand_core_values,
+          whatBrandDoes: formData.brand_description,
+          brandStrengths: formData.brand_strengths_weaknesses,
+          brandWeaknesses: formData.brand_strengths_weaknesses,
+          primaryGoals: formData.primary_goals,
+          uniqueValueProposition: formData.unique_value_proposition,
+          threeYearVision: formData.brand_vision_3_years,
+          newProductsServices: formData.new_products_launch,
+          expansionPlans: formData.expansion_plans,
+          idealCustomer: formData.ideal_customer_profile,
+          topCompetitors: formData.top_competitors,
+          currentChallenges: formData.current_market_challenges,
+          marketOpportunities: formData.market_opportunities,
+          brandDifferentiation: formData.competitor_differentiation,
+          competitorChallenges: formData.competitor_challenges,
+          marketGaps: formData.market_gaps,
+          admiredBrands: formData.admired_brands,
+          expectationsFromAgency: formData.expectations_creative_partner,
+          previousAgencyExperience: formData.previous_agency_experience,
+          specificThemesIdeas: formData.specific_themes_ideas,
+          mandatoryElements: formData.mandatory_branding_elements
+        };
       }
 
-      const endpoint = isBrandIdentityPage ? "brand-identity" : "client-feedback";
+      const endpoint = isBrandIdentityPage 
+        ? "/api/v1/clients/brand-questionnaire"
+        : isClientOnboarding 
+          ? "/api/v1/clients/details" 
+          : "/api/v1/client-feedback";
 
       try {
-        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/v1/${endpoint}`, {
-          method: "POST",
-          headers: { "Content-Type": "application/json", "x-api-key": process.env.NEXT_PUBLIC_INTERNAL_API_KEY || "" },
-          body: JSON.stringify(payload),
-        });
-        if (!res.ok) throw new Error("Failed to submit");
+        await apiClient.post(endpoint, payload);
         toast.success("Thank you! Your information has been submitted.");
         setStep(1);
         setFormData({});

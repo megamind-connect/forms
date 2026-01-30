@@ -129,10 +129,10 @@ export default function ProjectToOperation() {
         },
         {
             id: "10",
-            name: "workload_manageable_rating",
-            label: "The workload is manageable most of the time.",
+            name: "supportive_environment_rating",
+            label: "A supportive work environment is encouraged.",
             fieldType: "dropdown",
-            type: "Work Environment & Growth",
+            type: "Behaviour",
             options: [
                 { label: "1", value: "1" },
                 { label: "2", value: "2" },
@@ -143,10 +143,10 @@ export default function ProjectToOperation() {
         },
         {
             id: "11",
-            name: "work_life_balance_rating",
-            label: "I feel a healthy work-life balance is encouraged.",
+            name: "team_needs_understanding_rating",
+            label: "The Operations Manager understands team needs.",
             fieldType: "dropdown",
-            type: "Work Environment & Growth",
+            type: "Management Competency",
             options: [
                 { label: "1", value: "1" },
                 { label: "2", value: "2" },
@@ -157,10 +157,10 @@ export default function ProjectToOperation() {
         },
         {
             id: "12",
-            name: "professional_growth_rating",
-            label: "Megamind feels like a place where I can grow professionally.",
+            name: "effective_challenges_addressing_rating",
+            label: "Challenges are addressed effectively.",
             fieldType: "dropdown",
-            type: "Work Environment & Growth",
+            type: "Management Competency",
             options: [
                 { label: "1", value: "1" },
                 { label: "2", value: "2" },
@@ -171,10 +171,10 @@ export default function ProjectToOperation() {
         },
         {
             id: "13",
-            name: "hr_approachable_rating",
-            label: "HR is approachable and easy to talk to.",
+            name: "team_coordination_rating",
+            label: "Coordination between teams is managed well.",
             fieldType: "dropdown",
-            type: "HR Experience",
+            type: "Management Competency",
             options: [
                 { label: "1", value: "1" },
                 { label: "2", value: "2" },
@@ -185,10 +185,10 @@ export default function ProjectToOperation() {
         },
         {
             id: "14",
-            name: "hr_listens_rating",
-            label: "HR listens to employee concerns seriously.",
+            name: "flexibility_rating",
+            label: "Flexibility is shown when required.",
             fieldType: "dropdown",
-            type: "HR Experience",
+            type: "Management Competency",
             options: [
                 { label: "1", value: "1" },
                 { label: "2", value: "2" },
@@ -199,10 +199,10 @@ export default function ProjectToOperation() {
         },
         {
             id: "15",
-            name: "hr_culture_rating",
-            label: "HR contributes positively to workplace culture.",
+            name: "work_effectiveness_improvement_rating",
+            label: "Support improves work effectiveness.",
             fieldType: "dropdown",
-            type: "HR Experience",
+            type: "Impact & Results",
             options: [
                 { label: "1", value: "1" },
                 { label: "2", value: "2" },
@@ -213,29 +213,64 @@ export default function ProjectToOperation() {
         },
         {
             id: "16",
-            name: "enjoy_working_text",
-            label: "What do you enjoy most about working at Megamind?",
-            fieldType: "short",
-            type: "Open-Ended Questions",
+            name: "team_functioning_improvement_rating",
+            label: "Team functioning improves under the Operations.",
+            fieldType: "dropdown",
+            type: "Impact & Results",
+            options: [
+                { label: "1", value: "1" },
+                { label: "2", value: "2" },
+                { label: "3", value: "3" },
+                { label: "4", value: "4" },
+                { label: "5", value: "5" },
+            ],
         },
         {
             id: "17",
-            name: "challenges_faced_text",
-            label: "What challenges or difficulties do you face at work?",
-            fieldType: "short",
-            type: "Open-Ended Questions",
+            name: "smooth_work_progress_rating",
+            label: "Work progress feels smooth and organized.",
+            fieldType: "dropdown",
+            type: "Impact & Results",
+            options: [
+                { label: "1", value: "1" },
+                { label: "2", value: "2" },
+                { label: "3", value: "3" },
+                { label: "4", value: "4" },
+                { label: "5", value: "5" },
+            ],
         },
         {
             id: "18",
-            name: "improve_life_text",
-            label: "What can be done to improve Life at Megamind?",
+            name: "overall_operations_support_rating",
+            label: "Overall operations support is effective.",
+            fieldType: "dropdown",
+            type: "Impact & Results",
+            options: [
+                { label: "1", value: "1" },
+                { label: "2", value: "2" },
+                { label: "3", value: "3" },
+                { label: "4", value: "4" },
+                { label: "5", value: "5" },
+            ],
+        },
+        {
+            id: "19",
+            name: "works_well_text",
+            label: "What support from the Operations Manager works well?",
             fieldType: "short",
             type: "Open-Ended Questions",
         },
         {
-            id: "19",
-            name: "anonymous_share_text",
-            label: "Is there anything you would like to share anonymously with the HR Team?",
+            id: "20",
+            name: "challenges_text",
+            label: "What challenges do you face?",
+            fieldType: "short",
+            type: "Open-Ended Questions",
+        },
+        {
+            id: "21",
+            name: "improvement_text",
+            label: "What should be improved going forward?",
             fieldType: "short",
             type: "Open-Ended Questions",
         },
@@ -266,27 +301,29 @@ export default function ProjectToOperation() {
             respectful_communication_rating: formData.respectful_communication_rating,
             constructive_feedback_rating: formData.constructive_feedback_rating,
             concerns_listened_rating: formData.concerns_listened_rating,
-            workload_manageable_rating: formData.workload_manageable_rating,
-            work_life_balance_rating: formData.work_life_balance_rating,
-            professional_growth_rating: formData.professional_growth_rating,
-            hr_approachable_rating: formData.hr_approachable_rating,
-            hr_listens_rating: formData.hr_listens_rating,
-            hr_culture_rating: formData.hr_culture_rating,
+            supportive_environment_rating: formData.supportive_environment_rating,
+            team_needs_understanding_rating: formData.team_needs_understanding_rating,
+            effective_challenges_addressing_rating: formData.effective_challenges_addressing_rating,
+            team_coordination_rating: formData.team_coordination_rating,
+            flexibility_rating: formData.flexibility_rating,
+            work_effectiveness_improvement_rating: formData.work_effectiveness_improvement_rating,
+            team_functioning_improvement_rating: formData.team_functioning_improvement_rating,
+            smooth_work_progress_rating: formData.smooth_work_progress_rating,
+            overall_operations_support_rating: formData.overall_operations_support_rating,
 
-            enjoy_working_text: formData.enjoy_working_text || "",
-            challenges_faced_text: formData.challenges_faced_text || "",
-            improve_life_text: formData.improve_life_text || "",
-            anonymous_share_text: formData.anonymous_share_text || "",
+            works_well_text: formData.works_well_text || "",
+            challenges_text: formData.challenges_text || "",
+            improvement_text: formData.improvement_text || "",
         };
 
         try {
-            const res = await apiClient.post(`/api/v1/feedback/project-to-operation`, payload,
+            const res = await apiClient.post(`/api/v1/feedback/project-manager-to-operations-manager`, payload,
                 {
                     headers: {
                         "x-api-key": process.env.NEXT_PUBLIC_INTERNAL_API_KEY,
                     },
                 });
-            router.push("/project-to-operation/thank-you");
+            router.push("/project-to-operation-feedback/thank-you");
 
             setFormData({});
         } catch (err: any) {

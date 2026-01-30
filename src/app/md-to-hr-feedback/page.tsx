@@ -334,7 +334,7 @@ export default function MDToHR() {
                         "x-api-key": process.env.NEXT_PUBLIC_INTERNAL_API_KEY,
                     },
                 });
-            router.push("/md-to-hr/thank-you");
+            router.push("/md-to-hr-feedback/thank-you");
 
             setFormData({});
         } catch (err: any) {

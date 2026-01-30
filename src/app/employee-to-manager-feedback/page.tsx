@@ -293,7 +293,7 @@ export default function Employee() {
         }
       );
 
-      router.push("/employee/thank-you");
+      router.push("/employee-to-manager-feedback/thank-you");
       setFormData({});
     } catch (err: any) {
       console.error("Submission error:", err);

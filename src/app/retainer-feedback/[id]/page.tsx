@@ -1,11 +1,12 @@
 "use client";
-
 import { useState } from "react";
 import DynamicField from "@/components/client/DynamicFields";
 import { Step2Form } from "@/components/client/Step2Form";
 import { StepIndicator } from "@/components/client/StepIndicator";
 import { Button } from "@/components/ui/Button";
 import toast from "react-hot-toast";
+import { useParams, useRouter } from "next/navigation";
+import apiClient from "@/lib/api";
 
 // --- Field Definitions ---
 
@@ -18,9 +19,9 @@ const step1Fields = [
         fieldType: "text",
     },
     {
-        id: "resp_name",
-        name: "respondent_name",
-        label: "2. Name of the Respondent",
+        id: "person_name",
+        name: "person_name",
+        label: "2. Name of the person",
         placeholder: "Enter your answer",
         fieldType: "text",
     },
@@ -49,12 +50,11 @@ const step2Fields = [
         label: "4. How would you rate your overall experience with Megamind?",
         fieldType: "rating5",
         options: [
-            { value: "very_poor", label: "Very Poor" },
-            { value: "poor", label: "poor" },
-            { value: "average", label: "Average" },
-            { value: "good", label: "good" },
-            { value: "excellent", label: "Excellent" },
-            { value: "exceptional", label: "Exceptional" },
+            { value: "Very Poor", label: "Very Poor" },
+            { value: "Poor", label: "Poor" },
+            { value: "Average", label: "Average" },
+            { value: "Good", label: "Good" },
+            { value: "Exceptional", label: "Exceptional" },
         ],
     },
     {
@@ -63,12 +63,11 @@ const step2Fields = [
         label: "5. How would you assess the impact and results of our services on your brand?",
         fieldType: "rating5",
         options: [
-            { value: "very_poor", label: "Very Poor" },
-            { value: "poor", label: "poor" },
-            { value: "average", label: "Average" },
-            { value: "good", label: "good" },
-            { value: "excellent", label: "Excellent" },
-            { value: "exceptional", label: "Exceptional" },
+            { value: "Very Poor", label: "Very Poor" },
+            { value: "Poor", label: "Poor" },
+            { value: "Average", label: "Average" },
+            { value: "Good", label: "Good" },
+            { value: "Exceptional", label: "Exceptional" },
         ],
     },
     {
@@ -77,12 +76,11 @@ const step2Fields = [
         label: "6. Quality of services provided?",
         fieldType: "rating5",
         options: [
-            { value: "very_poor", label: "Very Poor" },
-            { value: "poor", label: "poor" },
-            { value: "average", label: "Average" },
-            { value: "good", label: "good" },
-            { value: "excellent", label: "Excellent" },
-            { value: "exceptional", label: "Exceptional" },
+            { value: "Very Poor", label: "Very Poor" },
+            { value: "Poor", label: "Poor" },
+            { value: "Average", label: "Average" },
+            { value: "Good", label: "Good" },
+            { value: "Exceptional", label: "Exceptional" },
         ],
     },
     {
@@ -91,12 +89,11 @@ const step2Fields = [
         label: "7. Delivery Time of services",
         fieldType: "rating5",
         options: [
-            { value: "very_poor", label: "Very Poor" },
-            { value: "poor", label: "poor" },
-            { value: "average", label: "Average" },
-            { value: "good", label: "good" },
-            { value: "excellent", label: "Excellent" },
-            { value: "exceptional", label: "Exceptional" },
+            { value: "Very Poor", label: "Very Poor" },
+            { value: "Poor", label: "Poor" },
+            { value: "Average", label: "Average" },
+            { value: "Good", label: "Good" },
+            { value: "Exceptional", label: "Exceptional" },
         ],
     },
     {
@@ -105,12 +102,11 @@ const step2Fields = [
         label: "8. How would you rate our Brand Strategy in terms of aligning with your business",
         fieldType: "rating5",
         options: [
-            { value: "very_poor", label: "Very Poor" },
-            { value: "poor", label: "poor" },
-            { value: "average", label: "Average" },
-            { value: "good", label: "good" },
-            { value: "excellent", label: "Excellent" },
-            { value: "exceptional", label: "Exceptional" },
+            { value: "Very Poor", label: "Very Poor" },
+            { value: "Poor", label: "Poor" },
+            { value: "Average", label: "Average" },
+            { value: "Good", label: "Good" },
+            { value: "Exceptional", label: "Exceptional" },
         ],
     },
 ];
@@ -122,132 +118,150 @@ const step3Fields = [
         label: "9. Which service(s) did we provide for you?",
         fieldType: "checkbox_group",
         options: [
-            { label: "Graphic Design", value: "graphic_design" },
-            { label: "PPC", value: "ppc" },
-            { label: "Video Shoot / Production", value: "video_shoot_production" },
-            { label: "Video Editing", value: "video_editing" },
-            { label: "Social Media Management", value: "social_media_management" },
-            { label: "Social Media Marketing", value: "social_media_marketing" },
-            { label: "Website Development", value: "website_development" },
-            { label: "Software Development", value: "software_development" },
+            { label: "Graphic Design", value: "Graphic Design" },
+            { label: "PPC", value: "PPC" },
+            { label: "Video Shoot / Production", value: "Video Shoot / Production" },
+            { label: "Video Editing", value: "Video Editing" },
+            { label: "Social Media Management", value: "Social Media Management" },
+            { label: "Social Media Marketing (includes Graphic Design, Video Shoot, Video Editing, and Management)", value: "Social Media Marketing" },
+            { label: "Website Development", value: "Website Development" },
+            { label: "Software Development", value: "Software Development" },
             { label: "Others…", value: "other" },
         ],
     },
     {
         id: "service_align_buisness",
         name: "service_align_buisness",
-        label: "10. How well do our services align with your business goals? ",
+        label: "10. How well do our services align with your business goals this month?  ",
         fieldType: "rating5",
         options: [
-            { value: "extremely_well", label: "Extremely Well" },
-            { value: "somewhat_well", label: "Somewhat Well" },
-            { value: "neutral", label: "Neutral" },
-            { value: "somewhat_not_well", label: "Somewhat Not Well" },
-            { value: "extremely_not_well", label: "Extremely Not Well" },
+            { value: "Extremely Well", label: "Extremely Well" },
+            { value: "Somewhat Well", label: "Somewhat Well" },
+            { value: "Neutral", label: "Neutral" },
+            { value: "Somewhat Not Well", label: "Somewhat Not Well" },
+            { value: "Extremely Not Well", label: "Extremely Not Well" },
         ],
     },
     {
-        id: "feedback_requests",
-        name: "feedback_requests",
-        label: "11. Do you feel your feedback and requests were understood and incorporated into the work?  ",
+        id: "rate_ability_deadlines",
+        name: "rate_ability_deadlines",
+        label: "11. How would you rate our ability to meet deadlines this month?   ",
         fieldType: "rating5",
         options: [
-            { value: "never", label: "Never" },
-            { value: "rarely", label: "Rarely" },
-            { value: "sometimes", label: "Sometimes" },
-            { value: "usually", label: "Usually" },
-            { value: "always", label: "Always" },
+            { value: "Never", label: "Never" },
+            { value: "Rarely", label: "Rarely" },
+            { value: "Sometimes", label: "Sometimes" },
+            { value: "Usually", label: "Usually" },
+            { value: "Always", label: "Always" },
+        ],
+    },
+    {
+        id: "feedback_requests_understanding",
+        name: "feedback_requests_understanding",
+        label: "12. Do you feel your feedback and requests were understood and incorporated into the work?   ",
+        fieldType: "rating5",
+        options: [
+            { value: "Excellent", label: "Excellent" },
+            { value: "Good", label: "Good" },
+            { value: "Average", label: "Average" },
+            { value: "Poor", label: "Poor" },
+            { value: "Very Poor", label: "Very Poor" },
         ],
     },
 ];
 
 const step4Fields = [
     {
-        id: "content_creation",
-        name: "content_creation",
-        label: "12. How would you rate our content creation and creative work in representing your brand?  ",
+        id: "digital_marketing_results",
+        name: "digital_marketing_results",
+        label: "13. How would you rate our Digital Marketing services in driving measurable results for your business?   ",
         fieldType: "rating5",
         options: [
-            { value: "excellent", label: "Excellent" },
-            { value: "good", label: "Good" },
-            { value: "average", label: "Average" },
-            { value: "poor", label: "Poor" },
-            { value: "very_poor", label: "Very Poor" },
+            { value: "Significant Results", label: "Significant Results" },
+            { value: "Strong Results", label: "Strong Results" },
+            { value: "Moderate Results", label: "Moderate Results" },
+            { value: "Minimal Results", label: "Minimal Results" },
+            { value: "No Results", label: "No Results" },
+        ],
+    },
+    {
+        id: "creative_work",
+        name: "creative_work",
+        label: "14. How would you rate our content creation and creative work in representing your brand? ",
+        fieldType: "rating5",
+        options: [
+            { value: "Excellent", label: "Excellent" },
+            { value: "Good", label: "Good" },
+            { value: "Average", label: "Average" },
+            { value: "Very Slow", label: "Very Slow" },
+            { value: "Slow", label: "Slow" },
         ],
     },
     {
         id: "surprised_deliverables",
         name: "surprised_deliverables",
-        label: "13. Were there any deliverables that pleasantly surprised you? If so, we would love to know which ones and what made them stand out for you? ",
+        label: "15. Were there any deliverables that pleasantly surprised you? If so, we would love to know which ones and what made them stand out for you. ",
         fieldType: "text",
-
     },
-
     {
-        id: "creative_work",
-        name: "creative_work",
-        label: "14. How well did our team respond to your enquiries? ",
+        id: "enquiries_response",
+        name: "enquiries_response",
+        label: "16. How well did our team respond to your enquiries?  ",
         fieldType: "rating5",
         options: [
-            { value: "extremely_responsive", label: "Extremely Responsive" },
-            { value: "responsive", label: "Responsive" },
-            { value: "neutral", label: "Neutral" },
-            { value: "very_slow", label: "Very Slow" },
-            { value: "slow", label: "Slow" },
+            { value: "Extremely Responsive", label: "Extremely Responsive" },
+            { value: "Responsive", label: "Responsive" },
+            { value: "Neutral", label: "Neutral" },
+            { value: "Very Slow", label: "Very Slow" },
+            { value: "Slow", label: "Slow" },
         ],
     },
-
-
 ];
 
 const step5Fields = [
     {
         id: "overall_work_relationship",
         name: "overall_work_relationship",
-        label: "15. How would you describe the overall working relationship with our team?  (Please specify any areas where we fell short)",
+        label: "17. How would you describe the overall working relationship with our team?  (Please specify any areas where we fell short)",
         fieldType: "short_text",
-
     },
     {
         id: "project_improvements",
         name: "project_improvements",
-        label: "16. Are there any improvements you would like to see in the next Project? ",
+        label: "18. Are there any improvements you would like to see in the coming months?  ",
         fieldType: "short_text",
-
     },
     {
         id: "future_service",
         name: "future_service",
-        label: "17. How likely are you to continue using our service in future? ",
+        label: "19. How likely are you to continue using our service in the coming months? ",
         fieldType: "rating5",
         options: [
-            { value: "definitely_yes", label: "Definitely Yes" },
-            { value: "probably_yes", label: "Probably Yes" },
-            { value: "not_sure_yet", label: "Not sure yet" },
-            { value: "probably_not", label: "Probably Not" },
-            { value: "definitely_not", label: "Definitely Not" },
+            { value: "Definitely Yes", label: "Definitely Yes" },
+            { value: "Probably Yes", label: "Probably Yes" },
+            { value: "Not sure yet", label: "Not sure yet" },
+            { value: "Probably Not", label: "Probably Not" },
+            { value: "Definitely Not", label: "Definitely Not" },
         ],
     },
-
     {
         id: "recommendation",
         name: "recommendation",
-        label: "18. How likely are you to recommend Megamind to others?  ",
+        label: "20.How likely are you to recommend Megamind to others?   ",
         fieldType: "rating5",
         options: [
-            { value: "definitely_yes", label: "Definitely Yes" },
-            { value: "probably_yes", label: "Probably Yes" },
-            { value: "not_sure", label: "Not sure" },
-            { value: "probably_not", label: "Probably Not" },
-            { value: "definitely_not", label: "Definitely Not" },
+            { value: "Definitely Yes", label: "Definitely Yes" },
+            { value: "Probably Yes", label: "Probably Yes" },
+            { value: "Not sure", label: "Not sure" },
+            { value: "Probably Not", label: "Probably Not" },
+            { value: "Definitely Not", label: "Definitely Not" },
         ],
     },
     {
-        id: "comments",
-        name: "comments",
-        label: "19. Any other comments or suggestions for improvement? ",
+        id: "comments_suggestions",
+        name: "comments_suggestions",
+        label: "21. Any other comments or suggestions for improvement? ",
         fieldType: "short_text",
-
     },
 ];
 
@@ -255,7 +269,11 @@ const step5Fields = [
 const STEPS_COUNT = 5;
 const stepStructure = { 1: 1, 2: 1, 3: 1, 4: 1, 5: 1 };
 
-export default function OneTimerClientPage() {
+export default function RetainerFeedbackPage() {
+    const params = useParams();
+    const router = useRouter();
+    const id = params?.id as string;
+
     const [step, setStep] = useState(1);
     const [formData, setFormData] = useState<Record<string, any>>({});
     const [touched, setTouched] = useState<Record<string, boolean>>({});
@@ -322,21 +340,41 @@ export default function OneTimerClientPage() {
     };
 
     const handleSubmit = async () => {
-        console.log("Submitting Form Data:", formData);
-        // TODO: Connect to API
+        const payload = {
+            clientId: id,
+            organisation_name: formData.organisation_name,
+            person_name: formData.person_name,
+            position_role: formData.position_role,
+            overall_experience: formData.overall_experience || "",
+            impact_results: formData.impact_results || "",
+            quality_services: formData.quality_services || "",
+            delivery_time: formData.delivery_time || "",
+            brand_strategy: formData.brand_strategy || "",
+            services_provided: formData.services_provided?.list || [],
+            service_align_buisness: formData.service_align_buisness || "",
+            rate_ability_deadlines: formData.rate_ability_deadlines || "",
+            feedback_requests_understanding: formData.feedback_requests_understanding || "",
+            digital_marketing_results: formData.digital_marketing_results || "",
+            creative_work: formData.creative_work || "",
+            surprised_deliverables: formData.surprised_deliverables || "",
+            enquiries_response: formData.enquiries_response || "",
+            overall_work_relationship: formData.overall_work_relationship || "",
+            project_improvements: formData.project_improvements || "",
+            future_service: formData.future_service || "",
+            recommendation: formData.recommendation || "",
+            comments_suggestions: formData.comments_suggestions || "",
+        };
+
         try {
-            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/v1/client-feedback`, {
-                method: "POST",
-                headers: { "Content-Type": "application/json", "x-api-key": process.env.NEXT_PUBLIC_INTERNAL_API_KEY || "" },
-                body: JSON.stringify({
-                    ...formData,
-                    form_type: "one-timer-client" // Optional discriminator
-                }),
+            await apiClient.post(`/api/v1/feedback/retainer`, payload, {
+                headers: {
+                    "x-api-key": process.env.NEXT_PUBLIC_INTERNAL_API_KEY,
+                },
             });
-            if (!res.ok) throw new Error("Failed to submit");
             toast.success("Thank you! Your feedback has been submitted.");
-            setStep(1);
+            router.push("/retainer-feedback/thank-you");
             setFormData({});
+            setStep(1);
         } catch (err) {
             console.error("Submission error:", err);
             toast.error("Something went wrong. Please try again.");
@@ -345,19 +383,16 @@ export default function OneTimerClientPage() {
 
     const getStepProgress = (n: number) => {
         if (n < step) return 100;
-        if (n === step) return 50; // Partial progress for current step? Or just 0.
+        if (n === step) return 50;
         return 0;
     };
 
     const handleStepClick = (n: number) => {
-        // Only allow going back or to current step, or forward if validated?
-        // For simplicity, allow going back.
         if (n < step) {
             setStep(n);
         }
     };
 
-    // Render logic helpers
     const renderStepFields = (fields: any[]) => (
         <div className="px-4 max-w-2xl w-full pb-3 mx-auto md:px-0">
             {step === 2 && <h2 className="text-[32px] font-medium text-primary mt-4 mb-6">Overall Experience</h2>}
@@ -391,8 +426,6 @@ export default function OneTimerClientPage() {
 
     return (
         <div className="relative min-h-screen !bg-[#FFFBFB] flex flex-col py-10 justify-center overflow-hidden">
-
-            {/* Step Progress Indicator */}
             <StepIndicator
                 step={step}
                 stepStructure={stepStructure}
@@ -400,7 +433,6 @@ export default function OneTimerClientPage() {
                 handleStepClick={handleStepClick}
             />
 
-            {/* STEP 1 */}
             {step === 1 && (
                 <Step2Form
                     formFields={step1Fields}
@@ -411,23 +443,15 @@ export default function OneTimerClientPage() {
                     touched={touched}
                     markFieldTouched={markFieldTouched}
                     markAllFieldsTouched={() => markAllFieldsTouched(step1Fields)}
-                    headerTitle="" // Title is empty as per Image 0? Or maybe "Step 1"? Image 0 doesn't show big header for the form itself.
+                    headerTitle=""
                     isClientPage={true}
                 />
             )}
 
-            {/* STEP 2 */}
             {step === 2 && renderStepFields(step2Fields)}
-
-            {/* STEP 3 */}
             {step === 3 && renderStepFields(step3Fields)}
-
-            {/* STEP 4 */}
             {step === 4 && renderStepFields(step4Fields)}
-
-            {/* STEP 5 */}
             {step === 5 && renderStepFields(step5Fields)}
-
         </div>
     );
 }

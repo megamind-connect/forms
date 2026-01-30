@@ -32,7 +32,7 @@ export default function Manager() {
     {
       id: "3",
       name: "understands_brief_rating",
-      label: "Does The employee understands assigned responsibilities?",
+      label: "The employee understands assigned responsibilities.",
       fieldType: "dropdown",
       type: "Work Approach & Actions",
       options: [
@@ -46,7 +46,7 @@ export default function Manager() {
     {
       id: "4",
       name: "on_time_delivery_rating",
-      label: "Have the tasks been completed within the agreed timelines?",
+      label: "Tasks are completed within agreed timelines.",
       fieldType: "dropdown",
       type: "Work Approach & Actions",
       options: [
@@ -74,7 +74,7 @@ export default function Manager() {
     {
       id: "6",
       name: "creative_contribution_rating",
-      label: "Do they follow the Instructions correctly?",
+      label: "Instructions are followed correctly.",
       fieldType: "dropdown",
       type: "Work Approach & Actions",
       options: [
@@ -88,7 +88,7 @@ export default function Manager() {
     {
       id: "7",
       name: "attention_to_detail_rating",
-      label: "Do they communicate clearly and professionally?",
+      label: "Communication is clear and professional.",
       fieldType: "dropdown",
       type: "Professional Behaviour",
       options: [
@@ -102,7 +102,7 @@ export default function Manager() {
     {
       id: "8",
       name: "collaboration_rating",
-      label: "Do they accept feedback positively?",
+      label: "Feedback is accepted positively.",
       fieldType: "dropdown",
       type: "Professional Behaviour",
       options: [
@@ -116,7 +116,7 @@ export default function Manager() {
     {
       id: "9",
       name: "self_management_rating",
-      label: "Is accountability shown for work outcomes?",
+      label: "Accountability is shown for work outcomes.",
       fieldType: "dropdown",
       type: "Professional Behaviour",
       options: [
@@ -130,7 +130,7 @@ export default function Manager() {
     {
       id: "10",
       name: "adaptability_rating",
-      label: "Coordination with others is smooth?",
+      label: "Coordination with others is smooth.",
       fieldType: "dropdown",
       type: "Professional Behaviour",
       options: [
@@ -144,7 +144,7 @@ export default function Manager() {
     {
       id: "11",
       name: "growth_rating",
-      label: "The employee has the required skills for the role?",
+      label: "The employee has the required skills for the role.",
       fieldType: "dropdown",
       type: "Role Competency",
       options: [
@@ -158,7 +158,7 @@ export default function Manager() {
     {
       id: "12",
       name: "learning_rating",
-      label: "The employee applies skills effectively in work?",
+      label: "The employee applies skills effectively in work.",
       fieldType: "dropdown",
       type: "Role Competency",
       options: [
@@ -172,7 +172,7 @@ export default function Manager() {
     {
       id: "13",
       name: "last_minute_reason_clarity_rating",
-      label: "The employee shows willingness to learn and improve?",
+      label: "The employee shows willingness to learn and improve.",
       fieldType: "dropdown",
       type: "Role Competency",
       options: [
@@ -187,7 +187,7 @@ export default function Manager() {
     {
       id: "14",
       name: "last_minute_handling_rating",
-      label: "The employee adapts well to changes?",
+      label: "The employee adapts well to changes.",
       fieldType: "dropdown",
       type: "Role Competency",
       options: [
@@ -201,7 +201,7 @@ export default function Manager() {
     {
       id: "15",
       name: "deadline_communication_rating",
-      label: "Work output meets expectations?",
+      label: "Work output meets expectations.",
       fieldType: "dropdown",
       type: "Results & Contribution",
       options: [
@@ -214,7 +214,7 @@ export default function Manager() {
     },
 
     {
-      id: "16", name: "creative_strength_text", label: "Contributions support team goals?", fieldType: "dropdown", type: "Results & Contribution",
+      id: "16", name: "creative_strength_text", label: "Contributions support team goals.", fieldType: "dropdown", type: "Results & Contribution",
       options: [
         { label: "1", value: "1" },
         { label: "2", value: "2" },
@@ -226,7 +226,7 @@ export default function Manager() {
     {
       id: "17",
       name: "improvement_area_text",
-      label: "Work quality is consistent?",
+      label: "Work quality is consistent.",
       fieldType: "dropdown",
       type: "Results & Contribution",
       options: [
@@ -240,7 +240,7 @@ export default function Manager() {
     {
       id: "18",
       name: "process_limitation_text",
-      label: "Overall performance is satisfactory?",
+      label: "Overall performance is satisfactory.",
       fieldType: "dropdown",
       type: "Results & Contribution",
       options: [
@@ -310,17 +310,20 @@ export default function Manager() {
       creative_strength_text: formData.creative_strength_text || "",
       improvement_area_text: formData.improvement_area_text || "",
       process_limitation_text: formData.process_limitation_text || "",
+      what_went_well_text: formData.what_went_well_text || "",
+      what_needs_improvement_text: formData.what_needs_improvement_text || "",
+      what_should_be_done_differently_text: formData.what_should_be_done_differently_text || "",
     };
 
 
     try {
-      const res = await apiClient.post(`/api/v1/feedback/operations-to-project-manage`, payload,
+      const res = await apiClient.post(`/api/v1/feedback/operations-to-project-manager`, payload,
         {
           headers: {
             "x-api-key": process.env.NEXT_PUBLIC_INTERNAL_API_KEY,
           },
         });
-      router.push("/manager/thank-you");
+      router.push("/operations-to-project-feedback/thank-you");
 
       setFormData({});
     } catch (err: any) {
