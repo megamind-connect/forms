@@ -19,260 +19,267 @@ interface FormField {
     placeholder?: string;
 }
 
-export default function Manager() {
+export default function ManagerToIntern() {
     const [formData, setFormData] = useState<Record<string, any>>({});
     const [errors, setErrors] = useState<Record<string, string>>({});
 
     const router = useRouter();
 
     const step2Fields = [
-        { id: "1", name: "submitted_by_id", label: "Your Name", fieldType: "searchable" },
-        { id: "2", name: "submitted_for_id", label: "MD's Name", fieldType: "searchable" },
+        { id: "submitted_by", name: "submitted_by_id", label: "Your Name", fieldType: "searchable" },
+        { id: "submitted_for", name: "submitted_for_id", label: "Employee's Name", fieldType: "searchable" },
 
-        // Actions & Decision-Making
+        // Work & Actions
         {
-            id: "3",
+            id: "1",
             name: "understands_brief_rating",
-            label: "The MD clearly communicates company goals and priorities.",
+            label: "Understand the tasks assigned.",
             fieldType: "dropdown",
-            type: "Actions & Decision-Making",
+            type: "Work & Actions",
             options: [
-                { label: "5", value: "5" },
-                { label: "4", value: "4" },
-                { label: "3", value: "3" },
-                { label: "2", value: "2" },
                 { label: "1", value: "1" },
+                { label: "2", value: "2" },
+                { label: "3", value: "3" },
+                { label: "4", value: "4" },
+                { label: "5", value: "5" },
             ],
         },
         {
-            id: "4",
+            id: "on_time_delivery",
             name: "on_time_delivery_rating",
-            label: "Decisions taken by the MD are clear and well-explained.",
+            label: "Completes assigned work on time.",
             fieldType: "dropdown",
-            type: "Actions & Decision-Making",
+            type: "Work & Actions",
             options: [
-                { label: "5", value: "5" },
-                { label: "4", value: "4" },
-                { label: "3", value: "3" },
-                { label: "2", value: "2" },
                 { label: "1", value: "1" },
+                { label: "2", value: "2" },
+                { label: "3", value: "3" },
+                { label: "4", value: "4" },
+                { label: "5", value: "5" },
             ],
         },
         {
-            id: "5",
+            id: "feedback_implementation",
             name: "feedback_implementation_rating",
-            label: "Provides direction during important situations.",
+            label: "Follows instructions clearly.",
             fieldType: "dropdown",
-            type: "Actions & Decision-Making",
+            type: "Work & Actions",
             options: [
-                { label: "5", value: "5" },
-                { label: "4", value: "4" },
-                { label: "3", value: "3" },
-                { label: "2", value: "2" },
                 { label: "1", value: "1" },
+                { label: "2", value: "2" },
+                { label: "3", value: "3" },
+                { label: "4", value: "4" },
+                { label: "5", value: "5" },
             ],
         },
         {
-            id: "6",
+            id: "work_responsibility",
             name: "creative_contribution_rating",
-            label: "The MD follows up on key actions.",
+            label: "Shows responsibility towards assigned tasks.",
             fieldType: "dropdown",
-            type: "Actions & Decision-Making",
+            type: "Work & Actions",
             options: [
-                { label: "5", value: "5" },
-                { label: "4", value: "4" },
-                { label: "3", value: "3" },
-                { label: "2", value: "2" },
                 { label: "1", value: "1" },
+                { label: "2", value: "2" },
+                { label: "3", value: "3" },
+                { label: "4", value: "4" },
+                { label: "5", value: "5" },
             ],
         },
 
-        // Leadership Behavior
+        // Behaviour & Attitude
         {
-            id: "7",
+            id: "attention_to_detail",
             name: "attention_to_detail_rating",
-            label: "Listen to different viewpoints.",
+            label: "Communicates respectfully.",
             fieldType: "dropdown",
-            type: "Leadership Behavior",
+            type: "Behaviour & Attitude",
             options: [
-                { label: "5", value: "5" },
-                { label: "4", value: "4" },
-                { label: "3", value: "3" },
-                { label: "2", value: "2" },
                 { label: "1", value: "1" },
+                { label: "2", value: "2" },
+                { label: "3", value: "3" },
+                { label: "4", value: "4" },
+                { label: "5", value: "5" },
             ],
         },
         {
-            id: "8",
+            id: "collaboration",
             name: "collaboration_rating",
-            label: "The MD treats all departments fairly.",
+            label: "Is open to feedback and guidance.",
             fieldType: "dropdown",
-            type: "Leadership Behavior",
+            type: "Behaviour & Attitude",
             options: [
-                { label: "5", value: "5" },
-                { label: "4", value: "4" },
-                { label: "3", value: "3" },
-                { label: "2", value: "2" },
                 { label: "1", value: "1" },
+                { label: "2", value: "2" },
+                { label: "3", value: "3" },
+                { label: "4", value: "4" },
+                { label: "5", value: "5" },
             ],
         },
         {
-            id: "9",
+            id: "self_management",
             name: "self_management_rating",
-            label: "Maintains professionalism in challenging situations.",
+            label: "Shows a positive attitude towards work.",
             fieldType: "dropdown",
-            type: "Leadership Behavior",
+            type: "Behaviour & Attitude",
             options: [
-                { label: "5", value: "5" },
-                { label: "4", value: "4" },
-                { label: "3", value: "3" },
-                { label: "2", value: "2" },
                 { label: "1", value: "1" },
+                { label: "2", value: "2" },
+                { label: "3", value: "3" },
+                { label: "4", value: "4" },
+                { label: "5", value: "5" },
             ],
         },
         {
-            id: "10",
+            id: "adaptability",
             name: "adaptability_rating",
-            label: "The MD encourages open and honest communication.",
+            label: "Works well with team members.",
             fieldType: "dropdown",
-            type: "Leadership Behavior",
+            type: "Behaviour & Attitude",
             options: [
-                { label: "5", value: "5" },
-                { label: "4", value: "4" },
-                { label: "3", value: "3" },
-                { label: "2", value: "2" },
                 { label: "1", value: "1" },
+                { label: "2", value: "2" },
+                { label: "3", value: "3" },
+                { label: "4", value: "4" },
+                { label: "5", value: "5" },
             ],
         },
 
-        // Competency & Business Understanding
+        // Learning & Competency
         {
-            id: "11",
+            id: "willingness_to_learn",
             name: "growth_rating",
-            label: "The MD demonstrates a strong understanding of the business.",
+            label: "Shows willingness to learn new skills.",
             fieldType: "dropdown",
-            type: "Competency & Business Understanding",
+            type: "Learning & Competency",
             options: [
-                { label: "5", value: "5" },
-                { label: "4", value: "4" },
-                { label: "3", value: "3" },
-                { label: "2", value: "2" },
                 { label: "1", value: "1" },
+                { label: "2", value: "2" },
+                { label: "3", value: "3" },
+                { label: "4", value: "4" },
+                { label: "5", value: "5" },
             ],
         },
         {
-            id: "12",
+            id: "apply_learning",
             name: "learning_rating",
-            label: "The MD aligns decisions with the company's vision.",
+            label: "Applies learning to assigned work.",
             fieldType: "dropdown",
-            type: "Competency & Business Understanding",
+            type: "Learning & Competency",
             options: [
-                { label: "5", value: "5" },
-                { label: "4", value: "4" },
-                { label: "3", value: "3" },
-                { label: "2", value: "2" },
                 { label: "1", value: "1" },
+                { label: "2", value: "2" },
+                { label: "3", value: "3" },
+                { label: "4", value: "4" },
+                { label: "5", value: "5" },
             ],
         },
         {
-            id: "13",
+            id: "asks_questions",
             name: "last_minute_reason_clarity_rating",
-            label: "The MD supports departments in addressing challenges.",
+            label: "Asks questions when unsure.",
             fieldType: "dropdown",
-            type: "Competency & Business Understanding",
+            type: "Learning & Competency",
             options: [
-                { label: "5", value: "5" },
-                { label: "4", value: "4" },
-                { label: "3", value: "3" },
-                { label: "2", value: "2" },
                 { label: "1", value: "1" },
+                { label: "2", value: "2" },
+                { label: "3", value: "3" },
+                { label: "4", value: "4" },
+                { label: "5", value: "5" },
+            ],
+        },
+        {
+            id: "adapts_to_tasks",
+            name: "last_minute_handling_rating",
+            label: "Adapts well to new tasks.",
+            fieldType: "dropdown",
+            type: "Learning & Competency",
+            options: [
+                { label: "1", value: "1" },
+                { label: "2", value: "2" },
+                { label: "3", value: "3" },
+                { label: "4", value: "4" },
+                { label: "5", value: "5" },
             ],
         },
 
-        // Results & Impact
+        // Contribution & Results
         {
-            id: "14",
-            name: "last_minute_handling_rating",
-            label: "The MD's leadership positively impacts overall performance.",
-            fieldType: "dropdown",
-            type: "Results & Impact",
-            options: [
-                { label: "5", value: "5" },
-                { label: "4", value: "4" },
-                { label: "3", value: "3" },
-                { label: "2", value: "2" },
-                { label: "1", value: "1" },
-            ],
-        },
-        {
-            id: "15",
+            id: "meets_expectations",
             name: "deadline_communication_rating",
-            label: "The MD enables smooth collaboration between departments.",
+            label: "Work meets expectations for the role.",
             fieldType: "dropdown",
-            type: "Results & Impact",
+            type: "Contribution & Results",
             options: [
-                { label: "5", value: "5" },
-                { label: "4", value: "4" },
-                { label: "3", value: "3" },
-                { label: "2", value: "2" },
                 { label: "1", value: "1" },
+                { label: "2", value: "2" },
+                { label: "3", value: "3" },
+                { label: "4", value: "4" },
+                { label: "5", value: "5" },
             ],
         },
         {
-            id: "16",
+            id: "positive_contribution",
             name: "creative_strength_text",
-            label: "The MD supports teams in achieving their goals.",
+            label: "Contributes positively to the team.",
             fieldType: "dropdown",
-            type: "Results & Impact",
+            type: "Contribution & Results",
             options: [
-                { label: "5", value: "5" },
-                { label: "4", value: "4" },
-                { label: "3", value: "3" },
-                { label: "2", value: "2" },
                 { label: "1", value: "1" },
+                { label: "2", value: "2" },
+                { label: "3", value: "3" },
+                { label: "4", value: "4" },
+                { label: "5", value: "5" },
             ],
         },
         {
-            id: "17",
+            id: "shows_improvement",
             name: "improvement_area_text",
-            label: "Overall, the MD provides effective leadership.",
+            label: "Shows improvement over time.",
             fieldType: "dropdown",
-            type: "Results & Impact",
+            type: "Contribution & Results",
             options: [
-                { label: "5", value: "5" },
-                { label: "4", value: "4" },
-                { label: "3", value: "3" },
-                { label: "2", value: "2" },
                 { label: "1", value: "1" },
+                { label: "2", value: "2" },
+                { label: "3", value: "3" },
+                { label: "4", value: "4" },
+                { label: "5", value: "5" },
+            ],
+        },
+        {
+            id: "satisfactory_performance",
+            name: "process_limitation_text",
+            label: "Overall performance is satisfactory.",
+            fieldType: "dropdown",
+            type: "Contribution & Results",
+            options: [
+                { label: "1", value: "1" },
+                { label: "2", value: "2" },
+                { label: "3", value: "3" },
+                { label: "4", value: "4" },
+                { label: "5", value: "5" },
             ],
         },
 
         // Open-Ended Questions
         {
-            id: "18",
-            name: "process_limitation_text",
-            label: "What leadership actions of the MD are working well?",
-            fieldType: "short",
-            type: "Open-Ended Questions",
-        },
-        {
-            id: "19",
+            id: "what_went_well",
             name: "what_went_well_text",
-            label: "What areas of leadership could be improved?",
+            label: "What went well?",
             fieldType: "short",
             type: "Open-Ended Questions",
         },
         {
-            id: "20",
+            id: "improvement_areas",
             name: "what_needs_improvement_text",
-            label: "What should the MD do differently to better support teams?",
+            label: "What areas need improvement?",
             fieldType: "short",
             type: "Open-Ended Questions",
         },
         {
-            id: "21",
+            id: "forward_focus",
             name: "what_should_be_done_differently_text",
-            label: "Any additional confidential feedback you would like to share?",
+            label: "What should be focused on going forward?",
             fieldType: "short",
             type: "Open-Ended Questions",
         },
@@ -314,20 +321,24 @@ export default function Manager() {
             creative_strength_text: formData.creative_strength_text || "",
             improvement_area_text: formData.improvement_area_text || "",
             process_limitation_text: formData.process_limitation_text || "",
+            what_went_well_text: formData.what_went_well_text || "",
+            what_needs_improvement_text: formData.what_needs_improvement_text || "",
+            what_should_be_done_differently_text: formData.what_should_be_done_differently_text || "",
         };
 
 
         try {
-            const res = await apiClient.post(`/api/v1/feedback/fin-hr-op-to-md`, payload,
+            const res = await apiClient.post(`/api/v1/feedback/manager-to-intern`, payload,
                 {
                     headers: {
                         "x-api-key": process.env.NEXT_PUBLIC_INTERNAL_API_KEY,
                     },
                 });
-            router.push("/manager/thank-you");
+            router.push("/manager-to-intern/thank-you");
 
             setFormData({});
         } catch (err: any) {
+            console.error("Submission error:", err);
             toast.error("Something went wrong. Please check required fields or API schema.");
         }
     };
@@ -335,7 +346,7 @@ export default function Manager() {
     const month = new Date().toLocaleString("en-US", { month: "long" });
     return (
         <div className="relative min-h-screen flex flex-col  justify-center bg-[#F9F9F9] overflow-hidden">
-            <div className="max-w-6xl mx-auto py-10">
+            <div className="w-full max-w-6xl mx-auto py-10">
                 <div className="w-full relative flex  px-6 justify-center items-center mb-6">
                     <Image
                         src="/images/feedBackImage.png" // <-- your image here

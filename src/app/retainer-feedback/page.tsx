@@ -159,7 +159,7 @@ const step3Fields = [
             { value: "always", label: "Always" },
         ],
     },
-     {
+    {
         id: "feedback_requests_understanding",
         name: "feedback_requests_understanding",
         label: "12. Do you feel your feedback and requests were understood and incorporated into the work?   ",
@@ -175,7 +175,7 @@ const step3Fields = [
 ];
 
 const step4Fields = [
-   
+
     {
         id: "digital_marketing_results",
         name: "digital_marketing_results",
@@ -203,14 +203,14 @@ const step4Fields = [
             { value: "slow", label: "Slow" },
         ],
     },
-        {
+    {
         id: "surprised_deliverables",
         name: "surprised_deliverables",
         label: "15. Were there any deliverables that pleasantly surprised you? If so, we would love to know which ones and what made them stand out for you. ",
         fieldType: "text",
-   
+
     },
-        {
+    {
         id: "enquiries_response",
         name: "enquiries_response",
         label: "16. How well did our team respond to your enquiries?  ",
@@ -365,7 +365,7 @@ export default function OneTimerClientPage() {
             setStep(1);
             setFormData({});
         } catch (err) {
-            console.error(err);
+            console.error("Submission error:", err);
             toast.error("Something went wrong. Please try again.");
         }
     };

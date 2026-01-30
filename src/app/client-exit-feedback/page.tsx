@@ -10,7 +10,7 @@ import toast from "react-hot-toast";
 // --- Field Definitions ---
 
 // Step 1: Questions 1-2
-const step1Fields = [
+const step1Fields = [ 
     {
         id: "respondent_name",
         name: "respondent_name",
@@ -411,7 +411,7 @@ export default function OffboardingClientPage() {
             setStep(1);
             setFormData({});
         } catch (err) {
-            console.error(err);
+            console.error("Submission error:", err);
             toast.error("Something went wrong. Please try again.");
         }
     };

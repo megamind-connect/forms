@@ -36,11 +36,11 @@ export default function ProjectToOperation() {
             fieldType: "dropdown",
             type: "Clarity & Direction",
             options: [
-                { label: "5", value: "5" },
-                { label: "4", value: "4" },
-                { label: "3", value: "3" },
-                { label: "2", value: "2" },
                 { label: "1", value: "1" },
+                { label: "2", value: "2" },
+                { label: "3", value: "3" },
+                { label: "4", value: "4" },
+                { label: "5", value: "5" },
             ],
         },
         {
@@ -50,11 +50,11 @@ export default function ProjectToOperation() {
             fieldType: "dropdown",
             type: "Clarity & Direction",
             options: [
-                { label: "5", value: "5" },
-                { label: "4", value: "4" },
-                { label: "3", value: "3" },
-                { label: "2", value: "2" },
                 { label: "1", value: "1" },
+                { label: "2", value: "2" },
+                { label: "3", value: "3" },
+                { label: "4", value: "4" },
+                { label: "5", value: "5" },
             ],
         },
         {
@@ -64,11 +64,11 @@ export default function ProjectToOperation() {
             fieldType: "dropdown",
             type: "Clarity & Direction",
             options: [
-                { label: "5", value: "5" },
-                { label: "4", value: "4" },
-                { label: "3", value: "3" },
-                { label: "2", value: "2" },
                 { label: "1", value: "1" },
+                { label: "2", value: "2" },
+                { label: "3", value: "3" },
+                { label: "4", value: "4" },
+                { label: "5", value: "5" },
             ],
         },
         {
@@ -78,11 +78,11 @@ export default function ProjectToOperation() {
             fieldType: "dropdown",
             type: "Clarity & Direction",
             options: [
-                { label: "5", value: "5" },
-                { label: "4", value: "4" },
-                { label: "3", value: "3" },
-                { label: "2", value: "2" },
                 { label: "1", value: "1" },
+                { label: "2", value: "2" },
+                { label: "3", value: "3" },
+                { label: "4", value: "4" },
+                { label: "5", value: "5" },
             ],
         },
         {
@@ -92,11 +92,11 @@ export default function ProjectToOperation() {
             fieldType: "dropdown",
             type: "Behaviour",
             options: [
-                { label: "5", value: "5" },
-                { label: "4", value: "4" },
-                { label: "3", value: "3" },
-                { label: "2", value: "2" },
                 { label: "1", value: "1" },
+                { label: "2", value: "2" },
+                { label: "3", value: "3" },
+                { label: "4", value: "4" },
+                { label: "5", value: "5" },
             ],
         },
         {
@@ -106,11 +106,11 @@ export default function ProjectToOperation() {
             fieldType: "dropdown",
             type: "Behaviour",
             options: [
-                { label: "5", value: "5" },
-                { label: "4", value: "4" },
-                { label: "3", value: "3" },
-                { label: "2", value: "2" },
                 { label: "1", value: "1" },
+                { label: "2", value: "2" },
+                { label: "3", value: "3" },
+                { label: "4", value: "4" },
+                { label: "5", value: "5" },
             ],
         },
         {
@@ -120,11 +120,11 @@ export default function ProjectToOperation() {
             fieldType: "dropdown",
             type: "Behaviour",
             options: [
-                { label: "5", value: "5" },
-                { label: "4", value: "4" },
-                { label: "3", value: "3" },
-                { label: "2", value: "2" },
                 { label: "1", value: "1" },
+                { label: "2", value: "2" },
+                { label: "3", value: "3" },
+                { label: "4", value: "4" },
+                { label: "5", value: "5" },
             ],
         },
         {
@@ -134,11 +134,11 @@ export default function ProjectToOperation() {
             fieldType: "dropdown",
             type: "Work Environment & Growth",
             options: [
-                { label: "5", value: "5" },
-                { label: "4", value: "4" },
-                { label: "3", value: "3" },
-                { label: "2", value: "2" },
                 { label: "1", value: "1" },
+                { label: "2", value: "2" },
+                { label: "3", value: "3" },
+                { label: "4", value: "4" },
+                { label: "5", value: "5" },
             ],
         },
         {
@@ -148,11 +148,11 @@ export default function ProjectToOperation() {
             fieldType: "dropdown",
             type: "Work Environment & Growth",
             options: [
-                { label: "5", value: "5" },
-                { label: "4", value: "4" },
-                { label: "3", value: "3" },
-                { label: "2", value: "2" },
                 { label: "1", value: "1" },
+                { label: "2", value: "2" },
+                { label: "3", value: "3" },
+                { label: "4", value: "4" },
+                { label: "5", value: "5" },
             ],
         },
         {
@@ -162,11 +162,11 @@ export default function ProjectToOperation() {
             fieldType: "dropdown",
             type: "Work Environment & Growth",
             options: [
-                { label: "5", value: "5" },
-                { label: "4", value: "4" },
-                { label: "3", value: "3" },
-                { label: "2", value: "2" },
                 { label: "1", value: "1" },
+                { label: "2", value: "2" },
+                { label: "3", value: "3" },
+                { label: "4", value: "4" },
+                { label: "5", value: "5" },
             ],
         },
         {
@@ -176,11 +176,11 @@ export default function ProjectToOperation() {
             fieldType: "dropdown",
             type: "HR Experience",
             options: [
-                { label: "5", value: "5" },
-                { label: "4", value: "4" },
-                { label: "3", value: "3" },
-                { label: "2", value: "2" },
                 { label: "1", value: "1" },
+                { label: "2", value: "2" },
+                { label: "3", value: "3" },
+                { label: "4", value: "4" },
+                { label: "5", value: "5" },
             ],
         },
         {
@@ -190,11 +190,11 @@ export default function ProjectToOperation() {
             fieldType: "dropdown",
             type: "HR Experience",
             options: [
-                { label: "5", value: "5" },
-                { label: "4", value: "4" },
-                { label: "3", value: "3" },
-                { label: "2", value: "2" },
                 { label: "1", value: "1" },
+                { label: "2", value: "2" },
+                { label: "3", value: "3" },
+                { label: "4", value: "4" },
+                { label: "5", value: "5" },
             ],
         },
         {
@@ -204,11 +204,11 @@ export default function ProjectToOperation() {
             fieldType: "dropdown",
             type: "HR Experience",
             options: [
-                { label: "5", value: "5" },
-                { label: "4", value: "4" },
-                { label: "3", value: "3" },
-                { label: "2", value: "2" },
                 { label: "1", value: "1" },
+                { label: "2", value: "2" },
+                { label: "3", value: "3" },
+                { label: "4", value: "4" },
+                { label: "5", value: "5" },
             ],
         },
         {
@@ -290,6 +290,7 @@ export default function ProjectToOperation() {
 
             setFormData({});
         } catch (err: any) {
+            console.error("Submission error:", err);
             toast.error("Something went wrong. Please check required fields or API schema.");
         }
     };

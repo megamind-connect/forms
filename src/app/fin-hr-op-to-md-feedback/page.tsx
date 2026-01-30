@@ -19,7 +19,7 @@ interface FormField {
     placeholder?: string;
 }
 
-export default function MDToFinance() {
+export default function Manager() {
     const [formData, setFormData] = useState<Record<string, any>>({});
     const [errors, setErrors] = useState<Record<string, string>>({});
 
@@ -27,259 +27,252 @@ export default function MDToFinance() {
 
     const step2Fields = [
         { id: "1", name: "submitted_by_id", label: "Your Name", fieldType: "searchable" },
-        { id: "2", name: "submitted_for_id", label: "Finance Head's Name", fieldType: "searchable" },
+        { id: "2", name: "submitted_for_id", label: "MD's Name", fieldType: "searchable" },
 
-        // Actions
+        // Actions & Decision-Making
         {
             id: "3",
             name: "understands_brief_rating",
-            label: "Understand business priorities clearly.",
+            label: "The MD clearly communicates company goals and priorities.",
             fieldType: "dropdown",
-            type: "Actions",
+            type: "Actions & Decision-Making",
             options: [
-                   { label: "5", value: "5" },
-                { label: "4", value: "4" },
-                { label: "3", value: "3" },
-                { label: "2", value: "2" },
                 { label: "1", value: "1" },
+                { label: "2", value: "2" },
+                { label: "3", value: "3" },
+                { label: "4", value: "4" },
+                { label: "5", value: "5" },
             ],
         },
         {
             id: "4",
             name: "on_time_delivery_rating",
-            label: "Given tasks are completed accurately and on time.",
+            label: "Decisions taken by the MD are clear and well-explained.",
             fieldType: "dropdown",
-            type: "Actions",
+            type: "Actions & Decision-Making",
             options: [
-                   { label: "5", value: "5" },
-                { label: "4", value: "4" },
-                { label: "3", value: "3" },
-                { label: "2", value: "2" },
                 { label: "1", value: "1" },
+                { label: "2", value: "2" },
+                { label: "3", value: "3" },
+                { label: "4", value: "4" },
+                { label: "5", value: "5" },
             ],
         },
         {
             id: "5",
             name: "feedback_implementation_rating",
-            label: "Follows up on pending items effectively.",
+            label: "Provides direction during important situations.",
             fieldType: "dropdown",
-            type: "Actions",
+            type: "Actions & Decision-Making",
             options: [
-                   { label: "5", value: "5" },
-                { label: "4", value: "4" },
-                { label: "3", value: "3" },
-                { label: "2", value: "2" },
                 { label: "1", value: "1" },
+                { label: "2", value: "2" },
+                { label: "3", value: "3" },
+                { label: "4", value: "4" },
+                { label: "5", value: "5" },
             ],
         },
         {
             id: "6",
             name: "creative_contribution_rating",
-            label: "Finance takes ownership of financial responsibilities.",
+            label: "The MD follows up on key actions.",
             fieldType: "dropdown",
-            type: "Actions",
+            type: "Actions & Decision-Making",
             options: [
-                   { label: "5", value: "5" },
-                { label: "4", value: "4" },
-                { label: "3", value: "3" },
-                { label: "2", value: "2" },
                 { label: "1", value: "1" },
+                { label: "2", value: "2" },
+                { label: "3", value: "3" },
+                { label: "4", value: "4" },
+                { label: "5", value: "5" },
             ],
         },
 
-        // Behaviour
+        // Leadership Behavior
         {
             id: "7",
             name: "attention_to_detail_rating",
-            label: "Communicates financial information clearly.",
+            label: "Listen to different viewpoints.",
             fieldType: "dropdown",
-            type: "Behaviour",
+            type: "Leadership Behavior",
             options: [
-                   { label: "5", value: "5" },
-                { label: "4", value: "4" },
-                { label: "3", value: "3" },
-                { label: "2", value: "2" },
                 { label: "1", value: "1" },
+                { label: "2", value: "2" },
+                { label: "3", value: "3" },
+                { label: "4", value: "4" },
+                { label: "5", value: "5" },
             ],
         },
         {
             id: "8",
             name: "collaboration_rating",
-            label: "Maintains transparency in reporting.",
+            label: "The MD treats all departments fairly.",
             fieldType: "dropdown",
-            type: "Behaviour",
+            type: "Leadership Behavior",
             options: [
-                   { label: "5", value: "5" },
-                { label: "4", value: "4" },
-                { label: "3", value: "3" },
-                { label: "2", value: "2" },
                 { label: "1", value: "1" },
+                { label: "2", value: "2" },
+                { label: "3", value: "3" },
+                { label: "4", value: "4" },
+                { label: "5", value: "5" },
             ],
         },
         {
             id: "9",
             name: "self_management_rating",
-            label: "Handles pressure professionally.",
+            label: "Maintains professionalism in challenging situations.",
             fieldType: "dropdown",
-            type: "Behaviour",
+            type: "Leadership Behavior",
             options: [
-                   { label: "5", value: "5" },
-                { label: "4", value: "4" },
-                { label: "3", value: "3" },
-                { label: "2", value: "2" },
                 { label: "1", value: "1" },
+                { label: "2", value: "2" },
+                { label: "3", value: "3" },
+                { label: "4", value: "4" },
+                { label: "5", value: "5" },
             ],
         },
         {
             id: "10",
             name: "adaptability_rating",
-            label: "Finance collaborates well with other departments.",
+            label: "The MD encourages open and honest communication.",
             fieldType: "dropdown",
-            type: "Behaviour",
+            type: "Leadership Behavior",
             options: [
-                   { label: "5", value: "5" },
-                { label: "4", value: "4" },
-                { label: "3", value: "3" },
-                { label: "2", value: "2" },
                 { label: "1", value: "1" },
+                { label: "2", value: "2" },
+                { label: "3", value: "3" },
+                { label: "4", value: "4" },
+                { label: "5", value: "5" },
             ],
         },
 
-        // Competency
+        // Competency & Business Understanding
         {
             id: "11",
             name: "growth_rating",
-            label: "Demonstrates strong financial knowledge.",
+            label: "The MD demonstrates a strong understanding of the business.",
             fieldType: "dropdown",
-            type: "Competency",
+            type: "Competency & Business Understanding",
             options: [
-                   { label: "5", value: "5" },
-                { label: "4", value: "4" },
-                { label: "3", value: "3" },
-                { label: "2", value: "2" },
                 { label: "1", value: "1" },
+                { label: "2", value: "2" },
+                { label: "3", value: "3" },
+                { label: "4", value: "4" },
+                { label: "5", value: "5" },
             ],
         },
         {
             id: "12",
             name: "learning_rating",
-            label: "Supports decision-making with data.",
+            label: "The MD aligns decisions with the company's vision.",
             fieldType: "dropdown",
-            type: "Competency",
+            type: "Competency & Business Understanding",
             options: [
-                   { label: "5", value: "5" },
-                { label: "4", value: "4" },
-                { label: "3", value: "3" },
-                { label: "2", value: "2" },
                 { label: "1", value: "1" },
+                { label: "2", value: "2" },
+                { label: "3", value: "3" },
+                { label: "4", value: "4" },
+                { label: "5", value: "5" },
             ],
         },
         {
             id: "13",
             name: "last_minute_reason_clarity_rating",
-            label: "Identifies risks and controls effectively.",
+            label: "The MD supports departments in addressing challenges.",
             fieldType: "dropdown",
-            type: "Competency",
+            type: "Competency & Business Understanding",
             options: [
-                   { label: "5", value: "5" },
-                { label: "4", value: "4" },
-                { label: "3", value: "3" },
-                { label: "2", value: "2" },
                 { label: "1", value: "1" },
-            ],
-        },
-        {
-            id: "14",
-            name: "last_minute_handling_rating",
-            label: "Adapts to changing business requirements.",
-            fieldType: "dropdown",
-            type: "Competency",
-            options: [
-                   { label: "5", value: "5" },
-                { label: "4", value: "4" },
-                { label: "3", value: "3" },
                 { label: "2", value: "2" },
-                { label: "1", value: "1" },
+                { label: "3", value: "3" },
+                { label: "4", value: "4" },
+                { label: "5", value: "5" },
             ],
         },
 
-        // Results
+        // Results & Impact
+        {
+            id: "14",
+            name: "last_minute_handling_rating",
+            label: "The MD's leadership positively impacts overall performance.",
+            fieldType: "dropdown",
+            type: "Results & Impact",
+            options: [
+                { label: "1", value: "1" },
+                { label: "2", value: "2" },
+                { label: "3", value: "3" },
+                { label: "4", value: "4" },
+                { label: "5", value: "5" },
+            ],
+        },
         {
             id: "15",
             name: "deadline_communication_rating",
-            label: "Finance contributes to financial stability.",
+            label: "The MD enables smooth collaboration between departments.",
             fieldType: "dropdown",
-            type: "Results",
+            type: "Results & Impact",
             options: [
-                   { label: "5", value: "5" },
-                { label: "4", value: "4" },
-                { label: "3", value: "3" },
-                { label: "2", value: "2" },
                 { label: "1", value: "1" },
+                { label: "2", value: "2" },
+                { label: "3", value: "3" },
+                { label: "4", value: "4" },
+                { label: "5", value: "5" },
             ],
         },
         {
             id: "16",
             name: "creative_strength_text",
-            label: "Finance supports cost control and planning.",
+            label: "The MD supports teams in achieving their goals.",
             fieldType: "dropdown",
-            type: "Results",
+            type: "Results & Impact",
             options: [
-                   { label: "5", value: "5" },
-                { label: "4", value: "4" },
-                { label: "3", value: "3" },
-                { label: "2", value: "2" },
                 { label: "1", value: "1" },
+                { label: "2", value: "2" },
+                { label: "3", value: "3" },
+                { label: "4", value: "4" },
+                { label: "5", value: "5" },
             ],
         },
         {
             id: "17",
             name: "improvement_area_text",
-            label: "Finance enables smooth business operations.",
+            label: "Overall, the MD provides effective leadership.",
             fieldType: "dropdown",
-            type: "Results",
+            type: "Results & Impact",
             options: [
-                   { label: "5", value: "5" },
-                { label: "4", value: "4" },
-                { label: "3", value: "3" },
-                { label: "2", value: "2" },
                 { label: "1", value: "1" },
-            ],
-        },
-        {
-            id: "18",
-            name: "process_limitation_text",
-            label: "Overall, Finance delivers effective results.",
-            fieldType: "dropdown",
-            type: "Results",
-            options: [
-                   { label: "5", value: "5" },
-                { label: "4", value: "4" },
-                { label: "3", value: "3" },
                 { label: "2", value: "2" },
-                { label: "1", value: "1" },
+                { label: "3", value: "3" },
+                { label: "4", value: "4" },
+                { label: "5", value: "5" },
             ],
         },
 
         // Open-Ended Questions
         {
+            id: "18",
+            name: "process_limitation_text",
+            label: "What leadership actions of the MD are working well?",
+            fieldType: "short",
+            type: "Open-Ended Questions",
+        },
+        {
             id: "19",
             name: "what_went_well_text",
-            label: "What is working well in Finance?",
+            label: "What areas of leadership could be improved?",
             fieldType: "short",
             type: "Open-Ended Questions",
         },
         {
             id: "20",
             name: "what_needs_improvement_text",
-            label: "What needs improvement?",
+            label: "What should the MD do differently to better support teams?",
             fieldType: "short",
             type: "Open-Ended Questions",
         },
         {
             id: "21",
             name: "what_should_be_done_differently_text",
-            label: "What should be done differently to add more value?",
+            label: "Any additional confidential feedback you would like to share?",
             fieldType: "short",
             type: "Open-Ended Questions",
         },
@@ -321,23 +314,21 @@ export default function MDToFinance() {
             creative_strength_text: formData.creative_strength_text || "",
             improvement_area_text: formData.improvement_area_text || "",
             process_limitation_text: formData.process_limitation_text || "",
-            what_went_well_text: formData.what_went_well_text || "",
-            what_needs_improvement_text: formData.what_needs_improvement_text || "",
-            what_should_be_done_differently_text: formData.what_should_be_done_differently_text || "",
         };
 
 
         try {
-            const res = await apiClient.post(`/api/v1/feedback/md-to-fin`, payload,
+            const res = await apiClient.post(`/api/v1/feedback/fin-hr-op-to-md`, payload,
                 {
                     headers: {
                         "x-api-key": process.env.NEXT_PUBLIC_INTERNAL_API_KEY,
                     },
                 });
-            router.push("/md-to-fin/thank-you");
+            router.push("/manager/thank-you");
 
             setFormData({});
         } catch (err: any) {
+            console.error("Submission error:", err);
             toast.error("Something went wrong. Please check required fields or API schema.");
         }
     };

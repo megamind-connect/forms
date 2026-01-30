@@ -31,25 +31,41 @@ export default function DynamicField({ field, value, onChange }: DynamicFieldPro
 
         <div className="flex flex-wrap items-center justify-center gap-6 md:gap-20 mt-5 md:mt-12 max-w-full">
 
-          {options.map((opt) => (
-            <label
-              key={opt.value}
-              className="flex flex-row md:flex-col gap-4 md:gap-0 items-center cursor-pointer text-center  transition-all duration-300 ease-in-out"
-            >
-              <input
-                type="radio"
-                name={name}
-                checked={value === opt.value}
-                onClick={() => handleSelect(opt.value)}
-                className="appearance-none w-4 h-4 md:w-6 md:h-6 border-2 border-red rounded-full cursor-pointer relative
-                after:content-[''] after:absolute after:top-1/2 after:left-1/2 after:-translate-x-1/2 after:-translate-y-1/2
-                after:w-2 after:h-2 md:after:w-4 md:after:h-4 after:rounded-full after:bg-transparent
-                checked:after:bg-[#F43F46] checked:border-[#F43F46] transition-all duration-300 ease-in-out"
-              />
+          {options.map((opt) => {
+            const isOther = opt.value.toLowerCase() === "other";
+            const currentSelected = typeof value === "object" ? value.selected : value;
+            const isSelected = currentSelected === opt.value;
 
-              <span className="text-sm md:text-lg font-medium text-[#8F8881]">{opt.label}</span>
-            </label>
-          ))}
+            return (
+              <label
+                key={opt.value}
+                className="flex flex-row md:flex-col gap-4 md:gap-0 items-center cursor-pointer text-center  transition-all duration-300 ease-in-out"
+              >
+                <input
+                  type="radio"
+                  name={name}
+                  checked={isSelected}
+                  onChange={() => onChange(isOther ? { selected: opt.value, otherText: typeof value === 'object' ? value.otherText : "" } : opt.value)}
+                  className="appearance-none w-4 h-4 md:w-6 md:h-6 border-2 border-red rounded-full cursor-pointer relative
+                  after:content-[''] after:absolute after:top-1/2 after:left-1/2 after:-translate-x-1/2 after:-translate-y-1/2
+                  after:w-2 after:h-2 md:after:w-4 md:after:h-4 after:rounded-full after:bg-transparent
+                  checked:after:bg-[#E31212] checked:border-[#E31212] transition-all duration-300 ease-in-out"
+                />
+
+                {isOther ? (
+                  <input
+                    type="text"
+                    placeholder="Other..."
+                    value={typeof value === "object" && isSelected ? value.otherText : ""}
+                    onChange={(e) => onChange({ selected: opt.value, otherText: e.target.value })}
+                    className="border-b border-gray-300 text-[#8F8881] placeholder:text-[#8F8881] outline-none text-sm md:text-lg bg-transparent w-24 md:w-32 text-center"
+                  />
+                ) : (
+                  <span className="text-sm md:text-lg font-medium text-[#8F8881]">{opt.label}</span>
+                )}
+              </label>
+            );
+          })}
         </div>
       </div>
     );
@@ -64,27 +80,43 @@ export default function DynamicField({ field, value, onChange }: DynamicFieldPro
         </label>
 
         <div className="flex flex-row items-start justify-between gap-2 mt-5 md:mt-12 overflow-x-auto pb-4 scrollbar-hide">
-          {options.map((opt) => (
-            <label
-              key={opt.value}
-              className="flex flex-col items-center gap-2 cursor-pointer text-center min-w-[80px] md:min-w-[100px] transition-all duration-300 ease-in-out"
-            >
-              <input
-                type="radio"
-                name={name}
-                checked={value === opt.value}
-                onClick={() => onChange(opt.value)}
-                className="appearance-none w-4 h-4 md:w-6 md:h-6 border-2 border-red rounded-full cursor-pointer relative
-                after:content-[''] after:absolute after:top-1/2 after:left-1/2 after:-translate-x-1/2 after:-translate-y-1/2
-                after:w-2 after:h-2 md:after:w-4 md:after:h-4 after:rounded-full after:bg-transparent
-                checked:after:bg-[#F43F46] checked:border-[#F43F46] transition-all duration-300 ease-in-out"
-              />
+          {options.map((opt) => {
+            const isOther = opt.value.toLowerCase() === "other";
+            const currentSelected = typeof value === "object" ? value.selected : value;
+            const isSelected = currentSelected === opt.value;
 
-              <span className="text-[10px] md:text-sm font-medium text-[#8F8881] leading-tight max-w-[120px]">
-                {opt.label}
-              </span>
-            </label>
-          ))}
+            return (
+              <label
+                key={opt.value}
+                className="flex flex-col items-center gap-2 cursor-pointer text-center min-w-[80px] md:min-w-[100px] transition-all duration-300 ease-in-out"
+              >
+                <input
+                  type="radio"
+                  name={name}
+                  checked={isSelected}
+                  onChange={() => onChange(isOther ? { selected: opt.value, otherText: typeof value === 'object' ? value.otherText : "" } : opt.value)}
+                  className="appearance-none w-4 h-4 md:w-6 md:h-6 border-2 border-red rounded-full cursor-pointer relative
+                  after:content-[''] after:absolute after:top-1/2 after:left-1/2 after:-translate-x-1/2 after:-translate-y-1/2
+                  after:w-2 after:h-2 md:after:w-4 md:after:h-4 after:rounded-full after:bg-transparent
+                  checked:after:bg-[#F43F46] checked:border-[#F43F46] transition-all duration-300 ease-in-out"
+                />
+
+                {isOther ? (
+                  <input
+                    type="text"
+                    placeholder="Other..."
+                    value={typeof value === "object" && isSelected ? value.otherText : ""}
+                    onChange={(e) => onChange({ selected: opt.value, otherText: e.target.value })}
+                    className="border-b border-gray-300 text-[#8F8881] placeholder:text-[#8F8881] outline-none text-[10px] md:text-sm bg-transparent w-full text-center"
+                  />
+                ) : (
+                  <span className="text-[10px] md:text-sm font-medium text-[#8F8881] leading-tight max-w-[120px]">
+                    {opt.label}
+                  </span>
+                )}
+              </label>
+            );
+          })}
         </div>
       </div>
     );
@@ -94,30 +126,56 @@ export default function DynamicField({ field, value, onChange }: DynamicFieldPro
     const handleSelect = (val: string) => onChange(val);
 
     return (
-      <div className="w-full space-y-3 rounded-md pb-5 md:pb-10">
+      <div className="w-full space-y-3 rounded-md pb-5 md:pb-10 ">
         <label className="text-base md:text-[24px] font-medium text-[#202020]">
           {label}
         </label>
 
-        <div className="flex flex-col gap-4 mt-5 md:mt-8 max-w-full">
-          {options.map((opt) => (
-            <label
-              key={opt.value}
-              className="flex items-center gap-4 cursor-pointer transition-all duration-300 ease-in-out"
-            >
-              <input
-                type="radio"
-                name={name}
-                checked={value === opt.value}
-                onClick={() => handleSelect(opt.value)}
-                className="appearance-none w-4 h-4 md:w-6 md:h-6 border-2 border-red rounded-full cursor-pointer relative
-                after:content-[''] after:absolute after:top-1/2 after:left-1/2 after:-translate-x-1/2 after:-translate-y-1/2
-                after:w-2 after:h-2 md:after:w-4 md:after:h-4 after:rounded-full after:bg-transparent
-                checked:after:bg-[#F43F46] checked:border-[#F43F46] transition-all duration-300 ease-in-out"
-              />
-              <span className="text-sm md:text-lg font-medium text-[#8F8881]">{opt.label}</span>
-            </label>
-          ))}
+        <div className="flex flex-col gap-4 mt-5 md:mt- max-w-full">
+          {options.map((opt) => {
+            // 1. Determine if this specific option is selected
+            const isOther = opt.value.toLowerCase() === "other";
+            const currentSelected = typeof value === "object" ? value.selected : value;
+            const isSelected = currentSelected === opt.value;
+
+            return (
+              <label
+                key={opt.value}
+                // 2. Conditionally apply classes based on 'isSelected'
+                className={`flex items-center gap-4 cursor-pointer p-4 rounded-lg border-2 transition-all duration-300 ease-in-out
+          ${isSelected
+                    ? "bg-red-50 border-[#E31212]"   // Style when selected (Red BG & Border)
+                    : "border-transparent hover:bg-gray-50" // Style when NOT selected
+                  }`}
+              >
+                <input
+                  type="radio"
+                  name={name}
+                  checked={isSelected}
+                  // Changed onClick to onChange for better React standard practice
+                  onChange={() => onChange(isOther ? { selected: opt.value, otherText: typeof value === 'object' ? value.otherText : "" } : opt.value)}
+                  className="appearance-none w-4 h-4 md:w-6 md:h-6 border-2 border-red-500 rounded-full cursor-pointer relative
+          after:content-[''] after:absolute after:top-1/2 after:left-1/2 after:-translate-x-1/2 after:-translate-y-1/2
+          after:w-2 after:h-2 md:after:w-4 md:after:h-4 after:rounded-full after:bg-transparent
+          checked:after:bg-[#E31212] checked:border-[#E31212] transition-all duration-300 ease-in-out accent-[#E31212]"
+                />
+
+                {isOther ? (
+                  <input
+                    type="text"
+                    placeholder="Other..."
+                    value={typeof value === "object" && isSelected ? value.otherText : ""}
+                    onChange={(e) => onChange({ selected: opt.value, otherText: e.target.value })}
+                    className={`flex-1 border-b outline-none text-sm md:text-lg font-medium bg-transparent ${isSelected ? "text-[#E31212] border-[#E31212]" : "text-[#8F8881] border-gray-400"}`}
+                  />
+                ) : (
+                  <span className={`text-sm md:text-lg font-medium ${isSelected ? "text-[#E31212]" : "text-[#8F8881]"}`}>
+                    {opt.label}
+                  </span>
+                )}
+              </label>
+            );
+          })}
         </div>
       </div>
     );
@@ -127,7 +185,7 @@ export default function DynamicField({ field, value, onChange }: DynamicFieldPro
   /* ---------------------------- 5-POINT OR CUSTOM RATING (dynamic) ---------------------------- */
   if (fieldType === "rating5") {
     // Use dynamic options, fallback to default if not provided
-    const ratingOptions = field.options || [
+    const ratingOptionsradio_stacked = field.options || [
       { value: 1, label: "Very Poor" },
       { value: 2, label: "" },
       { value: 3, label: "Average" },
@@ -142,7 +200,7 @@ export default function DynamicField({ field, value, onChange }: DynamicFieldPro
         </label>
 
         <div className="flex items-start justify-center gap-6 mt-6">
-          {ratingOptions.map((opt) => (
+          {ratingOptionsradio_stacked.map((opt) => (
             <div key={opt.value} className="w-14 md:w-16 flex flex-col items-center">
               <input
                 type="radio"
@@ -153,7 +211,7 @@ export default function DynamicField({ field, value, onChange }: DynamicFieldPro
                 className="appearance-none w-4 h-4 md:w-6 md:h-6 border-2 border-red rounded-full cursor-pointer relative
                 after:content-[''] after:absolute after:top-1/2 after:left-1/2 after:-translate-x-1/2 after:-translate-y-1/2
                 after:w-2 after:h-2 md:after:w-4 md:after:h-4 after:rounded-full after:bg-transparent
-                checked:after:bg-[#F43F46] checked:border-[#F43F46] transition-all"
+                checked:after:bg-[#E31212] checked:border-[#E31212] transition-all"
               />
 
               <span className="text-xs md:text-sm font-medium text-[#8F8881] text-center w-full mt-2 leading-tight">
@@ -316,9 +374,9 @@ export default function DynamicField({ field, value, onChange }: DynamicFieldPro
 
         <input
           type="text"
-          className="border-b border-gray-300 text-[#202020] placeholder:text-[#202020] 
+          className="border-b border-gray-300 text-[#8F8881] placeholder:text-[#8F8881] 
                      placeholder:text-sm md:placeholder:text-base focus:border-gray-800 outline-none 
-                     py-1 text-lg font-medium"
+                     py-1 text-lg font-medium mt-6"
           placeholder={placeholder || "Write your answer..."}
           value={value || ""}
           onChange={(e) => onChange(e.target.value)}

@@ -50,9 +50,9 @@ const step2Fields = [
         fieldType: "rating5",
         options: [
             { value: "very_poor", label: "Very Poor" },
-            { value: "poor", label: "" },
+            { value: "poor", label: "poor" },
             { value: "average", label: "Average" },
-            { value: "good", label: "" },
+            { value: "good", label: "good" },
             { value: "excellent", label: "Excellent" },
             { value: "exceptional", label: "Exceptional" },
         ],
@@ -64,9 +64,9 @@ const step2Fields = [
         fieldType: "rating5",
         options: [
             { value: "very_poor", label: "Very Poor" },
-            { value: "poor", label: "" },
+            { value: "poor", label: "poor" },
             { value: "average", label: "Average" },
-            { value: "good", label: "" },
+            { value: "good", label: "good" },
             { value: "excellent", label: "Excellent" },
             { value: "exceptional", label: "Exceptional" },
         ],
@@ -78,9 +78,9 @@ const step2Fields = [
         fieldType: "rating5",
         options: [
             { value: "very_poor", label: "Very Poor" },
-            { value: "poor", label: "" },
+            { value: "poor", label: "poor" },
             { value: "average", label: "Average" },
-            { value: "good", label: "" },
+            { value: "good", label: "good" },
             { value: "excellent", label: "Excellent" },
             { value: "exceptional", label: "Exceptional" },
         ],
@@ -92,9 +92,9 @@ const step2Fields = [
         fieldType: "rating5",
         options: [
             { value: "very_poor", label: "Very Poor" },
-            { value: "poor", label: "" },
+            { value: "poor", label: "poor" },
             { value: "average", label: "Average" },
-            { value: "good", label: "" },
+            { value: "good", label: "good" },
             { value: "excellent", label: "Excellent" },
             { value: "exceptional", label: "Exceptional" },
         ],
@@ -106,9 +106,9 @@ const step2Fields = [
         fieldType: "rating5",
         options: [
             { value: "very_poor", label: "Very Poor" },
-            { value: "poor", label: "" },
+            { value: "poor", label: "poor" },
             { value: "average", label: "Average" },
-            { value: "good", label: "" },
+            { value: "good", label: "good" },
             { value: "excellent", label: "Excellent" },
             { value: "exceptional", label: "Exceptional" },
         ],
@@ -175,7 +175,7 @@ const step4Fields = [
             { value: "very_poor", label: "Very Poor" },
         ],
     },
-        {
+    {
         id: "surprised_deliverables",
         name: "surprised_deliverables",
         label: "13. Were there any deliverables that pleasantly surprised you? If so, we would love to know which ones and what made them stand out for you? ",
@@ -338,7 +338,7 @@ export default function OneTimerClientPage() {
             setStep(1);
             setFormData({});
         } catch (err) {
-            console.error(err);
+            console.error("Submission error:", err);
             toast.error("Something went wrong. Please try again.");
         }
     };
