@@ -26,8 +26,8 @@ export default function ManagerToIntern() {
     const router = useRouter();
 
     const step2Fields = [
-        { id: "11", name: "submitted_by_id", label: "Your Name", fieldType: "searchable" },
-        { id: "21", name: "submitted_for_id", label: "Employee's Name", fieldType: "searchable" },
+        { id: "submitted_by", name: "submitted_by_id", label: "Your Name", fieldType: "searchable" },
+        { id: "submitted_for", name: "submitted_for_id", label: "Employee's Name", fieldType: "searchable" },
 
         // Work & Actions
         {
@@ -45,13 +45,13 @@ export default function ManagerToIntern() {
             ],
         },
         {
-            id: "2",
+            id: "on_time_delivery",
             name: "on_time_delivery_rating",
             label: "Completes assigned work on time.",
             fieldType: "dropdown",
             type: "Work & Actions",
             options: [
-                   { label: "5", value: "5" },
+                { label: "5", value: "5" },
                 { label: "4", value: "4" },
                 { label: "3", value: "3" },
                 { label: "2", value: "2" },
@@ -59,13 +59,13 @@ export default function ManagerToIntern() {
             ],
         },
         {
-            id: "3",
+            id: "feedback_implementation",
             name: "feedback_implementation_rating",
             label: "Follows instructions clearly.",
             fieldType: "dropdown",
             type: "Work & Actions",
             options: [
-                   { label: "5", value: "5" },
+                { label: "5", value: "5" },
                 { label: "4", value: "4" },
                 { label: "3", value: "3" },
                 { label: "2", value: "2" },
@@ -73,13 +73,13 @@ export default function ManagerToIntern() {
             ],
         },
         {
-            id: "4",
+            id: "work_responsibility",
             name: "creative_contribution_rating",
             label: "Shows responsibility towards assigned tasks.",
             fieldType: "dropdown",
             type: "Work & Actions",
             options: [
-                   { label: "5", value: "5" },
+                { label: "5", value: "5" },
                 { label: "4", value: "4" },
                 { label: "3", value: "3" },
                 { label: "2", value: "2" },
@@ -89,13 +89,13 @@ export default function ManagerToIntern() {
 
         // Behaviour & Attitude
         {
-            id: "5",
+            id: "attention_to_detail",
             name: "attention_to_detail_rating",
             label: "Communicates respectfully.",
             fieldType: "dropdown",
             type: "Behaviour & Attitude",
             options: [
-                   { label: "5", value: "5" },
+                { label: "5", value: "5" },
                 { label: "4", value: "4" },
                 { label: "3", value: "3" },
                 { label: "2", value: "2" },
@@ -103,13 +103,13 @@ export default function ManagerToIntern() {
             ],
         },
         {
-            id: "6",
+            id: "collaboration",
             name: "collaboration_rating",
             label: "Is open to feedback and guidance.",
             fieldType: "dropdown",
             type: "Behaviour & Attitude",
             options: [
-                   { label: "5", value: "5" },
+                { label: "5", value: "5" },
                 { label: "4", value: "4" },
                 { label: "3", value: "3" },
                 { label: "2", value: "2" },
@@ -117,13 +117,13 @@ export default function ManagerToIntern() {
             ],
         },
         {
-            id: "7",
+            id: "self_management",
             name: "self_management_rating",
             label: "Shows a positive attitude towards work.",
             fieldType: "dropdown",
             type: "Behaviour & Attitude",
             options: [
-                   { label: "5", value: "5" },
+                { label: "5", value: "5" },
                 { label: "4", value: "4" },
                 { label: "3", value: "3" },
                 { label: "2", value: "2" },
@@ -131,13 +131,13 @@ export default function ManagerToIntern() {
             ],
         },
         {
-            id: "8",
+            id: "adaptability",
             name: "adaptability_rating",
             label: "Works well with team members.",
             fieldType: "dropdown",
             type: "Behaviour & Attitude",
             options: [
-                   { label: "5", value: "5" },
+                { label: "5", value: "5" },
                 { label: "4", value: "4" },
                 { label: "3", value: "3" },
                 { label: "2", value: "2" },
@@ -147,13 +147,13 @@ export default function ManagerToIntern() {
 
         // Learning & Competency
         {
-            id: "9",
+            id: "willingness_to_learn",
             name: "growth_rating",
             label: "Shows willingness to learn new skills.",
             fieldType: "dropdown",
             type: "Learning & Competency",
             options: [
-                   { label: "5", value: "5" },
+                { label: "5", value: "5" },
                 { label: "4", value: "4" },
                 { label: "3", value: "3" },
                 { label: "2", value: "2" },
@@ -161,13 +161,13 @@ export default function ManagerToIntern() {
             ],
         },
         {
-            id: "10",
+            id: "apply_learning",
             name: "learning_rating",
             label: "Applies learning to assigned work.",
             fieldType: "dropdown",
             type: "Learning & Competency",
             options: [
-                   { label: "5", value: "5" },
+                { label: "5", value: "5" },
                 { label: "4", value: "4" },
                 { label: "3", value: "3" },
                 { label: "2", value: "2" },
@@ -175,13 +175,13 @@ export default function ManagerToIntern() {
             ],
         },
         {
-            id: "11",
+            id: "asks_questions",
             name: "last_minute_reason_clarity_rating",
             label: "Asks questions when unsure.",
             fieldType: "dropdown",
             type: "Learning & Competency",
             options: [
-                   { label: "5", value: "5" },
+                { label: "5", value: "5" },
                 { label: "4", value: "4" },
                 { label: "3", value: "3" },
                 { label: "2", value: "2" },
@@ -189,13 +189,13 @@ export default function ManagerToIntern() {
             ],
         },
         {
-            id: "12",
+            id: "adapts_to_tasks",
             name: "last_minute_handling_rating",
             label: "Adapts well to new tasks.",
             fieldType: "dropdown",
             type: "Learning & Competency",
             options: [
-                   { label: "5", value: "5" },
+                { label: "5", value: "5" },
                 { label: "4", value: "4" },
                 { label: "3", value: "3" },
                 { label: "2", value: "2" },
@@ -205,13 +205,13 @@ export default function ManagerToIntern() {
 
         // Contribution & Results
         {
-            id: "13",
+            id: "meets_expectations",
             name: "deadline_communication_rating",
             label: "Work meets expectations for the role.",
             fieldType: "dropdown",
             type: "Contribution & Results",
             options: [
-                   { label: "5", value: "5" },
+                { label: "5", value: "5" },
                 { label: "4", value: "4" },
                 { label: "3", value: "3" },
                 { label: "2", value: "2" },
@@ -219,13 +219,13 @@ export default function ManagerToIntern() {
             ],
         },
         {
-            id: "14",
+            id: "positive_contribution",
             name: "creative_strength_text",
             label: "Contributes positively to the team.",
             fieldType: "dropdown",
             type: "Contribution & Results",
             options: [
-                   { label: "5", value: "5" },
+                { label: "5", value: "5" },
                 { label: "4", value: "4" },
                 { label: "3", value: "3" },
                 { label: "2", value: "2" },
@@ -233,13 +233,13 @@ export default function ManagerToIntern() {
             ],
         },
         {
-            id: "15",
+            id: "shows_improvement",
             name: "improvement_area_text",
             label: "Shows improvement over time.",
             fieldType: "dropdown",
             type: "Contribution & Results",
             options: [
-                   { label: "5", value: "5" },
+                { label: "5", value: "5" },
                 { label: "4", value: "4" },
                 { label: "3", value: "3" },
                 { label: "2", value: "2" },
@@ -247,13 +247,13 @@ export default function ManagerToIntern() {
             ],
         },
         {
-            id: "16",
+            id: "satisfactory_performance",
             name: "process_limitation_text",
             label: "Overall performance is satisfactory.",
             fieldType: "dropdown",
             type: "Contribution & Results",
             options: [
-                   { label: "5", value: "5" },
+                { label: "5", value: "5" },
                 { label: "4", value: "4" },
                 { label: "3", value: "3" },
                 { label: "2", value: "2" },
@@ -263,21 +263,21 @@ export default function ManagerToIntern() {
 
         // Open-Ended Questions
         {
-            id: "17",
+            id: "what_went_well",
             name: "what_went_well_text",
             label: "What went well?",
             fieldType: "short",
             type: "Open-Ended Questions",
         },
         {
-            id: "18",
+            id: "improvement_areas",
             name: "what_needs_improvement_text",
             label: "What areas need improvement?",
             fieldType: "short",
             type: "Open-Ended Questions",
         },
         {
-            id: "19",
+            id: "forward_focus",
             name: "what_should_be_done_differently_text",
             label: "What should be focused on going forward?",
             fieldType: "short",
@@ -338,70 +338,72 @@ export default function ManagerToIntern() {
 
             setFormData({});
         } catch (err: any) {
-            toast.error("Something went wrong. Please check required fields or API schema.");
+            console.error("Submission Error:", err.response?.data || err.message);
+            const errorMsg = err.response?.data?.message || err.response?.data?.error || "Check required fields or API schema.";
+            console.log(`Error: ${errorMsg}`);
         }
     };
 
     const month = new Date().toLocaleString("en-US", { month: "long" });
     return (
         <div className="relative min-h-screen flex flex-col  justify-center bg-[#F9F9F9] overflow-hidden">
-                   <div className="w-3xl max-w-6xl mx-auto py-10">
-                       <div className="w-full relative flex  px-6 justify-center items-center mb-6">
-                           <Image
-                               src="/images/feedBackImage.png" // <-- your image here
-                               alt="Feedback Banner"
-                               width={1400}
-                               height={300}
-                               className="w-full object-cover rounded-md"
-                           />
-       
-                           {/* ✅ Month Name Overlaid */}
-                           <div className="absolute left-16 top-[30%] -translate-y-1/2">
-                               <h1 className="text-xl lg:text-[80px] font-bold text-[#E31313]">{month}</h1>
-                               <h1 className="text-base lg:text-3xl font-semibold text-[#E31313]">Feedback Form</h1>
-                           </div>
-                       </div>
-       
-       
-       
-                       <form
-                           className="flex flex-col items-center px-6 overflow-y-auto  space-y-4"
-                           onSubmit={(e) => {
-                               e.preventDefault();
-                               submitHandler();
-                           }}
-                       >
-                           <div className="space-y-6 w-full  ">
-                               {step2Fields.map((field, index) => {
-                                   const prevField = index > 0 ? step2Fields[index - 1] : null;
-                                   const showTypeHeading = field.type && (!prevField || (prevField as any).type !== field.type);
-       
-                                   return (
-                                       <div key={field.id}>
-                                           {showTypeHeading && (
-                                               <h3 className="text-lg font-semibold text-[#E31313] mb-3 mt-6">
-                                                   {field.type}
-                                               </h3>
-                                           )}
-                                           <DynamicField
-                                               field={field}
-                                               value={formData[field.name] || ""}
-                                               onChange={(val) => setFormData((p) => ({ ...p, [field.name]: val }))}
-                                           />
-                                       </div>
-                                   );
-                               })}
-       
-                               <button
-                                   type="submit"
-                                   className=" text-center cursor-pointer mx-auto px-5 py-2 bg-[#F43F46] text-white text-[17px] rounded-full font-semibold  gap-2 flex items-center justify-center"
-                               >
-                                   <Image width={20} height={20} alt="submitlogo" src="/svgs/submit-logo.svg" />
-                                   Submit
-                               </button>
-                           </div>
-                       </form>
-                   </div>
-               </div>
+            <div className="w-full max-w-6xl mx-auto py-10">
+                <div className="w-full relative flex  px-6 justify-center items-center mb-6">
+                    <Image
+                        src="/images/feedBackImage.png" // <-- your image here
+                        alt="Feedback Banner"
+                        width={1400}
+                        height={300}
+                        className="w-full object-cover rounded-md"
+                    />
+
+                    {/* ✅ Month Name Overlaid */}
+                    <div className="absolute left-16 top-[30%] -translate-y-1/2">
+                        <h1 className="text-xl lg:text-[80px] font-bold text-[#E31313]">{month}</h1>
+                        <h1 className="text-base lg:text-3xl font-semibold text-[#E31313]">Feedback Form</h1>
+                    </div>
+                </div>
+
+
+
+                <form
+                    className="flex flex-col items-center px-6 overflow-y-auto  space-y-4"
+                    onSubmit={(e) => {
+                        e.preventDefault();
+                        submitHandler();
+                    }}
+                >
+                    <div className="space-y-6 w-full  ">
+                        {step2Fields.map((field, index) => {
+                            const prevField = index > 0 ? step2Fields[index - 1] : null;
+                            const showTypeHeading = field.type && (!prevField || (prevField as any).type !== field.type);
+
+                            return (
+                                <div key={field.id}>
+                                    {showTypeHeading && (
+                                        <h3 className="text-lg font-semibold text-[#E31313] mb-3 mt-6">
+                                            {field.type}
+                                        </h3>
+                                    )}
+                                    <DynamicField
+                                        field={field}
+                                        value={formData[field.name] || ""}
+                                        onChange={(val) => setFormData((p) => ({ ...p, [field.name]: val }))}
+                                    />
+                                </div>
+                            );
+                        })}
+
+                        <button
+                            type="submit"
+                            className=" text-center cursor-pointer mx-auto px-5 py-2 bg-[#F43F46] text-white text-[17px] rounded-full font-semibold  gap-2 flex items-center justify-center"
+                        >
+                            <Image width={20} height={20} alt="submitlogo" src="/svgs/submit-logo.svg" />
+                            Submit
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
     );
 }

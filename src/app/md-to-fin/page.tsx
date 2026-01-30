@@ -26,12 +26,12 @@ export default function MDToFinance() {
     const router = useRouter();
 
     const step2Fields = [
-        { id: "11", name: "submitted_by_id", label: "Your Name", fieldType: "searchable" },
-        { id: "21", name: "submitted_for_id", label: "Finance Head's Name", fieldType: "searchable" },
+        { id: "1", name: "submitted_by_id", label: "Your Name", fieldType: "searchable" },
+        { id: "2", name: "submitted_for_id", label: "Finance Head's Name", fieldType: "searchable" },
 
         // Actions
         {
-            id: "1",
+            id: "3",
             name: "understands_brief_rating",
             label: "Understand business priorities clearly.",
             fieldType: "dropdown",
@@ -45,7 +45,7 @@ export default function MDToFinance() {
             ],
         },
         {
-            id: "2",
+            id: "4",
             name: "on_time_delivery_rating",
             label: "Given tasks are completed accurately and on time.",
             fieldType: "dropdown",
@@ -59,7 +59,7 @@ export default function MDToFinance() {
             ],
         },
         {
-            id: "3",
+            id: "5",
             name: "feedback_implementation_rating",
             label: "Follows up on pending items effectively.",
             fieldType: "dropdown",
@@ -73,7 +73,7 @@ export default function MDToFinance() {
             ],
         },
         {
-            id: "4",
+            id: "6",
             name: "creative_contribution_rating",
             label: "Finance takes ownership of financial responsibilities.",
             fieldType: "dropdown",
@@ -89,7 +89,7 @@ export default function MDToFinance() {
 
         // Behaviour
         {
-            id: "5",
+            id: "7",
             name: "attention_to_detail_rating",
             label: "Communicates financial information clearly.",
             fieldType: "dropdown",
@@ -103,7 +103,7 @@ export default function MDToFinance() {
             ],
         },
         {
-            id: "6",
+            id: "8",
             name: "collaboration_rating",
             label: "Maintains transparency in reporting.",
             fieldType: "dropdown",
@@ -117,7 +117,7 @@ export default function MDToFinance() {
             ],
         },
         {
-            id: "7",
+            id: "9",
             name: "self_management_rating",
             label: "Handles pressure professionally.",
             fieldType: "dropdown",
@@ -131,7 +131,7 @@ export default function MDToFinance() {
             ],
         },
         {
-            id: "8",
+            id: "10",
             name: "adaptability_rating",
             label: "Finance collaborates well with other departments.",
             fieldType: "dropdown",
@@ -147,7 +147,7 @@ export default function MDToFinance() {
 
         // Competency
         {
-            id: "9",
+            id: "11",
             name: "growth_rating",
             label: "Demonstrates strong financial knowledge.",
             fieldType: "dropdown",
@@ -161,7 +161,7 @@ export default function MDToFinance() {
             ],
         },
         {
-            id: "10",
+            id: "12",
             name: "learning_rating",
             label: "Supports decision-making with data.",
             fieldType: "dropdown",
@@ -175,7 +175,7 @@ export default function MDToFinance() {
             ],
         },
         {
-            id: "11",
+            id: "13",
             name: "last_minute_reason_clarity_rating",
             label: "Identifies risks and controls effectively.",
             fieldType: "dropdown",
@@ -189,7 +189,7 @@ export default function MDToFinance() {
             ],
         },
         {
-            id: "12",
+            id: "14",
             name: "last_minute_handling_rating",
             label: "Adapts to changing business requirements.",
             fieldType: "dropdown",
@@ -205,7 +205,7 @@ export default function MDToFinance() {
 
         // Results
         {
-            id: "13",
+            id: "15",
             name: "deadline_communication_rating",
             label: "Finance contributes to financial stability.",
             fieldType: "dropdown",
@@ -219,7 +219,7 @@ export default function MDToFinance() {
             ],
         },
         {
-            id: "14",
+            id: "16",
             name: "creative_strength_text",
             label: "Finance supports cost control and planning.",
             fieldType: "dropdown",
@@ -233,7 +233,7 @@ export default function MDToFinance() {
             ],
         },
         {
-            id: "15",
+            id: "17",
             name: "improvement_area_text",
             label: "Finance enables smooth business operations.",
             fieldType: "dropdown",
@@ -247,7 +247,7 @@ export default function MDToFinance() {
             ],
         },
         {
-            id: "16",
+            id: "18",
             name: "process_limitation_text",
             label: "Overall, Finance delivers effective results.",
             fieldType: "dropdown",
@@ -263,21 +263,21 @@ export default function MDToFinance() {
 
         // Open-Ended Questions
         {
-            id: "17",
+            id: "19",
             name: "what_went_well_text",
             label: "What is working well in Finance?",
             fieldType: "short",
             type: "Open-Ended Questions",
         },
         {
-            id: "18",
+            id: "20",
             name: "what_needs_improvement_text",
             label: "What needs improvement?",
             fieldType: "short",
             type: "Open-Ended Questions",
         },
         {
-            id: "19",
+            id: "21",
             name: "what_should_be_done_differently_text",
             label: "What should be done differently to add more value?",
             fieldType: "short",
@@ -328,7 +328,7 @@ export default function MDToFinance() {
 
 
         try {
-            const res = await apiClient.post(`/api/v1/feedback/md-to-finance`, payload,
+            const res = await apiClient.post(`/api/v1/feedback/md-to-fin`, payload,
                 {
                     headers: {
                         "x-api-key": process.env.NEXT_PUBLIC_INTERNAL_API_KEY,

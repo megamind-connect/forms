@@ -204,15 +204,15 @@ const step4Fields = [
         ],
     },
         {
-        id: "creative_work",
-        name: "creative_work",
+        id: "surprised_deliverables",
+        name: "surprised_deliverables",
         label: "15. Were there any deliverables that pleasantly surprised you? If so, we would love to know which ones and what made them stand out for you. ",
         fieldType: "text",
    
     },
         {
-        id: "creative_work",
-        name: "creative_work",
+        id: "enquiries_response",
+        name: "enquiries_response",
         label: "16. How well did our team respond to your enquiries?  ",
         fieldType: "rating5",
         options: [

@@ -26,12 +26,12 @@ export default function Manager() {
   const router = useRouter();
 
   const step2Fields = [
-    { id: "11", name: "submitted_by_id", label: "Your Name", fieldType: "searchable" },
-    { id: "21", name: "submitted_for_id", label: "Employee's Name", fieldType: "searchable" },
+    { id: "1", name: "submitted_by_id", label: "Your Name", fieldType: "searchable" },
+    { id: "2", name: "submitted_for_id", label: "Employee's Name", fieldType: "searchable" },
 
     // Actions
     {
-      id: "1",
+      id: "3",
       name: "understands_brief_rating",
       label: "The employee clearly understands the tasks assigned to them.",
       fieldType: "dropdown",
@@ -45,7 +45,7 @@ export default function Manager() {
       ],
     },
     {
-      id: "2",
+      id: "4",
       name: "on_time_delivery_rating",
       label: "The employee takes ownership of assigned work.",
       fieldType: "dropdown",
@@ -59,7 +59,7 @@ export default function Manager() {
       ],
     },
     {
-      id: "3",
+      id: "5",
       name: "feedback_implementation_rating",
       label: "The employee follows timelines and commitments.",
       fieldType: "dropdown",
@@ -73,7 +73,7 @@ export default function Manager() {
       ],
     },
     {
-      id: "4",
+      id: "6",
       name: "creative_contribution_rating",
       label: "The employee takes initiative without being reminded frequently.",
       fieldType: "dropdown",
@@ -89,7 +89,7 @@ export default function Manager() {
 
     // Behaviour
     {
-      id: "5",
+      id: "7",
       name: "attention_to_detail_rating",
       label: "The employee communicates clearly and respectfully.",
       fieldType: "dropdown",
@@ -103,7 +103,7 @@ export default function Manager() {
       ],
     },
     {
-      id: "6",
+      id: "8",
       name: "collaboration_rating",
       label: "The employee is open to feedback and suggestions.",
       fieldType: "dropdown",
@@ -117,7 +117,7 @@ export default function Manager() {
       ],
     },
     {
-      id: "7",
+      id: "9",
       name: "self_management_rating",
       label: "The employee maintains a positive attitude at work.",
       fieldType: "dropdown",
@@ -131,7 +131,7 @@ export default function Manager() {
       ],
     },
     {
-      id: "8",
+      id: "10",
       name: "adaptability_rating",
       label: "The employee collaborates well with team members.",
       fieldType: "dropdown",
@@ -147,7 +147,7 @@ export default function Manager() {
 
     // Competency
     {
-      id: "9",
+      id: "11",
       name: "growth_rating",
       label: "The employee has the required skills for their role.",
       fieldType: "dropdown",
@@ -161,7 +161,7 @@ export default function Manager() {
       ],
     },
     {
-      id: "10",
+      id: "12",
       name: "learning_rating",
       label: "The employee applies their skills effectively in daily work.",
       fieldType: "dropdown",
@@ -175,7 +175,7 @@ export default function Manager() {
       ],
     },
     {
-      id: "11",
+      id: "13",
       name: "last_minute_reason_clarity_rating",
       label: "The employee is willing to learn new tools or methods.",
       fieldType: "dropdown",
@@ -189,7 +189,7 @@ export default function Manager() {
       ],
     },
     {
-      id: "12",
+      id: "14",
       name: "last_minute_handling_rating",
       label: "The employee adapts well to changes or new requirements.",
       fieldType: "dropdown",
@@ -205,7 +205,7 @@ export default function Manager() {
 
     // Results
     {
-      id: "13",
+      id: "15",
       name: "deadline_communication_rating",
       label: "The quality of work meets expectations.",
       fieldType: "dropdown",
@@ -219,7 +219,7 @@ export default function Manager() {
       ],
     },
     {
-      id: "14",
+      id: "16",
       name: "creative_strength_text",
       label: "The employee contributes positively to team goals.",
       fieldType: "dropdown",
@@ -233,7 +233,7 @@ export default function Manager() {
       ],
     },
     {
-      id: "15",
+      id: "17",
       name: "improvement_area_text",
       label: "The employee's work has a visible impact on outcomes.",
       fieldType: "dropdown",
@@ -247,7 +247,7 @@ export default function Manager() {
       ],
     },
     {
-      id: "16",
+      id: "18",
       name: "process_limitation_text",
       label: "Overall, the employee performs well in their role.",
       fieldType: "dropdown",
@@ -263,21 +263,21 @@ export default function Manager() {
 
     // Open-Ended Questions
     {
-      id: "17",
+      id: "19",
       name: "what_went_well_text",
       label: "What went well in this employee's performance?",
       fieldType: "short",
       type: "Open-Ended Questions",
     },
     {
-      id: "18",
+      id: "20",
       name: "what_needs_improvement_text",
       label: "What did not go well or needs improvement?",
       fieldType: "short",
       type: "Open-Ended Questions",
     },
     {
-      id: "19",
+      id: "21",
       name: "what_should_be_done_differently_text",
       label: "What should the employee do differently going forward?",
       fieldType: "short",

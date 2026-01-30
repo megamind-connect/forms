@@ -26,11 +26,11 @@ export default function Manager() {
   const router = useRouter();
 
   const step2Fields = [
-    { id: "11", name: "submitted_by_id", label: "Your Name", fieldType: "searchable" },
-    { id: "21", name: "submitted_for_id", label: "Project Manager's Name", fieldType: "searchable" },
+    { id: "1", name: "submitted_by_id", label: "Your Name", fieldType: "searchable" },
+    { id: "2", name: "submitted_for_id", label: "Project Manager's Name", fieldType: "searchable" },
 
     {
-      id: "1",
+      id: "3",
       name: "understands_brief_rating",
       label: "Does The employee understands assigned responsibilities?",
       fieldType: "dropdown",
@@ -44,7 +44,7 @@ export default function Manager() {
       ],
     },
     {
-      id: "2",
+      id: "4",
       name: "on_time_delivery_rating",
       label: "Have the tasks been completed within the agreed timelines?",
       fieldType: "dropdown",
@@ -58,7 +58,7 @@ export default function Manager() {
       ],
     },
     {
-      id: "3",
+      id: "5",
       name: "feedback_implementation_rating",
       label: "Is the Work handled with a sense of ownership?",
       fieldType: "dropdown",
@@ -72,7 +72,7 @@ export default function Manager() {
       ],
     },
     {
-      id: "4",
+      id: "6",
       name: "creative_contribution_rating",
       label: "Do they follow the Instructions correctly?",
       fieldType: "dropdown",
@@ -86,7 +86,7 @@ export default function Manager() {
       ],
     },
     {
-      id: "5",
+      id: "7",
       name: "attention_to_detail_rating",
       label: "Do they communicate clearly and professionally?",
       fieldType: "dropdown",
@@ -100,7 +100,7 @@ export default function Manager() {
       ],
     },
     {
-      id: "6",
+      id: "8",
       name: "collaboration_rating",
       label: "Do they accept feedback positively?",
       fieldType: "dropdown",
@@ -114,7 +114,7 @@ export default function Manager() {
       ],
     },
     {
-      id: "7",
+      id: "9",
       name: "self_management_rating",
       label: "Is accountability shown for work outcomes?",
       fieldType: "dropdown",
@@ -128,7 +128,7 @@ export default function Manager() {
       ],
     },
     {
-      id: "8",
+      id: "10",
       name: "adaptability_rating",
       label: "Coordination with others is smooth?",
       fieldType: "dropdown",
@@ -142,7 +142,7 @@ export default function Manager() {
       ],
     },
     {
-      id: "9",
+      id: "11",
       name: "growth_rating",
       label: "The employee has the required skills for the role?",
       fieldType: "dropdown",
@@ -156,7 +156,7 @@ export default function Manager() {
       ],
     },
     {
-      id: "10",
+      id: "12",
       name: "learning_rating",
       label: "The employee applies skills effectively in work?",
       fieldType: "dropdown",
@@ -170,7 +170,7 @@ export default function Manager() {
       ],
     },
     {
-      id: "11",
+      id: "13",
       name: "last_minute_reason_clarity_rating",
       label: "The employee shows willingness to learn and improve?",
       fieldType: "dropdown",
@@ -185,7 +185,7 @@ export default function Manager() {
     },
 
     {
-      id: "12",
+      id: "14",
       name: "last_minute_handling_rating",
       label: "The employee adapts well to changes?",
       fieldType: "dropdown",
@@ -199,7 +199,7 @@ export default function Manager() {
       ],
     },
     {
-      id: "13",
+      id: "15",
       name: "deadline_communication_rating",
       label: "Work output meets expectations?",
       fieldType: "dropdown",
@@ -213,7 +213,7 @@ export default function Manager() {
       ],
     },
 
-    { id: "14", name: "creative_strength_text", label: "Contributions support team goals?", fieldType: "dropdown", type: "Results & Contribution",
+    { id: "16", name: "creative_strength_text", label: "Contributions support team goals?", fieldType: "dropdown", type: "Results & Contribution",
       options: [
                    { label: "5", value: "5" },
                 { label: "4", value: "4" },
@@ -223,7 +223,7 @@ export default function Manager() {
       ],
     },
     {
-      id: "15",
+      id: "17",
       name: "improvement_area_text",
       label: "Work quality is consistent?",
       fieldType: "dropdown",
@@ -237,7 +237,7 @@ export default function Manager() {
       ],
     },
     {
-      id: "16",
+      id: "18",
       name: "process_limitation_text",
       label: "Overall performance is satisfactory?",
       fieldType: "dropdown",
@@ -251,21 +251,21 @@ export default function Manager() {
       ],
     },
     {
-      id: "17",
+      id: "19",
       name: "what_went_well_text",
       label: "What went well in the employee’s performance?",
       fieldType: "short",
       type: "Open-Ended Questions",
     },
     {
-      id: "18",
+      id: "20",
       name: "what_needs_improvement_text",
       label: "What needs improvement?",
       fieldType: "short",
       type: "Open-Ended Questions",
     },
     {
-      id: "19",
+      id: "21",
       name: "what_should_be_done_differently_text",
       label: "What should be done differently going forward?",
       fieldType: "short",
@@ -313,7 +313,7 @@ export default function Manager() {
 
 
     try {
-      const res = await apiClient.post(`/api/v1/feedback/manager-to-employee`, payload,
+      const res = await apiClient.post(`/api/v1/feedback/operations-to-project-manage`, payload,
         {
           headers: {
             "x-api-key": process.env.NEXT_PUBLIC_INTERNAL_API_KEY,

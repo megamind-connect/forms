@@ -19,7 +19,7 @@ interface FormField {
     placeholder?: string;
 }
 
-export default function Manager() {
+export default function ProjectToOperation() {
     const [formData, setFormData] = useState<Record<string, any>>({});
     const [errors, setErrors] = useState<Record<string, string>>({});
 
@@ -27,15 +27,14 @@ export default function Manager() {
 
     const step2Fields = [
         { id: "1", name: "submitted_by_id", label: "Your Name", fieldType: "searchable" },
-        { id: "2", name: "submitted_for_id", label: "MD's Name", fieldType: "searchable" },
+        { id: "2", name: "submitted_for_id", label: "Operations Manager's Name", fieldType: "searchable" },
 
-        // Actions & Decision-Making
         {
             id: "3",
-            name: "understands_brief_rating",
-            label: "The MD clearly communicates company goals and priorities.",
+            name: "expectations_clarity_rating",
+            label: "Expectations are communicated clearly.",
             fieldType: "dropdown",
-            type: "Actions & Decision-Making",
+            type: "Clarity & Direction",
             options: [
                 { label: "5", value: "5" },
                 { label: "4", value: "4" },
@@ -46,10 +45,10 @@ export default function Manager() {
         },
         {
             id: "4",
-            name: "on_time_delivery_rating",
-            label: "Decisions taken by the MD are clear and well-explained.",
+            name: "priorities_shared_rating",
+            label: "Priorities are shared in a timely manner.",
             fieldType: "dropdown",
-            type: "Actions & Decision-Making",
+            type: "Clarity & Direction",
             options: [
                 { label: "5", value: "5" },
                 { label: "4", value: "4" },
@@ -60,10 +59,10 @@ export default function Manager() {
         },
         {
             id: "5",
-            name: "feedback_implementation_rating",
-            label: "Provides direction during important situations.",
+            name: "guidance_provided_rating",
+            label: "Guidance is provided when required.",
             fieldType: "dropdown",
-            type: "Actions & Decision-Making",
+            type: "Clarity & Direction",
             options: [
                 { label: "5", value: "5" },
                 { label: "4", value: "4" },
@@ -74,10 +73,10 @@ export default function Manager() {
         },
         {
             id: "6",
-            name: "creative_contribution_rating",
-            label: "The MD follows up on key actions.",
+            name: "decisions_explained_rating",
+            label: "Decisions are explained clearly.",
             fieldType: "dropdown",
-            type: "Actions & Decision-Making",
+            type: "Clarity & Direction",
             options: [
                 { label: "5", value: "5" },
                 { label: "4", value: "4" },
@@ -86,14 +85,12 @@ export default function Manager() {
                 { label: "1", value: "1" },
             ],
         },
-
-        // Leadership Behavior
         {
             id: "7",
-            name: "attention_to_detail_rating",
-            label: "Listen to different viewpoints.",
+            name: "respectful_communication_rating",
+            label: "Communication is respectful and professional.",
             fieldType: "dropdown",
-            type: "Leadership Behavior",
+            type: "Behaviour",
             options: [
                 { label: "5", value: "5" },
                 { label: "4", value: "4" },
@@ -104,10 +101,10 @@ export default function Manager() {
         },
         {
             id: "8",
-            name: "collaboration_rating",
-            label: "The MD treats all departments fairly.",
+            name: "constructive_feedback_rating",
+            label: "Feedback is given constructively.",
             fieldType: "dropdown",
-            type: "Leadership Behavior",
+            type: "Behaviour",
             options: [
                 { label: "5", value: "5" },
                 { label: "4", value: "4" },
@@ -118,10 +115,10 @@ export default function Manager() {
         },
         {
             id: "9",
-            name: "self_management_rating",
-            label: "Maintains professionalism in challenging situations.",
+            name: "concerns_listened_rating",
+            label: "Concerns are listened to seriously.",
             fieldType: "dropdown",
-            type: "Leadership Behavior",
+            type: "Behaviour",
             options: [
                 { label: "5", value: "5" },
                 { label: "4", value: "4" },
@@ -132,10 +129,10 @@ export default function Manager() {
         },
         {
             id: "10",
-            name: "adaptability_rating",
-            label: "The MD encourages open and honest communication.",
+            name: "workload_manageable_rating",
+            label: "The workload is manageable most of the time.",
             fieldType: "dropdown",
-            type: "Leadership Behavior",
+            type: "Work Environment & Growth",
             options: [
                 { label: "5", value: "5" },
                 { label: "4", value: "4" },
@@ -144,14 +141,12 @@ export default function Manager() {
                 { label: "1", value: "1" },
             ],
         },
-
-        // Competency & Business Understanding
         {
             id: "11",
-            name: "growth_rating",
-            label: "The MD demonstrates a strong understanding of the business.",
+            name: "work_life_balance_rating",
+            label: "I feel a healthy work-life balance is encouraged.",
             fieldType: "dropdown",
-            type: "Competency & Business Understanding",
+            type: "Work Environment & Growth",
             options: [
                 { label: "5", value: "5" },
                 { label: "4", value: "4" },
@@ -162,10 +157,10 @@ export default function Manager() {
         },
         {
             id: "12",
-            name: "learning_rating",
-            label: "The MD aligns decisions with the company's vision.",
+            name: "professional_growth_rating",
+            label: "Megamind feels like a place where I can grow professionally.",
             fieldType: "dropdown",
-            type: "Competency & Business Understanding",
+            type: "Work Environment & Growth",
             options: [
                 { label: "5", value: "5" },
                 { label: "4", value: "4" },
@@ -176,10 +171,10 @@ export default function Manager() {
         },
         {
             id: "13",
-            name: "last_minute_reason_clarity_rating",
-            label: "The MD supports departments in addressing challenges.",
+            name: "hr_approachable_rating",
+            label: "HR is approachable and easy to talk to.",
             fieldType: "dropdown",
-            type: "Competency & Business Understanding",
+            type: "HR Experience",
             options: [
                 { label: "5", value: "5" },
                 { label: "4", value: "4" },
@@ -188,14 +183,12 @@ export default function Manager() {
                 { label: "1", value: "1" },
             ],
         },
-
-        // Results & Impact
         {
             id: "14",
-            name: "last_minute_handling_rating",
-            label: "The MD's leadership positively impacts overall performance.",
+            name: "hr_listens_rating",
+            label: "HR listens to employee concerns seriously.",
             fieldType: "dropdown",
-            type: "Results & Impact",
+            type: "HR Experience",
             options: [
                 { label: "5", value: "5" },
                 { label: "4", value: "4" },
@@ -206,10 +199,10 @@ export default function Manager() {
         },
         {
             id: "15",
-            name: "deadline_communication_rating",
-            label: "The MD enables smooth collaboration between departments.",
+            name: "hr_culture_rating",
+            label: "HR contributes positively to workplace culture.",
             fieldType: "dropdown",
-            type: "Results & Impact",
+            type: "HR Experience",
             options: [
                 { label: "5", value: "5" },
                 { label: "4", value: "4" },
@@ -220,59 +213,29 @@ export default function Manager() {
         },
         {
             id: "16",
-            name: "creative_strength_text",
-            label: "The MD supports teams in achieving their goals.",
-            fieldType: "dropdown",
-            type: "Results & Impact",
-            options: [
-                { label: "5", value: "5" },
-                { label: "4", value: "4" },
-                { label: "3", value: "3" },
-                { label: "2", value: "2" },
-                { label: "1", value: "1" },
-            ],
+            name: "enjoy_working_text",
+            label: "What do you enjoy most about working at Megamind?",
+            fieldType: "short",
+            type: "Open-Ended Questions",
         },
         {
             id: "17",
-            name: "improvement_area_text",
-            label: "Overall, the MD provides effective leadership.",
-            fieldType: "dropdown",
-            type: "Results & Impact",
-            options: [
-                { label: "5", value: "5" },
-                { label: "4", value: "4" },
-                { label: "3", value: "3" },
-                { label: "2", value: "2" },
-                { label: "1", value: "1" },
-            ],
+            name: "challenges_faced_text",
+            label: "What challenges or difficulties do you face at work?",
+            fieldType: "short",
+            type: "Open-Ended Questions",
         },
-
-        // Open-Ended Questions
         {
             id: "18",
-            name: "process_limitation_text",
-            label: "What leadership actions of the MD are working well?",
+            name: "improve_life_text",
+            label: "What can be done to improve Life at Megamind?",
             fieldType: "short",
             type: "Open-Ended Questions",
         },
         {
             id: "19",
-            name: "what_went_well_text",
-            label: "What areas of leadership could be improved?",
-            fieldType: "short",
-            type: "Open-Ended Questions",
-        },
-        {
-            id: "20",
-            name: "what_needs_improvement_text",
-            label: "What should the MD do differently to better support teams?",
-            fieldType: "short",
-            type: "Open-Ended Questions",
-        },
-        {
-            id: "21",
-            name: "what_should_be_done_differently_text",
-            label: "Any additional confidential feedback you would like to share?",
+            name: "anonymous_share_text",
+            label: "Is there anything you would like to share anonymously with the HR Team?",
             fieldType: "short",
             type: "Open-Ended Questions",
         },
@@ -292,39 +255,38 @@ export default function Manager() {
             return;
         }
 
-
         const payload = {
             submitted_for_id: formData.submitted_for_id?.id,
             submitted_by_id: formData.submitted_by_id?.id,
 
-            understands_brief_rating: formData.understands_brief_rating,
-            on_time_delivery_rating: formData.on_time_delivery_rating,
-            feedback_implementation_rating: formData.feedback_implementation_rating,
-            creative_contribution_rating: formData.creative_contribution_rating,
-            attention_to_detail_rating: formData.attention_to_detail_rating,
-            collaboration_rating: formData.collaboration_rating,
-            self_management_rating: formData.self_management_rating,
-            adaptability_rating: formData.adaptability_rating,
-            growth_rating: formData.growth_rating,
-            learning_rating: formData.learning_rating,
-            last_minute_reason_clarity_rating: formData.last_minute_reason_clarity_rating,
-            last_minute_handling_rating: formData.last_minute_handling_rating,
-            deadline_communication_rating: formData.deadline_communication_rating,
+            expectations_clarity_rating: formData.expectations_clarity_rating,
+            priorities_shared_rating: formData.priorities_shared_rating,
+            guidance_provided_rating: formData.guidance_provided_rating,
+            decisions_explained_rating: formData.decisions_explained_rating,
+            respectful_communication_rating: formData.respectful_communication_rating,
+            constructive_feedback_rating: formData.constructive_feedback_rating,
+            concerns_listened_rating: formData.concerns_listened_rating,
+            workload_manageable_rating: formData.workload_manageable_rating,
+            work_life_balance_rating: formData.work_life_balance_rating,
+            professional_growth_rating: formData.professional_growth_rating,
+            hr_approachable_rating: formData.hr_approachable_rating,
+            hr_listens_rating: formData.hr_listens_rating,
+            hr_culture_rating: formData.hr_culture_rating,
 
-            creative_strength_text: formData.creative_strength_text || "",
-            improvement_area_text: formData.improvement_area_text || "",
-            process_limitation_text: formData.process_limitation_text || "",
+            enjoy_working_text: formData.enjoy_working_text || "",
+            challenges_faced_text: formData.challenges_faced_text || "",
+            improve_life_text: formData.improve_life_text || "",
+            anonymous_share_text: formData.anonymous_share_text || "",
         };
 
-
         try {
-            const res = await apiClient.post(`/api/v1/feedback/fin-hr-op-to-md`, payload,
+            const res = await apiClient.post(`/api/v1/feedback/project-to-operation`, payload,
                 {
                     headers: {
                         "x-api-key": process.env.NEXT_PUBLIC_INTERNAL_API_KEY,
                     },
                 });
-            router.push("/manager/thank-you");
+            router.push("/project-to-operation/thank-you");
 
             setFormData({});
         } catch (err: any) {
@@ -338,21 +300,18 @@ export default function Manager() {
             <div className="max-w-6xl mx-auto py-10">
                 <div className="w-full relative flex  px-6 justify-center items-center mb-6">
                     <Image
-                        src="/images/feedBackImage.png" // <-- your image here
+                        src="/images/feedBackImage.png"
                         alt="Feedback Banner"
                         width={1400}
                         height={300}
                         className="w-full object-cover rounded-md"
                     />
 
-                    {/* ✅ Month Name Overlaid */}
                     <div className="absolute left-16 top-[30%] -translate-y-1/2">
                         <h1 className="text-xl lg:text-[80px] font-bold text-[#E31313]">{month}</h1>
                         <h1 className="text-base lg:text-3xl font-semibold text-[#E31313]">Feedback Form</h1>
                     </div>
                 </div>
-
-
 
                 <form
                     className="flex flex-col items-center px-6 overflow-y-auto  space-y-4"
@@ -361,10 +320,10 @@ export default function Manager() {
                         submitHandler();
                     }}
                 >
-                    <div className="space-y-6 w-full  ">
+                    <div className="space-y-6 w-full">
                         {step2Fields.map((field, index) => {
                             const prevField = index > 0 ? step2Fields[index - 1] : null;
-                            const showTypeHeading = field.type && (!prevField || (prevField as any).type !== field.type);
+                            const showTypeHeading = field.type && (!prevField || prevField.type !== field.type);
 
                             return (
                                 <div key={field.id}>
@@ -376,7 +335,7 @@ export default function Manager() {
                                     <DynamicField
                                         field={field}
                                         value={formData[field.name] || ""}
-                                        onChange={(val) => setFormData((p) => ({ ...p, [field.name]: val }))}
+                                        onChange={(val: any) => setFormData((p) => ({ ...p, [field.name]: val }))}
                                     />
                                 </div>
                             );

@@ -28,6 +28,7 @@ interface Step2FormProps {
   markAllFieldsTouched: () => void;
   headerTitle?: string;
   isClientPage?: boolean;
+  buttonText?: string;
 }
 
 export function Step2Form({
@@ -40,7 +41,8 @@ export function Step2Form({
   markFieldTouched,
   markAllFieldsTouched,
   headerTitle = "General Information",
-  isClientPage = false
+  isClientPage = false,
+  buttonText
 }: Step2FormProps) {
   const [snackbar, setSnackbar] = useState<{ type: 'error' | 'success'; message: string } | null>(null);
 
@@ -396,11 +398,11 @@ export function Step2Form({
           onClick={handleSubmit}
           className="w-full !bg-[#E31212] !text-white !font-medium !text-xl max-w-2xl mt-8 h-14 flex justify-center items-center px-4 hover:!bg-[#c40f0f]"
         >
-          Proceed
+          {buttonText || "Proceed"}
         </Button>
       ) : (
         <Button onClick={handleSubmit} className="w-full !bg-white border !border-red !text-red !font-normal !text-lg max-w-2xl mt-8 flex justify-between items-center px-4 hover:bg-red-50">
-          Next <span className="font-bold text-xl">&gt;</span>
+          {buttonText || "Next"} <span className="font-bold text-xl">&gt;</span>
         </Button>
       )}
 

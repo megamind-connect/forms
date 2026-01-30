@@ -328,7 +328,7 @@ export default function MDToOperations() {
 
 
         try {
-            const res = await apiClient.post(`/api/v1/feedback/md-to-operations`, payload,
+            const res = await apiClient.post(`/api/v1/feedback/md-to-operation`, payload,
                 {
                     headers: {
                         "x-api-key": process.env.NEXT_PUBLIC_INTERNAL_API_KEY,

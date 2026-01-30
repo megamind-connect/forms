@@ -163,8 +163,8 @@ const step3Fields = [
 
 const step4Fields = [
     {
-        id: "brand_strat",
-        name: "brand_strategy",
+        id: "content_creation",
+        name: "content_creation",
         label: "12. How would you rate our content creation and creative work in representing your brand?  ",
         fieldType: "rating5",
         options: [
@@ -175,13 +175,14 @@ const step4Fields = [
             { value: "very_poor", label: "Very Poor" },
         ],
     },
-    {
-        id: "content_creation",
-        name: "content_creation",
-        label: "13. How would you rate our content creation and creative work in representing your brand?  ",
+        {
+        id: "surprised_deliverables",
+        name: "surprised_deliverables",
+        label: "13. Were there any deliverables that pleasantly surprised you? If so, we would love to know which ones and what made them stand out for you? ",
         fieldType: "text",
 
     },
+
     {
         id: "creative_work",
         name: "creative_work",

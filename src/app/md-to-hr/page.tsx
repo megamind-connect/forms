@@ -26,12 +26,12 @@ export default function MDToHR() {
     const router = useRouter();
 
     const step2Fields = [
-        { id: "11", name: "submitted_by_id", label: "Your Name", fieldType: "searchable" },
-        { id: "21", name: "submitted_for_id", label: "HR's Name", fieldType: "searchable" },
+        { id: "1", name: "submitted_by_id", label: "Your Name", fieldType: "searchable" },
+        { id: "2", name: "submitted_for_id", label: "HR's Name", fieldType: "searchable" },
 
         // Actions
         {
-            id: "1",
+            id: "3",
             name: "understands_brief_rating",
             label: "Understands the expectations of their role.",
             fieldType: "dropdown",
@@ -45,7 +45,7 @@ export default function MDToHR() {
             ],
         },
         {
-            id: "2",
+            id: "4",
             name: "on_time_delivery_rating",
             label: "Completes assigned responsibilities on time.",
             fieldType: "dropdown",
@@ -59,7 +59,7 @@ export default function MDToHR() {
             ],
         },
         {
-            id: "3",
+            id: "5",
             name: "feedback_implementation_rating",
             label: "HR follows up on commitments effectively.",
             fieldType: "dropdown",
@@ -73,7 +73,7 @@ export default function MDToHR() {
             ],
         },
         {
-            id: "4",
+            id: "6",
             name: "creative_contribution_rating",
             label: "Takes initiative when issues arise.",
             fieldType: "dropdown",
@@ -89,7 +89,7 @@ export default function MDToHR() {
 
         // Behaviour
         {
-            id: "5",
+            id: "7",
             name: "attention_to_detail_rating",
             label: "Communicates clearly and professionally.",
             fieldType: "dropdown",
@@ -103,7 +103,7 @@ export default function MDToHR() {
             ],
         },
         {
-            id: "6",
+            id: "8",
             name: "collaboration_rating",
             label: "Handles situations with maturity.",
             fieldType: "dropdown",
@@ -117,7 +117,7 @@ export default function MDToHR() {
             ],
         },
         {
-            id: "7",
+            id: "9",
             name: "self_management_rating",
             label: "Maintains confidentiality and trust.",
             fieldType: "dropdown",
@@ -131,7 +131,7 @@ export default function MDToHR() {
             ],
         },
         {
-            id: "8",
+            id: "10",
             name: "adaptability_rating",
             label: "Shows a positive and solution-oriented attitude.",
             fieldType: "dropdown",
@@ -147,7 +147,7 @@ export default function MDToHR() {
 
         // Competency
         {
-            id: "9",
+            id: "11",
             name: "growth_rating",
             label: "Demonstrates a good understanding of people-related matters.",
             fieldType: "dropdown",
@@ -161,7 +161,7 @@ export default function MDToHR() {
             ],
         },
         {
-            id: "10",
+            id: "12",
             name: "learning_rating",
             label: "Applies practical solutions to workplace issues.",
             fieldType: "dropdown",
@@ -175,7 +175,7 @@ export default function MDToHR() {
             ],
         },
         {
-            id: "11",
+            id: "13",
             name: "last_minute_reason_clarity_rating",
             label: "HR is willing to learn and improve continuously.",
             fieldType: "dropdown",
@@ -189,7 +189,7 @@ export default function MDToHR() {
             ],
         },
         {
-            id: "12",
+            id: "14",
             name: "last_minute_handling_rating",
             label: "Adapts well to company needs and changes.",
             fieldType: "dropdown",
@@ -205,7 +205,7 @@ export default function MDToHR() {
 
         // Results
         {
-            id: "13",
+            id: "15",
             name: "deadline_communication_rating",
             label: "Contributes positively to workplace culture.",
             fieldType: "dropdown",
@@ -219,7 +219,7 @@ export default function MDToHR() {
             ],
         },
         {
-            id: "14",
+            id: "16",
             name: "creative_strength_text",
             label: "Supports teams effectively.",
             fieldType: "dropdown",
@@ -233,7 +233,7 @@ export default function MDToHR() {
             ],
         },
         {
-            id: "15",
+            id: "17",
             name: "improvement_area_text",
             label: "HR adds value to overall organizational growth.",
             fieldType: "dropdown",
@@ -247,7 +247,7 @@ export default function MDToHR() {
             ],
         },
         {
-            id: "16",
+            id: "18",
             name: "process_limitation_text",
             label: "Overall, HR performs well in their role.",
             fieldType: "dropdown",
@@ -263,21 +263,21 @@ export default function MDToHR() {
 
         // Open-Ended Questions
         {
-            id: "17",
+            id: "19",
             name: "what_went_well_text",
             label: "What has HR done well?",
             fieldType: "short",
             type: "Open-Ended Questions",
         },
         {
-            id: "18",
+            id: "20",
             name: "what_needs_improvement_text",
             label: "What areas need improvement?",
             fieldType: "short",
             type: "Open-Ended Questions",
         },
         {
-            id: "19",
+            id: "21",
             name: "what_should_be_done_differently_text",
             label: "What should HR do differently going forward?",
             fieldType: "short",
