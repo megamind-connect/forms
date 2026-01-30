@@ -22,6 +22,7 @@ export default function DynamicField({ field, value, onChange }: DynamicFieldPro
   const [search, setSearch] = useState("");
   const [results, setResults] = useState<any[]>([]);
   const [showDropdown, setShowDropdown] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   // Keep input text synced with stored value
   useEffect(() => {
@@ -33,18 +34,18 @@ export default function DynamicField({ field, value, onChange }: DynamicFieldPro
   useEffect(() => {
     if (fieldType !== "searchable") return;
 
-    const fetchUsers = async () => {
-      if (!search || search.length < 1) {
+    const fetchSuggestions = async () => {
+      if (!search || search.length < 2) {
         setResults([]);
         return;
       }
-
+      setIsLoading(true);
       try {
-        const res = await apiClient.get(`/api/v1/users/search?name=${search}`, {
-          headers: {
-            "x-api-key": process.env.NEXT_PUBLIC_INTERNAL_API_KEY,
-          },
+        const res = await apiClient.get(`/api/v1/users/search`, {
+          params: { name: search },
         });
+
+        // Ensure we handle different naming conventions from API
         const data = res.data?.users || res.data?.data || res.data || [];
         setResults(Array.isArray(data) ? data : []);
       } catch (err) {
@@ -52,8 +53,11 @@ export default function DynamicField({ field, value, onChange }: DynamicFieldPro
       }
     };
 
-    const delay = setTimeout(fetchUsers, 250);
-    return () => clearTimeout(delay);
+    const delayDebounceFn = setTimeout(() => {
+      fetchSuggestions();
+    }, 500);
+
+    return () => clearTimeout(delayDebounceFn);
   }, [search, fieldType]);
 
   // ✅ Searchable Field
@@ -64,21 +68,28 @@ export default function DynamicField({ field, value, onChange }: DynamicFieldPro
           {label} <span className="text-red-500">*</span>
         </label>
 
-        <input
-          type="text"
-          className="border-b border-gray-300 text-[#202020] placeholder:text-[#202020] placeholder:text-sm md:placeholder:text-base focus:border-gray-800 outline-none py-1 text-lg font-medium"
-          placeholder={`Search ${label}`}
-          value={search}
-          onChange={(e) => {
-            setSearch(e.target.value);
-            setShowDropdown(true);
-          }}
-        />
+        <div className="relative flex items-center">
+          <input
+            type="text"
+            className="w-full border-b border-gray-300 text-[#202020] placeholder:text-[#202020] placeholder:text-sm md:placeholder:text-base focus:border-gray-800 outline-none py-1 text-lg font-medium pr-10"
+            placeholder={`Search ${label}`}
+            value={search}
+            onChange={(e) => {
+              setSearch(e.target.value);
+              setShowDropdown(true);
+            }}
+          />
+          {isLoading && (
+            <div className="absolute right-2 animate-spin rounded-full h-5 w-5 border-t-2 border-b-2 border-red-500"></div>
+          )}
+        </div>
 
         {showDropdown && results.length > 0 && (
           <ul className="absolute top-full left-0 text-secondary w-full bg-white border border-gray-300 rounded-md shadow-md max-h-56 overflow-auto z-20">
             {results.map((user) => {
-              const fullName = `${user.first_name} ${user.last_name}`;
+              // Be resilient to different name field formats
+              const fullName = user.fullName || user.name || (user.first_name ? `${user.first_name} ${user.last_name || ""}`.trim() : "Unknown User");
+              const position = user.position || user.role || "Employee";
 
               return (
                 <li
@@ -90,7 +101,7 @@ export default function DynamicField({ field, value, onChange }: DynamicFieldPro
                     setShowDropdown(false);
                   }}
                 >
-                  {fullName} — <span className="text-secondary/80">{user.position}</span>
+                  {fullName} — <span className="text-secondary/80">{position}</span>
                 </li>
               );
             })}
@@ -101,70 +112,70 @@ export default function DynamicField({ field, value, onChange }: DynamicFieldPro
   }
 
   // ✅ Dropdown Field (No Changes)
- if (fieldType === "dropdown" && options) {
-  const handleSelect = (val: string) => onChange(val);
+  if (fieldType === "dropdown" && options) {
+    const handleSelect = (val: string) => onChange(val);
 
-  return (
-    <div className="w-full space-y-3 bg-white rounded-md p-5 md:p-10">
-      <div className="flex flex-col md:flex-row justify-between items-start gap-2">
-        <p className="text-base md:text-[24px] font-medium text-[#202020] leading-tight">
-          {(() => {
-            const words = label.trim().split(/\s+/);
-            const last = words.pop();
-            const rest = words.join(" ");
+    return (
+      <div className="w-full space-y-3 bg-white rounded-md p-5 md:p-10">
+        <div className="flex flex-col md:flex-row justify-between items-start gap-2">
+          <p className="text-base md:text-[24px] font-medium text-[#202020] leading-tight">
+            {(() => {
+              const words = label.trim().split(/\s+/);
+              const last = words.pop();
+              const rest = words.join(" ");
 
-            return (
-              <>
-                {rest && <span>{rest} </span>}
-                <span className="whitespace-nowrap">
-                  {last} <span className="text-red-500">*</span>
-                </span>
-              </>
-            );
-          })()}
-        </p>
+              return (
+                <>
+                  {rest && <span>{rest} </span>}
+                  <span className="whitespace-nowrap">
+                    {last} <span className="text-red-500">*</span>
+                  </span>
+                </>
+              );
+            })()}
+          </p>
 
-        {value && (
-          <button
-            onClick={() => onChange(null)}
-            type="button"
-            className="text-sm text-[#989898] hover:text-gray-600 whitespace-nowrap"
-          >
-            Clear Selection
-          </button>
-        )}
-      </div>
+          {value && (
+            <button
+              onClick={() => onChange(null)}
+              type="button"
+              className="text-sm text-[#989898] hover:text-gray-600 whitespace-nowrap"
+            >
+              Clear Selection
+            </button>
+          )}
+        </div>
 
-      <div className="flex flex-col md:flex-row mt-5 md:mt-12 flex-wrap md:flex-nowrap md:items-center justify-center gap-6 md:gap-20">
-        {options.map((opt) => (
-          <label
-            key={opt.value}
-            className="flex flex-row md:flex-col gap-4 md:gap-0 items-center cursor-pointer text-center"
-          >
-            <span className="text-sm md:text-lg mb-3 hidden md:block font-medium text-[#202020]">
-              {opt.label}
-            </span>
+        <div className="flex flex-col md:flex-row mt-5 md:mt-12 flex-wrap md:flex-nowrap md:items-center justify-center gap-6 md:gap-20">
+          {options.map((opt) => (
+            <label
+              key={opt.value}
+              className="flex flex-row md:flex-col gap-4 md:gap-0 items-center cursor-pointer text-center"
+            >
+              <span className="text-sm md:text-lg mb-3 hidden md:block font-medium text-[#202020]">
+                {opt.label}
+              </span>
 
-            <input
-              type="radio"
-              name={name}
-              checked={value === opt.value}
-              onClick={() => handleSelect(opt.value)}
-              className="appearance-none w-4 h-4 md:w-6 md:h-6 border-2 border-[#202020] rounded-full cursor-pointer relative
+              <input
+                type="radio"
+                name={name}
+                checked={value === opt.value}
+                onClick={() => handleSelect(opt.value)}
+                className="appearance-none w-4 h-4 md:w-6 md:h-6 border-2 border-[#202020] rounded-full cursor-pointer relative
                          after:content-[''] after:absolute after:top-1/2 after:left-1/2 after:-translate-x-1/2 after:-translate-y-1/2
                          after:w-2 after:h-2 md:after:w-4 md:after:h-4 after:rounded-full after:bg-transparent
                          checked:after:bg-[#F43F46] checked:border-[#F43F46] transition-all"
-            />
+              />
 
-            <span className="text-sm md:text-lg md:hidden font-medium text-[#202020]">
-              {opt.label}
-            </span>
-          </label>
-        ))}
+              <span className="text-sm md:text-lg md:hidden font-medium text-[#202020]">
+                {opt.label}
+              </span>
+            </label>
+          ))}
+        </div>
       </div>
-    </div>
-  );
-}
+    );
+  }
 
 
   // ✅ Short Input (No Changes)

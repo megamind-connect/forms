@@ -19,7 +19,7 @@ interface FormField {
     placeholder?: string;
 }
 
-export default function Manager() {
+export default function MDToOperations() {
     const [formData, setFormData] = useState<Record<string, any>>({});
     const [errors, setErrors] = useState<Record<string, string>>({});
 
@@ -27,252 +27,259 @@ export default function Manager() {
 
     const step2Fields = [
         { id: "11", name: "submitted_by_id", label: "Your Name", fieldType: "searchable" },
-        { id: "21", name: "submitted_for_id", label: "MD's Name", fieldType: "searchable" },
+        { id: "21", name: "submitted_for_id", label: "Operations Manager's Name", fieldType: "searchable" },
 
-        // Actions & Decision-Making
+        // Actions
         {
             id: "1",
             name: "understands_brief_rating",
-            label: "The MD clearly communicates company goals and priorities.",
+            label: "The Operations Manager clearly understands business goals.",
             fieldType: "dropdown",
-            type: "Actions & Decision-Making",
+            type: "Actions",
             options: [
-                { label: "5", value: "5" },
-                { label: "4", value: "4" },
-                { label: "3", value: "3" },
-                { label: "2", value: "2" },
                 { label: "1", value: "1" },
+                { label: "2", value: "2" },
+                { label: "3", value: "3" },
+                { label: "4", value: "4" },
+                { label: "5", value: "5" },
             ],
         },
         {
             id: "2",
             name: "on_time_delivery_rating",
-            label: "Decisions taken by the MD are clear and well-explained.",
+            label: "Tasks and priorities are executed effectively.",
             fieldType: "dropdown",
-            type: "Actions & Decision-Making",
+            type: "Actions",
             options: [
-                { label: "5", value: "5" },
-                { label: "4", value: "4" },
-                { label: "3", value: "3" },
-                { label: "2", value: "2" },
                 { label: "1", value: "1" },
+                { label: "2", value: "2" },
+                { label: "3", value: "3" },
+                { label: "4", value: "4" },
+                { label: "5", value: "5" },
             ],
         },
         {
             id: "3",
             name: "feedback_implementation_rating",
-            label: "Provides direction during important situations.",
+            label: "The Operations Manager follows up on deliverables.",
             fieldType: "dropdown",
-            type: "Actions & Decision-Making",
+            type: "Actions",
             options: [
-                { label: "5", value: "5" },
-                { label: "4", value: "4" },
-                { label: "3", value: "3" },
-                { label: "2", value: "2" },
                 { label: "1", value: "1" },
+                { label: "2", value: "2" },
+                { label: "3", value: "3" },
+                { label: "4", value: "4" },
+                { label: "5", value: "5" },
             ],
         },
         {
             id: "4",
             name: "creative_contribution_rating",
-            label: "The MD follows up on key actions.",
+            label: "Takes ownership of outcomes.",
             fieldType: "dropdown",
-            type: "Actions & Decision-Making",
+            type: "Actions",
             options: [
-                { label: "5", value: "5" },
-                { label: "4", value: "4" },
-                { label: "3", value: "3" },
-                { label: "2", value: "2" },
                 { label: "1", value: "1" },
+                { label: "2", value: "2" },
+                { label: "3", value: "3" },
+                { label: "4", value: "4" },
+                { label: "5", value: "5" },
             ],
         },
 
-        // Leadership Behavior
+        // Behaviour
         {
             id: "5",
             name: "attention_to_detail_rating",
-            label: "Listen to different viewpoints.",
+            label: "Communicates clearly with teams.",
             fieldType: "dropdown",
-            type: "Leadership Behavior",
+            type: "Behaviour",
             options: [
-                { label: "5", value: "5" },
-                { label: "4", value: "4" },
-                { label: "3", value: "3" },
-                { label: "2", value: "2" },
                 { label: "1", value: "1" },
+                { label: "2", value: "2" },
+                { label: "3", value: "3" },
+                { label: "4", value: "4" },
+                { label: "5", value: "5" },
             ],
         },
         {
             id: "6",
             name: "collaboration_rating",
-            label: "The MD treats all departments fairly.",
+            label: "The Operations Manager maintains professionalism.",
             fieldType: "dropdown",
-            type: "Leadership Behavior",
+            type: "Behaviour",
             options: [
-                { label: "5", value: "5" },
-                { label: "4", value: "4" },
-                { label: "3", value: "3" },
-                { label: "2", value: "2" },
                 { label: "1", value: "1" },
+                { label: "2", value: "2" },
+                { label: "3", value: "3" },
+                { label: "4", value: "4" },
+                { label: "5", value: "5" },
             ],
         },
         {
             id: "7",
             name: "self_management_rating",
-            label: "Maintains professionalism in challenging situations.",
+            label: "The Operations Manager handles challenges calmly.",
             fieldType: "dropdown",
-            type: "Leadership Behavior",
+            type: "Behaviour",
             options: [
-                { label: "5", value: "5" },
-                { label: "4", value: "4" },
-                { label: "3", value: "3" },
-                { label: "2", value: "2" },
                 { label: "1", value: "1" },
+                { label: "2", value: "2" },
+                { label: "3", value: "3" },
+                { label: "4", value: "4" },
+                { label: "5", value: "5" },
             ],
         },
         {
             id: "8",
             name: "adaptability_rating",
-            label: "The MD encourages open and honest communication.",
+            label: "The Operations Manager encourages accountability.",
             fieldType: "dropdown",
-            type: "Leadership Behavior",
+            type: "Behaviour",
             options: [
-                { label: "5", value: "5" },
-                { label: "4", value: "4" },
-                { label: "3", value: "3" },
-                { label: "2", value: "2" },
                 { label: "1", value: "1" },
+                { label: "2", value: "2" },
+                { label: "3", value: "3" },
+                { label: "4", value: "4" },
+                { label: "5", value: "5" },
             ],
         },
 
-        // Competency & Business Understanding
+        // Competency
         {
             id: "9",
             name: "growth_rating",
-            label: "The MD demonstrates a strong understanding of the business.",
+            label: "The Operations Manager demonstrates strong operational understanding.",
             fieldType: "dropdown",
-            type: "Competency & Business Understanding",
+            type: "Competency",
             options: [
-                { label: "5", value: "5" },
-                { label: "4", value: "4" },
-                { label: "3", value: "3" },
-                { label: "2", value: "2" },
                 { label: "1", value: "1" },
+                { label: "2", value: "2" },
+                { label: "3", value: "3" },
+                { label: "4", value: "4" },
+                { label: "5", value: "5" },
             ],
         },
         {
             id: "10",
             name: "learning_rating",
-            label: "The MD aligns decisions with the company's vision.",
+            label: "The Operations Manager plans and prioritizes work well.",
             fieldType: "dropdown",
-            type: "Competency & Business Understanding",
+            type: "Competency",
             options: [
-                { label: "5", value: "5" },
-                { label: "4", value: "4" },
-                { label: "3", value: "3" },
-                { label: "2", value: "2" },
                 { label: "1", value: "1" },
+                { label: "2", value: "2" },
+                { label: "3", value: "3" },
+                { label: "4", value: "4" },
+                { label: "5", value: "5" },
             ],
         },
         {
             id: "11",
             name: "last_minute_reason_clarity_rating",
-            label: "The MD supports departments in addressing challenges.",
+            label: "The Operations Manager supports managers and teams effectively.",
             fieldType: "dropdown",
-            type: "Competency & Business Understanding",
+            type: "Competency",
             options: [
-                { label: "5", value: "5" },
-                { label: "4", value: "4" },
-                { label: "3", value: "3" },
-                { label: "2", value: "2" },
                 { label: "1", value: "1" },
+                { label: "2", value: "2" },
+                { label: "3", value: "3" },
+                { label: "4", value: "4" },
+                { label: "5", value: "5" },
             ],
         },
-
-        // Results & Impact
         {
             id: "12",
             name: "last_minute_handling_rating",
-            label: "The MD's leadership positively impacts overall performance.",
+            label: "The Operations Manager adapts to changing priorities.",
             fieldType: "dropdown",
-            type: "Results & Impact",
+            type: "Competency",
             options: [
-                { label: "5", value: "5" },
-                { label: "4", value: "4" },
-                { label: "3", value: "3" },
-                { label: "2", value: "2" },
                 { label: "1", value: "1" },
+                { label: "2", value: "2" },
+                { label: "3", value: "3" },
+                { label: "4", value: "4" },
+                { label: "5", value: "5" },
             ],
         },
+
+        // Results
         {
             id: "13",
             name: "deadline_communication_rating",
-            label: "The MD enables smooth collaboration between departments.",
+            label: "The Operations Manager drives operational efficiency.",
             fieldType: "dropdown",
-            type: "Results & Impact",
+            type: "Results",
             options: [
-                { label: "5", value: "5" },
-                { label: "4", value: "4" },
-                { label: "3", value: "3" },
-                { label: "2", value: "2" },
                 { label: "1", value: "1" },
+                { label: "2", value: "2" },
+                { label: "3", value: "3" },
+                { label: "4", value: "4" },
+                { label: "5", value: "5" },
             ],
         },
         {
             id: "14",
             name: "creative_strength_text",
-            label: "The MD supports teams in achieving their goals.",
+            label: "Ensure timely delivery of work.",
             fieldType: "dropdown",
-            type: "Results & Impact",
+            type: "Results",
             options: [
-                { label: "5", value: "5" },
-                { label: "4", value: "4" },
-                { label: "3", value: "3" },
-                { label: "2", value: "2" },
                 { label: "1", value: "1" },
+                { label: "2", value: "2" },
+                { label: "3", value: "3" },
+                { label: "4", value: "4" },
+                { label: "5", value: "5" },
             ],
         },
         {
             id: "15",
             name: "improvement_area_text",
-            label: "Overall, the MD provides effective leadership.",
+            label: "Contributes to cross-team alignment.",
             fieldType: "dropdown",
-            type: "Results & Impact",
+            type: "Results",
             options: [
-                { label: "5", value: "5" },
-                { label: "4", value: "4" },
-                { label: "3", value: "3" },
-                { label: "2", value: "2" },
                 { label: "1", value: "1" },
+                { label: "2", value: "2" },
+                { label: "3", value: "3" },
+                { label: "4", value: "4" },
+                { label: "5", value: "5" },
+            ],
+        },
+        {
+            id: "16",
+            name: "process_limitation_text",
+            label: "Overall, the Operations Manager performs effectively.",
+            fieldType: "dropdown",
+            type: "Results",
+            options: [
+                { label: "1", value: "1" },
+                { label: "2", value: "2" },
+                { label: "3", value: "3" },
+                { label: "4", value: "4" },
+                { label: "5", value: "5" },
             ],
         },
 
         // Open-Ended Questions
         {
-            id: "16",
-            name: "process_limitation_text",
-            label: "What leadership actions of the MD are working well?",
-            fieldType: "short",
-            type: "Open-Ended Questions",
-        },
-        {
             id: "17",
             name: "what_went_well_text",
-            label: "What areas of leadership could be improved?",
+            label: "What leadership actions are working well?",
             fieldType: "short",
             type: "Open-Ended Questions",
         },
         {
             id: "18",
             name: "what_needs_improvement_text",
-            label: "What should the MD do differently to better support teams?",
+            label: "What areas need improvement?",
             fieldType: "short",
             type: "Open-Ended Questions",
         },
         {
             id: "19",
             name: "what_should_be_done_differently_text",
-            label: "Any additional confidential feedback you would like to share?",
+            label: "What should be done differently to improve operations?",
             fieldType: "short",
             type: "Open-Ended Questions",
         },
@@ -314,20 +321,24 @@ export default function Manager() {
             creative_strength_text: formData.creative_strength_text || "",
             improvement_area_text: formData.improvement_area_text || "",
             process_limitation_text: formData.process_limitation_text || "",
+            what_went_well_text: formData.what_went_well_text || "",
+            what_needs_improvement_text: formData.what_needs_improvement_text || "",
+            what_should_be_done_differently_text: formData.what_should_be_done_differently_text || "",
         };
 
 
         try {
-            const res = await apiClient.post(`/api/v1/feedback/manager-to-employee`, payload,
+            const res = await apiClient.post(`/api/v1/feedback/md-to-operation`, payload,
                 {
                     headers: {
                         "x-api-key": process.env.NEXT_PUBLIC_INTERNAL_API_KEY,
                     },
                 });
-            router.push("/manager/thank-you");
+            router.push("/md-to-operation/thank-you");
 
             setFormData({});
         } catch (err: any) {
+            console.error("Submission error:", err);
             toast.error("Something went wrong. Please check required fields or API schema.");
         }
     };

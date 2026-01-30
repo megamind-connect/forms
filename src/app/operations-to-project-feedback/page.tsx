@@ -15,7 +15,7 @@ interface FormField {
   label: string;
   fieldType: string;
   type?: string;
-  options?: any[] | null;
+  options?: string[] | null;
   placeholder?: string;
 }
 
@@ -26,260 +26,249 @@ export default function Manager() {
   const router = useRouter();
 
   const step2Fields = [
-    { id: "11", name: "submitted_by_id", label: "Your Name", fieldType: "searchable" },
-    { id: "21", name: "submitted_for_id", label: "Employee's Name", fieldType: "searchable" },
+    { id: "1", name: "submitted_by_id", label: "Your Name", fieldType: "searchable" },
+    { id: "2", name: "submitted_for_id", label: "Project Manager's Name", fieldType: "searchable" },
 
-    // Actions
-    {
-      id: "1",
-      name: "understands_brief_rating",
-      label: "The employee clearly understands the tasks assigned to them.",
-      fieldType: "dropdown",
-      type: "Actions",
-      options: [
-        { label: "5", value: "5" },
-        { label: "4", value: "4" },
-        { label: "3", value: "3" },
-        { label: "2", value: "2" },
-        { label: "1", value: "1" },
-      ],
-    },
-    {
-      id: "2",
-      name: "on_time_delivery_rating",
-      label: "The employee takes ownership of assigned work.",
-      fieldType: "dropdown",
-      type: "Actions",
-      options: [
-        { label: "5", value: "5" },
-        { label: "4", value: "4" },
-        { label: "3", value: "3" },
-        { label: "2", value: "2" },
-        { label: "1", value: "1" },
-      ],
-    },
     {
       id: "3",
-      name: "feedback_implementation_rating",
-      label: "The employee follows timelines and commitments.",
+      name: "understands_brief_rating",
+      label: "Does The employee understands assigned responsibilities?",
       fieldType: "dropdown",
-      type: "Actions",
+      type: "Work Approach & Actions",
       options: [
-        { label: "5", value: "5" },
-        { label: "4", value: "4" },
-        { label: "3", value: "3" },
-        { label: "2", value: "2" },
         { label: "1", value: "1" },
+        { label: "2", value: "2" },
+        { label: "3", value: "3" },
+        { label: "4", value: "4" },
+        { label: "5", value: "5" },
       ],
     },
     {
       id: "4",
-      name: "creative_contribution_rating",
-      label: "The employee takes initiative without being reminded frequently.",
+      name: "on_time_delivery_rating",
+      label: "Have the tasks been completed within the agreed timelines?",
       fieldType: "dropdown",
-      type: "Actions",
+      type: "Work Approach & Actions",
       options: [
-        { label: "5", value: "5" },
-        { label: "4", value: "4" },
-        { label: "3", value: "3" },
-        { label: "2", value: "2" },
         { label: "1", value: "1" },
+        { label: "2", value: "2" },
+        { label: "3", value: "3" },
+        { label: "4", value: "4" },
+        { label: "5", value: "5" },
       ],
     },
-
-    // Behaviour
     {
       id: "5",
-      name: "attention_to_detail_rating",
-      label: "The employee communicates clearly and respectfully.",
+      name: "feedback_implementation_rating",
+      label: "Is the Work handled with a sense of ownership?",
       fieldType: "dropdown",
-      type: "Behaviour",
+      type: "Work Approach & Actions",
       options: [
-        { label: "5", value: "5" },
-        { label: "4", value: "4" },
-        { label: "3", value: "3" },
-        { label: "2", value: "2" },
         { label: "1", value: "1" },
+        { label: "2", value: "2" },
+        { label: "3", value: "3" },
+        { label: "4", value: "4" },
+        { label: "5", value: "5" },
       ],
     },
     {
       id: "6",
-      name: "collaboration_rating",
-      label: "The employee is open to feedback and suggestions.",
+      name: "creative_contribution_rating",
+      label: "Do they follow the Instructions correctly?",
       fieldType: "dropdown",
-      type: "Behaviour",
+      type: "Work Approach & Actions",
       options: [
-        { label: "5", value: "5" },
-        { label: "4", value: "4" },
-        { label: "3", value: "3" },
-        { label: "2", value: "2" },
         { label: "1", value: "1" },
+        { label: "2", value: "2" },
+        { label: "3", value: "3" },
+        { label: "4", value: "4" },
+        { label: "5", value: "5" },
       ],
     },
     {
       id: "7",
-      name: "self_management_rating",
-      label: "The employee maintains a positive attitude at work.",
+      name: "attention_to_detail_rating",
+      label: "Do they communicate clearly and professionally?",
       fieldType: "dropdown",
-      type: "Behaviour",
+      type: "Professional Behaviour",
       options: [
-        { label: "5", value: "5" },
-        { label: "4", value: "4" },
-        { label: "3", value: "3" },
-        { label: "2", value: "2" },
         { label: "1", value: "1" },
+        { label: "2", value: "2" },
+        { label: "3", value: "3" },
+        { label: "4", value: "4" },
+        { label: "5", value: "5" },
       ],
     },
     {
       id: "8",
-      name: "adaptability_rating",
-      label: "The employee collaborates well with team members.",
+      name: "collaboration_rating",
+      label: "Do they accept feedback positively?",
       fieldType: "dropdown",
-      type: "Behaviour",
+      type: "Professional Behaviour",
       options: [
-        { label: "5", value: "5" },
-        { label: "4", value: "4" },
-        { label: "3", value: "3" },
-        { label: "2", value: "2" },
         { label: "1", value: "1" },
+        { label: "2", value: "2" },
+        { label: "3", value: "3" },
+        { label: "4", value: "4" },
+        { label: "5", value: "5" },
       ],
     },
-
-    // Competency
     {
       id: "9",
-      name: "growth_rating",
-      label: "The employee has the required skills for their role.",
+      name: "self_management_rating",
+      label: "Is accountability shown for work outcomes?",
       fieldType: "dropdown",
-      type: "Competency",
+      type: "Professional Behaviour",
       options: [
-        { label: "5", value: "5" },
-        { label: "4", value: "4" },
-        { label: "3", value: "3" },
-        { label: "2", value: "2" },
         { label: "1", value: "1" },
+        { label: "2", value: "2" },
+        { label: "3", value: "3" },
+        { label: "4", value: "4" },
+        { label: "5", value: "5" },
       ],
     },
     {
       id: "10",
-      name: "learning_rating",
-      label: "The employee applies their skills effectively in daily work.",
+      name: "adaptability_rating",
+      label: "Coordination with others is smooth?",
       fieldType: "dropdown",
-      type: "Competency",
+      type: "Professional Behaviour",
       options: [
-        { label: "5", value: "5" },
-        { label: "4", value: "4" },
-        { label: "3", value: "3" },
-        { label: "2", value: "2" },
         { label: "1", value: "1" },
+        { label: "2", value: "2" },
+        { label: "3", value: "3" },
+        { label: "4", value: "4" },
+        { label: "5", value: "5" },
       ],
     },
     {
       id: "11",
-      name: "last_minute_reason_clarity_rating",
-      label: "The employee is willing to learn new tools or methods.",
+      name: "growth_rating",
+      label: "The employee has the required skills for the role?",
       fieldType: "dropdown",
-      type: "Competency",
+      type: "Role Competency",
       options: [
-        { label: "5", value: "5" },
-        { label: "4", value: "4" },
-        { label: "3", value: "3" },
-        { label: "2", value: "2" },
         { label: "1", value: "1" },
+        { label: "2", value: "2" },
+        { label: "3", value: "3" },
+        { label: "4", value: "4" },
+        { label: "5", value: "5" },
       ],
     },
     {
       id: "12",
-      name: "last_minute_handling_rating",
-      label: "The employee adapts well to changes or new requirements.",
+      name: "learning_rating",
+      label: "The employee applies skills effectively in work?",
       fieldType: "dropdown",
-      type: "Competency",
+      type: "Role Competency",
       options: [
-        { label: "5", value: "5" },
-        { label: "4", value: "4" },
-        { label: "3", value: "3" },
-        { label: "2", value: "2" },
         { label: "1", value: "1" },
+        { label: "2", value: "2" },
+        { label: "3", value: "3" },
+        { label: "4", value: "4" },
+        { label: "5", value: "5" },
+      ],
+    },
+    {
+      id: "13",
+      name: "last_minute_reason_clarity_rating",
+      label: "The employee shows willingness to learn and improve?",
+      fieldType: "dropdown",
+      type: "Role Competency",
+      options: [
+        { label: "1", value: "1" },
+        { label: "2", value: "2" },
+        { label: "3", value: "3" },
+        { label: "4", value: "4" },
+        { label: "5", value: "5" },
       ],
     },
 
-    // Results
-    {
-      id: "13",
-      name: "deadline_communication_rating",
-      label: "The quality of work meets expectations.",
-      fieldType: "dropdown",
-      type: "Results",
-      options: [
-        { label: "5", value: "5" },
-        { label: "4", value: "4" },
-        { label: "3", value: "3" },
-        { label: "2", value: "2" },
-        { label: "1", value: "1" },
-      ],
-    },
     {
       id: "14",
-      name: "creative_strength_text",
-      label: "The employee contributes positively to team goals.",
+      name: "last_minute_handling_rating",
+      label: "The employee adapts well to changes?",
       fieldType: "dropdown",
-      type: "Results",
+      type: "Role Competency",
       options: [
-        { label: "5", value: "5" },
-        { label: "4", value: "4" },
-        { label: "3", value: "3" },
-        { label: "2", value: "2" },
         { label: "1", value: "1" },
+        { label: "2", value: "2" },
+        { label: "3", value: "3" },
+        { label: "4", value: "4" },
+        { label: "5", value: "5" },
       ],
     },
     {
       id: "15",
-      name: "improvement_area_text",
-      label: "The employee's work has a visible impact on outcomes.",
+      name: "deadline_communication_rating",
+      label: "Work output meets expectations?",
       fieldType: "dropdown",
-      type: "Results",
+      type: "Results & Contribution",
       options: [
-        { label: "5", value: "5" },
-        { label: "4", value: "4" },
-        { label: "3", value: "3" },
-        { label: "2", value: "2" },
         { label: "1", value: "1" },
-      ],
-    },
-    {
-      id: "16",
-      name: "process_limitation_text",
-      label: "Overall, the employee performs well in their role.",
-      fieldType: "dropdown",
-      type: "Results",
-      options: [
-        { label: "5", value: "5" },
-        { label: "4", value: "4" },
-        { label: "3", value: "3" },
         { label: "2", value: "2" },
-        { label: "1", value: "1" },
+        { label: "3", value: "3" },
+        { label: "4", value: "4" },
+        { label: "5", value: "5" },
       ],
     },
 
-    // Open-Ended Questions
+    {
+      id: "16", name: "creative_strength_text", label: "Contributions support team goals?", fieldType: "dropdown", type: "Results & Contribution",
+      options: [
+        { label: "1", value: "1" },
+        { label: "2", value: "2" },
+        { label: "3", value: "3" },
+        { label: "4", value: "4" },
+        { label: "5", value: "5" },
+      ],
+    },
     {
       id: "17",
-      name: "what_went_well_text",
-      label: "What went well in this employee's performance?",
-      fieldType: "short",
-      type: "Open-Ended Questions",
+      name: "improvement_area_text",
+      label: "Work quality is consistent?",
+      fieldType: "dropdown",
+      type: "Results & Contribution",
+      options: [
+        { label: "1", value: "1" },
+        { label: "2", value: "2" },
+        { label: "3", value: "3" },
+        { label: "4", value: "4" },
+        { label: "5", value: "5" },
+      ],
     },
     {
       id: "18",
-      name: "what_needs_improvement_text",
-      label: "What did not go well or needs improvement?",
+      name: "process_limitation_text",
+      label: "Overall performance is satisfactory?",
+      fieldType: "dropdown",
+      type: "Results & Contribution",
+      options: [
+        { label: "1", value: "1" },
+        { label: "2", value: "2" },
+        { label: "3", value: "3" },
+        { label: "4", value: "4" },
+        { label: "5", value: "5" },
+      ],
+    },
+    {
+      id: "19",
+      name: "what_went_well_text",
+      label: "What went well in the employee’s performance?",
       fieldType: "short",
       type: "Open-Ended Questions",
     },
     {
-      id: "19",
+      id: "20",
+      name: "what_needs_improvement_text",
+      label: "What needs improvement?",
+      fieldType: "short",
+      type: "Open-Ended Questions",
+    },
+    {
+      id: "21",
       name: "what_should_be_done_differently_text",
-      label: "What should the employee do differently going forward?",
+      label: "What should be done differently going forward?",
       fieldType: "short",
       type: "Open-Ended Questions",
     },
@@ -321,14 +310,11 @@ export default function Manager() {
       creative_strength_text: formData.creative_strength_text || "",
       improvement_area_text: formData.improvement_area_text || "",
       process_limitation_text: formData.process_limitation_text || "",
-      what_went_well_text: formData.what_went_well_text || "",
-      what_needs_improvement_text: formData.what_needs_improvement_text || "",
-      what_should_be_done_differently_text: formData.what_should_be_done_differently_text || "",
     };
 
 
     try {
-      const res = await apiClient.post(`/api/v1/feedback/manager-to-employee`, payload,
+      const res = await apiClient.post(`/api/v1/feedback/operations-to-project-manage`, payload,
         {
           headers: {
             "x-api-key": process.env.NEXT_PUBLIC_INTERNAL_API_KEY,
@@ -338,6 +324,7 @@ export default function Manager() {
 
       setFormData({});
     } catch (err: any) {
+      console.error("Submission error:", err);
       toast.error("Something went wrong. Please check required fields or API schema.");
     }
   };
@@ -374,7 +361,7 @@ export default function Manager() {
           <div className="space-y-6 w-full  ">
             {step2Fields.map((field, index) => {
               const prevField = index > 0 ? step2Fields[index - 1] : null;
-              const showTypeHeading = field.type && (!prevField || (prevField as any).type !== field.type);
+              const showTypeHeading = field.type && (!prevField || prevField.type !== field.type);
 
               return (
                 <div key={field.id}>

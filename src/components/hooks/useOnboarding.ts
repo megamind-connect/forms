@@ -44,6 +44,7 @@ const step6Questions = [
 export function useOnboarding() {
   const pathname = usePathname();
   const isClientOnboarding = pathname === "/client/onboarding";
+  const isBrandIdentityPage = pathname === "/client/brand-idendity";
 
   const [step, setStep] = useState(1);
   const [subStep, setSubStep] = useState(1);
@@ -91,24 +92,16 @@ export function useOnboarding() {
 
   const stepStructure: Record<number, number> = isClientOnboarding
     ? {
-        1: 1,
-        2: 1,
-        3: 1,
-        4: 1,
-        5: 1,
-        6: 1,
-        7: 1,
-        8: 1,
-        9: 1,
-        10: 1,
-        11: 1,
-        12: 1,
-        13: 1,
-        14: 1,
-        15: 1,
-        16: 1,
+      1: 1, 2: 1, 3: 1, 4: 1, 5: 1, 6: 1, 7: 1, 8: 1, 9: 1, 10: 1, 11: 1, 12: 1, 13: 1, 14: 1, 15: 1, 16: 1,
+    }
+    : isBrandIdentityPage
+      ? {
+        1: 1, // Intro
+        2: 1, // Brand Identity & Overview (Step 6 in Onboarding)
+        3: 1, // Market, Audience & Positioning (Step 7 in Onboarding)
+        4: 1, // Project Scope & Expectations (Step 8 in Onboarding)
       }
-    : {
+      : {
         1: 1,
         2: 1,
         3: 1,
@@ -117,7 +110,7 @@ export function useOnboarding() {
         6: 1,
       };
 
-  const totalSteps = isClientOnboarding ? 16 : 6;
+  const totalSteps = isClientOnboarding ? 16 : isBrandIdentityPage ? 4 : 6;
 
   const validateFieldsHelper = (data: FormData, fields: any[]): Record<string, string> => {
     const errors: Record<string, string> = {};
@@ -168,8 +161,8 @@ export function useOnboarding() {
   const validateStep16Fields = (data: FormData) => validateFieldsHelper(data, businessVerificationFields_state);
 
   const validateCurrentStep = () => {
-    if (step === 2) return Object.keys(validateStep2Fields(formData)).length === 0;
     if (isClientOnboarding) {
+      if (step === 2) return Object.keys(validateStep2Fields(formData)).length === 0;
       if (step === 3) return Object.keys(validateStep3Fields(formData)).length === 0;
       if (step === 4) return Object.keys(validateStep4Fields(formData)).length === 0;
       if (step === 6) return Object.keys(validateStep6Fields(formData)).length === 0;
@@ -183,6 +176,10 @@ export function useOnboarding() {
       if (step === 14) return true; // Intro
       if (step === 15) return Object.keys(validateStep15Fields(formData)).length === 0;
       if (step === 16) return Object.keys(validateStep16Fields(formData)).length === 0;
+    } else if (isBrandIdentityPage) {
+      if (step === 2) return Object.keys(validateStep6Fields(formData)).length === 0;
+      if (step === 3) return Object.keys(validateStep7Fields(formData)).length === 0;
+      if (step === 4) return Object.keys(validateStep8Fields(formData)).length === 0;
     } else {
       if (step === 4) {
         if (subStep === 1)
@@ -215,6 +212,10 @@ export function useOnboarding() {
       if (step === 16) {
         /* submit handled later */
       }
+    } else if (isBrandIdentityPage) {
+      if (step === 4) {
+        /* submit handled later */
+      }
     } else {
       if (step === 4 && subStep < 3) {
         setSubStep((prev) => prev + 1);
@@ -227,38 +228,47 @@ export function useOnboarding() {
     }
 
     if (step === totalSteps) {
-      const payload = {
+      let payload: any = {
         ...formData,
-        name: formData.full_name,
-        position_role: formData.role_in_organisation,
-        overall_experience: formData.overall_experience_rating,
-        impact_assessment: formData.service_impact_rating,
-        quality_of_services: formData.service_quality_rating,
-        delivery_time: formData.delivery_time_option,
-        brand_strategy_alignment: formData.strategy_alignment_rating,
-        services_provided: formData.services_provided?.list || [],
-        other_service_description: formData.services_provided?.other_service_description,
-        services_align_with_goals: formData.goal_alignment_rating,
-        meet_deadlines_rating: formData.deadline_efficiency_rating,
-        feedback_understood_rating: formData.feedback_understanding_rating,
-        digital_marketing_results: formData.marketing_results_rating,
-        content_creation_rating: formData.brand_representation_rating,
-        surprised_deliverables: formData.pleasant_surprise,
-        team_responsiveness: formData.responsiveness_rating,
-        working_relationship_description: formData.experience_description,
-        additional_services_improvements: formData.additional_services,
-        likelihood_to_continue: formData.service_continuation_rating,
-        likelihood_to_recommend: formData.recommendation_likelihood_rating,
-        other_comments: formData.final_feedback_text,
       };
+
+      if (!isClientOnboarding && !isBrandIdentityPage) {
+        payload = {
+          ...payload,
+          name: formData.full_name,
+          position_role: formData.role_in_organisation,
+          overall_experience: formData.overall_experience_rating,
+          impact_assessment: formData.service_impact_rating,
+          quality_of_services: formData.service_quality_rating,
+          delivery_time: formData.delivery_time_option,
+          brand_strategy_alignment: formData.strategy_alignment_rating,
+          services_provided: formData.services_provided?.list || [],
+          other_service_description: formData.services_provided?.other_service_description,
+          services_align_with_goals: formData.goal_alignment_rating,
+          meet_deadlines_rating: formData.deadline_efficiency_rating,
+          feedback_understood_rating: formData.feedback_understanding_rating,
+          digital_marketing_results: formData.marketing_results_rating,
+          content_creation_rating: formData.brand_representation_rating,
+          surprised_deliverables: formData.pleasant_surprise,
+          team_responsiveness: formData.responsiveness_rating,
+          working_relationship_description: formData.experience_description,
+          additional_services_improvements: formData.additional_services,
+          likelihood_to_continue: formData.service_continuation_rating,
+          likelihood_to_recommend: formData.recommendation_likelihood_rating,
+          other_comments: formData.final_feedback_text,
+        };
+      }
+
+      const endpoint = isBrandIdentityPage ? "brand-identity" : "client-feedback";
+
       try {
-        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/v1/client-feedback`, {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/v1/${endpoint}`, {
           method: "POST",
           headers: { "Content-Type": "application/json", "x-api-key": process.env.NEXT_PUBLIC_INTERNAL_API_KEY || "" },
           body: JSON.stringify(payload),
         });
         if (!res.ok) throw new Error("Failed to submit");
-        toast.success("Thank you! Your feedback has been submitted.");
+        toast.success("Thank you! Your information has been submitted.");
         setStep(1);
         setFormData({});
       } catch (err) {
@@ -281,7 +291,7 @@ export function useOnboarding() {
   const getStepProgress = (num: number) => {
     if (num < step) return 100;
     if (num > step) return 0;
-    if (!isClientOnboarding) {
+    if (!isClientOnboarding && !isBrandIdentityPage) {
       if (num === 4) return ((subStep - 1) / 3) * 100;
       if (num === 5) return ((subStep - 1) / step6Questions.length) * 100;
     }

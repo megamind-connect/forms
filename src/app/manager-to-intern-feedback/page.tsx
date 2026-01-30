@@ -19,267 +19,267 @@ interface FormField {
     placeholder?: string;
 }
 
-export default function MDToHR() {
+export default function ManagerToIntern() {
     const [formData, setFormData] = useState<Record<string, any>>({});
     const [errors, setErrors] = useState<Record<string, string>>({});
 
     const router = useRouter();
 
     const step2Fields = [
-        { id: "11", name: "submitted_by_id", label: "Your Name", fieldType: "searchable" },
-        { id: "21", name: "submitted_for_id", label: "HR's Name", fieldType: "searchable" },
+        { id: "submitted_by", name: "submitted_by_id", label: "Your Name", fieldType: "searchable" },
+        { id: "submitted_for", name: "submitted_for_id", label: "Employee's Name", fieldType: "searchable" },
 
-        // Actions
+        // Work & Actions
         {
             id: "1",
             name: "understands_brief_rating",
-            label: "Understands the expectations of their role.",
+            label: "Understand the tasks assigned.",
             fieldType: "dropdown",
-            type: "Actions",
+            type: "Work & Actions",
             options: [
-                   { label: "5", value: "5" },
-                { label: "4", value: "4" },
-                { label: "3", value: "3" },
-                { label: "2", value: "2" },
                 { label: "1", value: "1" },
+                { label: "2", value: "2" },
+                { label: "3", value: "3" },
+                { label: "4", value: "4" },
+                { label: "5", value: "5" },
             ],
         },
         {
-            id: "2",
+            id: "on_time_delivery",
             name: "on_time_delivery_rating",
-            label: "Completes assigned responsibilities on time.",
+            label: "Completes assigned work on time.",
             fieldType: "dropdown",
-            type: "Actions",
+            type: "Work & Actions",
             options: [
-                   { label: "5", value: "5" },
-                { label: "4", value: "4" },
-                { label: "3", value: "3" },
-                { label: "2", value: "2" },
                 { label: "1", value: "1" },
+                { label: "2", value: "2" },
+                { label: "3", value: "3" },
+                { label: "4", value: "4" },
+                { label: "5", value: "5" },
             ],
         },
         {
-            id: "3",
+            id: "feedback_implementation",
             name: "feedback_implementation_rating",
-            label: "HR follows up on commitments effectively.",
+            label: "Follows instructions clearly.",
             fieldType: "dropdown",
-            type: "Actions",
+            type: "Work & Actions",
             options: [
-                   { label: "5", value: "5" },
-                { label: "4", value: "4" },
-                { label: "3", value: "3" },
-                { label: "2", value: "2" },
                 { label: "1", value: "1" },
+                { label: "2", value: "2" },
+                { label: "3", value: "3" },
+                { label: "4", value: "4" },
+                { label: "5", value: "5" },
             ],
         },
         {
-            id: "4",
+            id: "work_responsibility",
             name: "creative_contribution_rating",
-            label: "Takes initiative when issues arise.",
+            label: "Shows responsibility towards assigned tasks.",
             fieldType: "dropdown",
-            type: "Actions",
+            type: "Work & Actions",
             options: [
-                   { label: "5", value: "5" },
-                { label: "4", value: "4" },
-                { label: "3", value: "3" },
-                { label: "2", value: "2" },
                 { label: "1", value: "1" },
+                { label: "2", value: "2" },
+                { label: "3", value: "3" },
+                { label: "4", value: "4" },
+                { label: "5", value: "5" },
             ],
         },
 
-        // Behaviour
+        // Behaviour & Attitude
         {
-            id: "5",
+            id: "attention_to_detail",
             name: "attention_to_detail_rating",
-            label: "Communicates clearly and professionally.",
+            label: "Communicates respectfully.",
             fieldType: "dropdown",
-            type: "Behaviour",
+            type: "Behaviour & Attitude",
             options: [
-                   { label: "5", value: "5" },
-                { label: "4", value: "4" },
-                { label: "3", value: "3" },
-                { label: "2", value: "2" },
                 { label: "1", value: "1" },
+                { label: "2", value: "2" },
+                { label: "3", value: "3" },
+                { label: "4", value: "4" },
+                { label: "5", value: "5" },
             ],
         },
         {
-            id: "6",
+            id: "collaboration",
             name: "collaboration_rating",
-            label: "Handles situations with maturity.",
+            label: "Is open to feedback and guidance.",
             fieldType: "dropdown",
-            type: "Behaviour",
+            type: "Behaviour & Attitude",
             options: [
-                   { label: "5", value: "5" },
-                { label: "4", value: "4" },
-                { label: "3", value: "3" },
-                { label: "2", value: "2" },
                 { label: "1", value: "1" },
+                { label: "2", value: "2" },
+                { label: "3", value: "3" },
+                { label: "4", value: "4" },
+                { label: "5", value: "5" },
             ],
         },
         {
-            id: "7",
+            id: "self_management",
             name: "self_management_rating",
-            label: "Maintains confidentiality and trust.",
+            label: "Shows a positive attitude towards work.",
             fieldType: "dropdown",
-            type: "Behaviour",
+            type: "Behaviour & Attitude",
             options: [
-                   { label: "5", value: "5" },
-                { label: "4", value: "4" },
-                { label: "3", value: "3" },
-                { label: "2", value: "2" },
                 { label: "1", value: "1" },
+                { label: "2", value: "2" },
+                { label: "3", value: "3" },
+                { label: "4", value: "4" },
+                { label: "5", value: "5" },
             ],
         },
         {
-            id: "8",
+            id: "adaptability",
             name: "adaptability_rating",
-            label: "Shows a positive and solution-oriented attitude.",
+            label: "Works well with team members.",
             fieldType: "dropdown",
-            type: "Behaviour",
+            type: "Behaviour & Attitude",
             options: [
-                   { label: "5", value: "5" },
-                { label: "4", value: "4" },
-                { label: "3", value: "3" },
-                { label: "2", value: "2" },
                 { label: "1", value: "1" },
+                { label: "2", value: "2" },
+                { label: "3", value: "3" },
+                { label: "4", value: "4" },
+                { label: "5", value: "5" },
             ],
         },
 
-        // Competency
+        // Learning & Competency
         {
-            id: "9",
+            id: "willingness_to_learn",
             name: "growth_rating",
-            label: "Demonstrates a good understanding of people-related matters.",
+            label: "Shows willingness to learn new skills.",
             fieldType: "dropdown",
-            type: "Competency",
+            type: "Learning & Competency",
             options: [
-                   { label: "5", value: "5" },
-                { label: "4", value: "4" },
-                { label: "3", value: "3" },
-                { label: "2", value: "2" },
                 { label: "1", value: "1" },
+                { label: "2", value: "2" },
+                { label: "3", value: "3" },
+                { label: "4", value: "4" },
+                { label: "5", value: "5" },
             ],
         },
         {
-            id: "10",
+            id: "apply_learning",
             name: "learning_rating",
-            label: "Applies practical solutions to workplace issues.",
+            label: "Applies learning to assigned work.",
             fieldType: "dropdown",
-            type: "Competency",
+            type: "Learning & Competency",
             options: [
-                   { label: "5", value: "5" },
-                { label: "4", value: "4" },
-                { label: "3", value: "3" },
-                { label: "2", value: "2" },
                 { label: "1", value: "1" },
+                { label: "2", value: "2" },
+                { label: "3", value: "3" },
+                { label: "4", value: "4" },
+                { label: "5", value: "5" },
             ],
         },
         {
-            id: "11",
+            id: "asks_questions",
             name: "last_minute_reason_clarity_rating",
-            label: "HR is willing to learn and improve continuously.",
+            label: "Asks questions when unsure.",
             fieldType: "dropdown",
-            type: "Competency",
+            type: "Learning & Competency",
             options: [
-                   { label: "5", value: "5" },
-                { label: "4", value: "4" },
-                { label: "3", value: "3" },
-                { label: "2", value: "2" },
                 { label: "1", value: "1" },
+                { label: "2", value: "2" },
+                { label: "3", value: "3" },
+                { label: "4", value: "4" },
+                { label: "5", value: "5" },
             ],
         },
         {
-            id: "12",
+            id: "adapts_to_tasks",
             name: "last_minute_handling_rating",
-            label: "Adapts well to company needs and changes.",
+            label: "Adapts well to new tasks.",
             fieldType: "dropdown",
-            type: "Competency",
+            type: "Learning & Competency",
             options: [
-                   { label: "5", value: "5" },
-                { label: "4", value: "4" },
-                { label: "3", value: "3" },
-                { label: "2", value: "2" },
                 { label: "1", value: "1" },
+                { label: "2", value: "2" },
+                { label: "3", value: "3" },
+                { label: "4", value: "4" },
+                { label: "5", value: "5" },
             ],
         },
 
-        // Results
+        // Contribution & Results
         {
-            id: "13",
+            id: "meets_expectations",
             name: "deadline_communication_rating",
-            label: "Contributes positively to workplace culture.",
+            label: "Work meets expectations for the role.",
             fieldType: "dropdown",
-            type: "Results",
+            type: "Contribution & Results",
             options: [
-                   { label: "5", value: "5" },
-                { label: "4", value: "4" },
-                { label: "3", value: "3" },
-                { label: "2", value: "2" },
                 { label: "1", value: "1" },
+                { label: "2", value: "2" },
+                { label: "3", value: "3" },
+                { label: "4", value: "4" },
+                { label: "5", value: "5" },
             ],
         },
         {
-            id: "14",
+            id: "positive_contribution",
             name: "creative_strength_text",
-            label: "Supports teams effectively.",
+            label: "Contributes positively to the team.",
             fieldType: "dropdown",
-            type: "Results",
+            type: "Contribution & Results",
             options: [
-                   { label: "5", value: "5" },
-                { label: "4", value: "4" },
-                { label: "3", value: "3" },
-                { label: "2", value: "2" },
                 { label: "1", value: "1" },
+                { label: "2", value: "2" },
+                { label: "3", value: "3" },
+                { label: "4", value: "4" },
+                { label: "5", value: "5" },
             ],
         },
         {
-            id: "15",
+            id: "shows_improvement",
             name: "improvement_area_text",
-            label: "HR adds value to overall organizational growth.",
+            label: "Shows improvement over time.",
             fieldType: "dropdown",
-            type: "Results",
+            type: "Contribution & Results",
             options: [
-                   { label: "5", value: "5" },
-                { label: "4", value: "4" },
-                { label: "3", value: "3" },
-                { label: "2", value: "2" },
                 { label: "1", value: "1" },
+                { label: "2", value: "2" },
+                { label: "3", value: "3" },
+                { label: "4", value: "4" },
+                { label: "5", value: "5" },
             ],
         },
         {
-            id: "16",
+            id: "satisfactory_performance",
             name: "process_limitation_text",
-            label: "Overall, HR performs well in their role.",
+            label: "Overall performance is satisfactory.",
             fieldType: "dropdown",
-            type: "Results",
+            type: "Contribution & Results",
             options: [
-                   { label: "5", value: "5" },
-                { label: "4", value: "4" },
-                { label: "3", value: "3" },
-                { label: "2", value: "2" },
                 { label: "1", value: "1" },
+                { label: "2", value: "2" },
+                { label: "3", value: "3" },
+                { label: "4", value: "4" },
+                { label: "5", value: "5" },
             ],
         },
 
         // Open-Ended Questions
         {
-            id: "17",
+            id: "what_went_well",
             name: "what_went_well_text",
-            label: "What has HR done well?",
+            label: "What went well?",
             fieldType: "short",
             type: "Open-Ended Questions",
         },
         {
-            id: "18",
+            id: "improvement_areas",
             name: "what_needs_improvement_text",
             label: "What areas need improvement?",
             fieldType: "short",
             type: "Open-Ended Questions",
         },
         {
-            id: "19",
+            id: "forward_focus",
             name: "what_should_be_done_differently_text",
-            label: "What should HR do differently going forward?",
+            label: "What should be focused on going forward?",
             fieldType: "short",
             type: "Open-Ended Questions",
         },
@@ -328,16 +328,17 @@ export default function MDToHR() {
 
 
         try {
-            const res = await apiClient.post(`/api/v1/feedback/md-to-hr`, payload,
+            const res = await apiClient.post(`/api/v1/feedback/manager-to-intern`, payload,
                 {
                     headers: {
                         "x-api-key": process.env.NEXT_PUBLIC_INTERNAL_API_KEY,
                     },
                 });
-            router.push("/md-to-hr/thank-you");
+            router.push("/manager-to-intern/thank-you");
 
             setFormData({});
         } catch (err: any) {
+            console.error("Submission error:", err);
             toast.error("Something went wrong. Please check required fields or API schema.");
         }
     };
@@ -345,7 +346,7 @@ export default function MDToHR() {
     const month = new Date().toLocaleString("en-US", { month: "long" });
     return (
         <div className="relative min-h-screen flex flex-col  justify-center bg-[#F9F9F9] overflow-hidden">
-            <div className="max-w-6xl mx-auto py-10">
+            <div className="w-full max-w-6xl mx-auto py-10">
                 <div className="w-full relative flex  px-6 justify-center items-center mb-6">
                     <Image
                         src="/images/feedBackImage.png" // <-- your image here
