@@ -358,8 +358,8 @@ export default function MDToOperations() {
 
                     {/* ✅ Month Name Overlaid */}
                     <div className="absolute left-16 top-[30%] -translate-y-1/2">
-                        <h1 className="text-xl lg:text-[80px] font-bold text-[#E31313]">{month}</h1>
-                        <h1 className="text-base lg:text-3xl font-semibold text-[#E31313]">Feedback Form</h1>
+                        {/* <h1 className="text-xl lg:text-[80px] font-bold text-[#E31313]">{month}</h1> */}
+                        <h1 className="text-xl lg:text-[60px] font-bold text-[#E31313]">Feedback Form</h1>
                     </div>
                 </div>
 
