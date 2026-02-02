@@ -380,6 +380,12 @@ export default function OneTimerFeedbackPage() {
                     {step === STEPS_COUNT ? "Submit" : "Next"}
                 </Button>
             </div>
+
+            {step === STEPS_COUNT && (
+                <div className="mt-8 text-center text-gray-600 text-sm max-w-2xl mx-auto">
+                    <p>This feedback form is used to review and evaluate individual employee performance based on different criteria. It helps the organization understand performance levels and areas for improvement.</p>
+                </div>
+            )}
         </div>
     );
 
