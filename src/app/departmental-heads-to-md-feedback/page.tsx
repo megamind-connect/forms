@@ -327,7 +327,7 @@ export default function Manager() {
                         "x-api-key": process.env.NEXT_PUBLIC_INTERNAL_API_KEY,
                     },
                 });
-            router.push("/fin-hr-op-to-md-feedback/thank-you");
+            router.push("/departmental-heads-to-md-feedback/thank-you");
 
             setFormData({});
         } catch (err: any) {

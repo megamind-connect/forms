@@ -234,7 +234,7 @@ export default function MDToDeptHead() {
         };
 
         try {
-            await apiClient.post(`/api/v1/feedback/md-to-dept-head`, payload, {
+            await apiClient.post(`/api/v1/feedback/md-to-department-heads`, payload, {
                 headers: {
                     "x-api-key": process.env.NEXT_PUBLIC_INTERNAL_API_KEY,
                 },

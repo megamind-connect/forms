@@ -417,7 +417,7 @@ export default function ClientExitFeedbackPage() {
                 },
             });
             toast.success("Thank you for your valuable feedback!");
-            router.push("/client-exit-feedback/thank-you");
+            router.push("/departmental-heads-to-md-feedback/thank-you");
             setFormData({});
             setStep(1);
         } catch (err) {
