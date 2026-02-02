@@ -7,7 +7,7 @@ export default function Page() {
   const router = useRouter();
 
   useEffect(() => {
-    router.replace("/manager");
+    router.replace("/manager-to-employee-feedback") ;
   }, [router]);
 
   return null;

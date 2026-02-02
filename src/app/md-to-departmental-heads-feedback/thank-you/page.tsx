@@ -14,6 +14,7 @@ const ThankYouPage = () => {
           <p className="text-lg md:text-[42px] font-medium">We’ll address it shortly.</p>
         </div>
 
+
         {/* Dummy Illustration (Replace this image later) */}
         <div>
           <Image

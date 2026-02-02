@@ -35,10 +35,13 @@ export default function DynamicField({ field, value, onChange }: DynamicFieldPro
     if (fieldType !== "searchable") return;
 
     const fetchSuggestions = async () => {
-      if (!search || search.length < 2) {
+      // Don't fetch if search matches current selected value or is too short
+      if (!search || search.length < 2 || (value?.fullName === search)) {
         setResults([]);
+        setIsLoading(false);
         return;
       }
+
       setIsLoading(true);
       try {
         const res = await apiClient.get(`/api/v1/users/search`, {
@@ -50,6 +53,8 @@ export default function DynamicField({ field, value, onChange }: DynamicFieldPro
         setResults(Array.isArray(data) ? data : []);
       } catch (err) {
         console.log("Search Error:", err);
+      } finally {
+        setIsLoading(false);
       }
     };
 
