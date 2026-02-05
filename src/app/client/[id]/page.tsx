@@ -1,13 +1,13 @@
 "use client";
 
-import DynamicField from "@/components/client/DynamicFields";
-import { IntroStep } from "@/components/client/IntroStep";
-import { SplashScreen } from "@/components/client/SplashScreen";
-import { Step2Form } from "@/components/client/Step2Form";
-import { StepIndicator } from "@/components/client/StepIndicator";
-import { StepTextQuestion } from "@/components/client/StepTextQuestion";
-import { useOnboarding } from "@/components/hooks/useOnboarding";
-import { Button } from "@/components/ui/Button";
+import DynamicField from "../../../components/client/DynamicFields";
+import { IntroStep } from "../../../components/client/IntroStep";
+import { SplashScreen } from "../../../components/client/SplashScreen";
+import { Step2Form } from "../../../components/client/Step2Form";
+import { StepIndicator } from "../../../components/client/StepIndicator";
+import { StepTextQuestion } from "../../../components/client/StepTextQuestion";
+import { useOnboarding } from "../../../components/hooks/useOnboarding";
+import { Button } from "../../../components/ui/Button";
 
 export default function ClientPage() {
   const {
@@ -42,9 +42,9 @@ const step3Fields = [
     fieldType: "rating5",
     options: [
       { value: "very_poor", label: "Very Poor" },
-      { value: "poor", label: "" },
+      { value: "poor", label: "poor" },
       { value: "average", label: "Average" },
-      { value: "good", label: "" },
+      { value: "good", label: "good" },
       { value: "excellent", label: "Excellent" },
     ],
   },
@@ -55,9 +55,9 @@ const step3Fields = [
     fieldType: "rating5",
     options: [
       { value: "very_poor", label: "Very Poor" },
-      { value: "poor", label: "" },
+      { value: "poor", label: "poor" },
       { value: "average", label: "Average" },
-      { value: "good", label: "" },
+      { value: "good", label: "good" },
       { value: "excellent", label: "Excellent" },
     ],
   },
@@ -68,9 +68,9 @@ const step3Fields = [
     fieldType: "rating5",
     options: [
       { value: "very_poor", label: "Very Poor" },
-      { value: "poor", label: "" },
+      { value: "poor", label: "poor" },
       { value: "average", label: "Average" },
-      { value: "good", label: "" },
+      { value: "good", label: "good" },
       { value: "excellent", label: "Excellent" },
     ],
   },
@@ -95,9 +95,9 @@ const step3Fields = [
     fieldType: "rating5",
     options: [
       { value: "not_aligned", label: "Not Aligned" },
-      { value: "slightly_aligned", label: "" },
+      { value: "slightly_aligned", label: "Slightly Aligned" },
       { value: "moderately_aligned", label: "Moderately Aligned" },
-      { value: "well_aligned", label: "" },
+      { value: "well_aligned", label: "Well Aligned" },
       { value: "perfectly_aligned", label: "Perfectly Aligned" },
     ],
   },
@@ -133,9 +133,9 @@ const step4Fields = [
     fieldType: "rating5",
     options: [
       { value: "extremely_well", label: "Extremely well" },
-      { value: "somewhat_well", label: "" },
+      { value: "somewhat_well", label: "Somewhat well" },
       { value: "neutral", label: "Neutral" },
-      { value: "somewhat_not_well", label: "" },
+      { value: "somewhat_not_well", label: "Somewhat not well" },
       { value: "extremely_not_well", label: "Extremely not well" },
     ],
   },
@@ -146,9 +146,9 @@ const step4Fields = [
     fieldType: "rating5",
     options: [
       { value: "never", label: "Never" },
-      { value: "rarely", label: "" },
+      { value: "rarely", label: "Rarely" },
       { value: "sometimes", label: "Sometimes" },
-      { value: "usually", label: "" },
+      { value: "usually", label: "Usually" },
       { value: "always", label: "Always" },
     ],
   },
@@ -159,9 +159,9 @@ const step4Fields = [
     fieldType: "rating5",
     options: [
       { value: "never", label: "Never" },
-      { value: "rarely", label: "" },
+      { value: "rarely", label: "Rarely" },
       { value: "sometimes", label: "Sometimes" },
-      { value: "usually", label: "" },
+      { value: "usually", label: "Usually" },
       { value: "always", label: "Always" },
     ],
   },
@@ -180,9 +180,9 @@ const step5Fields = [
     fieldType: "rating5",
     options: [
       { value: "significant_results", label: "Significant Results" },
-      { value: "strong_results", label: "" },
+      { value: "strong_results", label: "Strong Results" },
       { value: "moderate_results", label: "Moderate Results" },
-      { value: "minimal_results", label: "" },
+      { value: "minimal_results", label: "Minimal Results" },
       { value: "no_results", label: "No Results" },
     ],
   },
@@ -193,9 +193,9 @@ const step5Fields = [
     fieldType: "rating5",
     options: [
       { value: "excellent", label: "Excellent" },
-      { value: "good", label: "" },
+      { value: "good", label: "Good" },
       { value: "average", label: "Average" },
-      { value: "poor", label: "" },
+      { value: "poor", label: "poor" },
       { value: "very_poor", label: "Very Poor" },
     ],
   },
@@ -206,9 +206,9 @@ const step5Fields = [
     fieldType: "rating5",
     options: [
       { value: "extremely_responsive", label: "Extremely Responsive" },
-      { value: "responsive", label: "" },
+      { value: "responsive", label: "Responsive" },
       { value: "neutral", label: "Neutral" },
-      { value: "slow", label: "" },
+      { value: "slow", label: "Slow" },
       { value: "very_slow", label: "Very Slow" },
     ],
   },
@@ -227,9 +227,9 @@ const step7Fields = [
     fieldType: "rating5",
     options: [
       { value: "definitely_yes", label: "Definitely yes" },
-      { value: "probably_yes", label: "" },
+      { value: "probably_yes", label: "Probably yes" },
       { value: "not_sure", label: "Not sure" },
-      { value: "probably_not", label: "" },
+      { value: "probably_not", label: "Probably not" },
       { value: "definitely_not", label: "Definitely not" },
     ],
   },
@@ -240,9 +240,9 @@ const step7Fields = [
     fieldType: "rating5",
     options: [
       { value: "definitely_yes", label: "Definitely yes" },
-      { value: "probably_yes", label: "" },
+      { value: "probably_yes", label: "Probably yes" },
       { value: "not_sure", label: "Not sure" },
-      { value: "probably_not", label: "" },
+      { value: "probably_not", label: "Probably not" },
       { value: "definitely_not", label: "Definitely not" },
     ],
   },
