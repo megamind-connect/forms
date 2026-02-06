@@ -100,9 +100,9 @@ export const clientPageGeneralFields = [
   {
     id: "role",
     name: "role_in_organisation",
-    label: "Role in the Organisation",
-    placeholder: "Select your role in the organisation",
-    fieldType: "dropdown",
+    label: "Position/Role in the Organisation",
+    placeholder: "Select your position/role in the organisation",
+    fieldType: "radio_stacked",
     options: [
       { label: "Managing Director", value: "managing_director" },
       { label: "Marketing Director", value: "marketing_director" },
@@ -189,47 +189,41 @@ export const brandIdentityFields = [
   {
     id: "bf_1",
     name: "founding_vision",
-    label: "What was the founding vision behind your brand?",
+    label: "What was the founding vision behind your brand? What inspired you to start this brand or business?",
     fieldType: "textarea",
     placeholder: "Share the big idea that set your brand in motion and defined what it set out to become.",
   },
   {
     id: "bf_2",
     name: "inspiration_origin",
-    label: "What was the inspiration for starting your brand?",
+    label: "What are your brand’s core values?",
     fieldType: "textarea",
     placeholder: "Was there a story, spark, or innovation that began your journey.",
   },
+
   {
     id: "bf_3",
-    name: "brand_core_values",
-    label: "What are your brand’s core values?",
-    fieldType: "textarea",
-    placeholder: "Talk about the values that anchor your brand and keep it true to its purpose.",
-  },
-  {
-    id: "bf_4",
     name: "brand_description",
-    label: "What does your brand do?",
+    label: "What does your brand do? Please describe your products or services.",
     fieldType: "textarea",
     placeholder: "Please describe your product or services.",
   },
   {
-    id: "bf_5",
+    id: "bf_4",
     name: "brand_strengths_weaknesses",
     label: "What are your brand’s greatest strengths and weaknesses?",
     fieldType: "textarea",
     placeholder: "Share the strengths that power your brand forward and the gaps you aim to improve over time.",
   },
   {
-    id: "bf_6",
+    id: "bf_5",
     name: "primary_goals",
     label: "What are the primary goals of this branding and communication initiative?",
     fieldType: "textarea",
     placeholder: "Spell out what this initiative is meant to achieve and the outcomes you’re aiming for.",
   },
   {
-    id: "bf_7",
+    id: "bf_6",
     name: "unique_value_proposition",
     label: "What is your brand’s unique value proposition?",
     fieldType: "textarea",
@@ -252,21 +246,21 @@ export const brandIdentityFields = [
   // I'll skip the duplicate "Primary goals" unless it has a different placeholder. Screenshot resolution is low but placeholder looks identical. I will add the remaining unique ones.
 
   {
-    id: "bf_8",
+    id: "bf_7",
     name: "brand_vision_3_years",
     label: "Where do you see your brand in the next 3 years?",
     fieldType: "textarea",
     placeholder: "Share the milestones you expect your brand to hit and the future you’re building toward.",
   },
   {
-    id: "bf_9",
+    id: "bf_8",
     name: "new_products_launch",
     label: "Are there any new products or services you plan to launch?",
     fieldType: "textarea",
     placeholder: "Share any upcoming products or services that are set to level up your brand’s offering.",
   },
   {
-    id: "bf_10",
+    id: "bf_9",
     name: "expansion_plans",
     label: "Are you planning to expand your brand?",
     fieldType: "textarea",
@@ -331,6 +325,20 @@ export const marketAudienceFields = [
     fieldType: "textarea",
     placeholder: "Why do they stand out?",
   },
+   {
+    id: "ma_9",
+    name: "themes_ideas_concerns",
+    label: "Do you have any specific themes, ideas, or concerns you want us to be aware of?",
+    fieldType: "textarea",
+    placeholder: "Share any themes, ideas, or concerns that should guide our work together.",
+  },
+   {
+    id: "ma_10",
+    name: "mandatory_elements",
+    label: "Are there any mandatory elements, guidelines, or messages that must be included in all branding materials?",
+    fieldType: "textarea",
+    placeholder: "Share the must-have components and rules that all materials should follow without fail.",
+  },
 ];
 
 export const projectScopeFields = [
@@ -348,20 +356,20 @@ export const projectScopeFields = [
     fieldType: "textarea",
     placeholder: "If yes, please share the challenges or drawbacks you experienced.",
   },
-  {
-    id: "ps_3",
-    name: "specific_themes_ideas",
-    label: "Do you have any specific themes, ideas, or concerns you want us to be aware of?",
-    fieldType: "textarea",
-    placeholder: "Share any themes, concepts, or concerns that should guide our approach.",
-  },
-  {
-    id: "ps_4",
-    name: "mandatory_branding_elements",
-    label: "Are there any mandatory elements, guidelines, or messages that must be included in all branding materials?",
-    fieldType: "textarea",
-    placeholder: "Share the must-have components and rules that all materials should follow without fail.",
-  },
+  // {
+  //   id: "ps_3",
+  //   name: "specific_themes_ideas",
+  //   label: "Do you have any specific themes, ideas, or concerns you want us to be aware of?",
+  //   fieldType: "textarea",
+  //   placeholder: "Share any themes, concepts, or concerns that should guide our approach.",
+  // },
+  // {
+  //   id: "ps_4",
+  //   name: "mandatory_branding_elements",
+  //   label: "Are there any mandatory elements, guidelines, or messages that must be included in all branding materials?",
+  //   fieldType: "textarea",
+  //   placeholder: "Share the must-have components and rules that all materials should follow without fail.",
+  // },
 ];
 
 export const socialPlatformFields = [
@@ -427,44 +435,54 @@ export const assetTypesFields = [
     label: "If you have any of the following assets, please toggle 'Yes' and provide the link for each.",
     fieldType: "header",
   },
-  { id: "asset_1", name: "brand_logo_files", label: "Brand Logo Files", fieldType: "toggle_input", placeholder: "In AI, EPS, SVG, PNG file types" },
+{
+    id: "asset_1",
+    name: "company_deck",
+    label: "Company Deck",
+    fieldType: "toggle_input",
+    placeholder: "In PDF file type",
+  },
+
+  { id: "asset_2", name: "brand_logo_files", label: "Brand Logo Files", fieldType: "toggle_input", placeholder: "In AI, EPS, SVG, PNG file types" },
+  
+  
   {
-    id: "asset_2",
+    id: "asset_3",
     name: "brand_guidelines",
     label: "Brand Guidelines",
     fieldType: "toggle_input",
     placeholder: "Inclusive of fonts, colors, tone, spacing",
   },
   {
-    id: "asset_3",
+    id: "asset_4",
     name: "brochures_product_photos",
     label: "Brochures / Product or Service Photos",
     fieldType: "toggle_input",
     placeholder: "Please provide a link to the library",
   },
   {
-    id: "asset_4",
+    id: "asset_5",
     name: "past_campaign_reports",
     label: "Past or Current Campaign Reports",
     fieldType: "toggle_input",
     placeholder: "Please provide a link to the library",
   },
   {
-    id: "asset_5",
+    id: "asset_6",
     name: "moodboards_videos",
     label: "Moodboards / Explainer Videos / Brand Films",
     fieldType: "toggle_input",
     placeholder: "Please provide a link to the library",
   },
   {
-    id: "asset_6",
+    id: "asset_7",
     name: "current_image_assets",
     label: "Current Image Assets",
     fieldType: "toggle_input",
     placeholder: "Please provide a link to the library",
   },
   {
-    id: "asset_7",
+    id: "asset_8",
     name: "current_video_assets",
     label: "Current Video Assets",
     fieldType: "toggle_input",

@@ -21,7 +21,7 @@ const step1Fields = [
     {
         id: "person_name",
         name: "person_name",
-        label: "2. Name of the person",
+        label: "2. Name of the Respondent",
         placeholder: "Enter your answer",
         fieldType: "text",
     },
@@ -135,11 +135,11 @@ const step3Fields = [
         label: "10. How well do our services align with your business goals this month?  ",
         fieldType: "rating5",
         options: [
-            { value: "Extremely Well", label: "Extremely Well" },
-            { value: "Somewhat Well", label: "Somewhat Well" },
-            { value: "Neutral", label: "Neutral" },
-            { value: "Somewhat Not Well", label: "Somewhat Not Well" },
             { value: "Extremely Not Well", label: "Extremely Not Well" },
+            { value: "Somewhat Not Well", label: "Somewhat Not Well" },
+            { value: "Neutral", label: "Neutral" },
+            { value: "Somewhat  Well", label: "Somewhat  Well" },
+            { value: "Extremely  Well", label: "Extremely  Well" },
         ],
     },
     {
@@ -161,11 +161,11 @@ const step3Fields = [
         label: "12. Do you feel your feedback and requests were understood and incorporated into the work?   ",
         fieldType: "rating5",
         options: [
-            { value: "Excellent", label: "Excellent" },
-            { value: "Good", label: "Good" },
-            { value: "Average", label: "Average" },
-            { value: "Poor", label: "Poor" },
             { value: "Very Poor", label: "Very Poor" },
+            { value: "Poor", label: "Poor" },
+            { value: "Average", label: "Average" },
+            { value: "Good", label: "Good" },
+            { value: "Excellent", label: "Excellent" },
         ],
     },
 ];
@@ -177,11 +177,11 @@ const step4Fields = [
         label: "13. How would you rate our Digital Marketing services in driving measurable results for your business?   ",
         fieldType: "rating5",
         options: [
-            { value: "Significant Results", label: "Significant Results" },
-            { value: "Strong Results", label: "Strong Results" },
-            { value: "Moderate Results", label: "Moderate Results" },
-            { value: "Minimal Results", label: "Minimal Results" },
             { value: "No Results", label: "No Results" },
+            { value: "Minimal Results", label: "Minimal Results" },
+            { value: "Moderate Results", label: "Moderate Results" },
+            { value: "Strong Results", label: "Strong Results" },
+            { value: "Significant Results", label: "Significant Results" },
         ],
     },
     {
@@ -190,11 +190,11 @@ const step4Fields = [
         label: "14. How would you rate our content creation and creative work in representing your brand? ",
         fieldType: "rating5",
         options: [
-            { value: "Excellent", label: "Excellent" },
-            { value: "Good", label: "Good" },
+            { value: "Good", label: "Excellent" },
+            { value: "Very Slow", label: "Good" },
             { value: "Average", label: "Average" },
-            { value: "Very Slow", label: "Very Slow" },
-            { value: "Slow", label: "Slow" },
+            { value: "Good", label: "Very Slow" },
+            { value: "Good", label: "Slow" },
         ],
     },
     {
@@ -266,8 +266,13 @@ const step5Fields = [
 ];
 
 // Combine all for step indicators (we have 5 steps)
-const STEPS_COUNT = 5;
-const stepStructure = { 1: 1, 2: 1, 3: 1, 4: 1, 5: 1 };
+const STEPS_COUNT = 6;
+const stepStructure = { 1: 1, 2: 1, 3: 1, 4: 1, 5: 1, 6: 1 };
+
+import { FormHeader } from "@/components/shared/FormHeader";
+
+
+import { IntroStep } from "@/components/client/IntroStep";
 
 export default function RetainerFeedbackPage() {
     const params = useParams();
@@ -306,11 +311,11 @@ export default function RetainerFeedbackPage() {
 
     const validateCurrentStep = () => {
         let fields: any[] = [];
-        if (step === 1) fields = step1Fields;
-        if (step === 2) fields = step2Fields;
-        if (step === 3) fields = step3Fields;
-        if (step === 4) fields = step4Fields;
-        if (step === 5) fields = step5Fields;
+        if (step === 2) fields = step1Fields;
+        if (step === 3) fields = step2Fields;
+        if (step === 4) fields = step3Fields;
+        if (step === 5) fields = step4Fields;
+        if (step === 6) fields = step5Fields;
 
         const errors = validateFields(fields);
         markAllFieldsTouched(fields);
@@ -319,7 +324,8 @@ export default function RetainerFeedbackPage() {
     };
 
     const handleNext = () => {
-        if (!validateCurrentStep()) {
+        // Skip validation for intro step (step 1)
+        if (step > 1 && !validateCurrentStep()) {
             toast.error("Please fill all required fields");
             return;
         }
@@ -395,7 +401,7 @@ export default function RetainerFeedbackPage() {
 
     const renderStepFields = (fields: any[]) => (
         <div className="px-4 max-w-2xl w-full pb-3 mx-auto md:px-0">
-            {step === 2 && <h2 className="text-[32px] font-medium text-primary mt-4 mb-6">Overall Experience</h2>}
+            {step === 3 && <h2 className="text-[32px] font-medium text-primary mt-4 mb-6">Overall Experience</h2>}
 
             {fields.map((field) => (
                 <DynamicField
@@ -432,14 +438,27 @@ export default function RetainerFeedbackPage() {
 
     return (
         <div className="relative min-h-screen !bg-[#FFFBFB] flex flex-col py-10 justify-center overflow-hidden">
-            <StepIndicator
-                step={step}
-                stepStructure={stepStructure}
-                getStepProgress={getStepProgress}
-                handleStepClick={handleStepClick}
-            />
+            {step > 1 && <FormHeader formName="Retainer Feedback" />}
+            {step > 1 && (
+                <StepIndicator
+                    step={step}
+                    stepStructure={stepStructure}
+                    getStepProgress={getStepProgress}
+                    handleStepClick={handleStepClick}
+                />
+            )}
 
             {step === 1 && (
+                <IntroStep
+                    img="/images/steps/5.png"
+                    title="Retainer Feedback"
+                    description="Please take a few moments to share your feedback. Your insights help us improve and serve you better."
+                    onNext={handleNext}
+                    buttonClassName="!bg-[#E31313] !text-lg text-white !font-bold"
+                />
+            )}
+
+            {step === 2 && (
                 <Step2Form
                     formFields={step1Fields}
                     formData={formData}
@@ -454,10 +473,10 @@ export default function RetainerFeedbackPage() {
                 />
             )}
 
-            {step === 2 && renderStepFields(step2Fields)}
-            {step === 3 && renderStepFields(step3Fields)}
-            {step === 4 && renderStepFields(step4Fields)}
-            {step === 5 && renderStepFields(step5Fields)}
+            {step === 3 && renderStepFields(step2Fields)}
+            {step === 4 && renderStepFields(step3Fields)}
+            {step === 5 && renderStepFields(step4Fields)}
+            {step === 6 && renderStepFields(step5Fields)}
         </div>
     );
 }
