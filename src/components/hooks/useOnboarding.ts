@@ -103,6 +103,8 @@ export function useOnboarding() {
         2: 1, // Brand Identity & Overview (Step 6 in Onboarding)
         3: 1, // Market, Audience & Positioning (Step 7 in Onboarding)
         4: 1, // Project Scope & Expectations (Step 8 in Onboarding)
+        5: 1, // Asset Types (Step 9)
+        6: 1, // Social Platforms (Step 11)
       }
       : {
         1: 1,
@@ -113,28 +115,68 @@ export function useOnboarding() {
         6: 1,
       };
 
-  const totalSteps = isClientOnboarding ? 12 : isBrandIdentityPage ? 4 : 6;
+  const totalSteps = isClientOnboarding ? 12 : isBrandIdentityPage ? 6 : 6;
 
   const validateFieldsHelper = (data: FormData, fields: any[]): Record<string, string> => {
-    // Making all fields optional as per request
-    return {};
+    const errors: Record<string, string> = {};
+    fields.forEach((field) => {
+      if (field.fieldType === "header" || field.fieldType === "subheader" || field.fieldType === "file") return;
+
+      const value = data[field.name];
+      if (!value || (typeof value === "string" && !value.trim())) {
+        errors[field.name] = "This field is required";
+      }
+    });
+    return errors;
   };
 
   const validateStep2Fields = (data: FormData) => {
-    return {};
+    return validateFieldsHelper(data, generalFormFields);
   };
-  const validateStep3Fields = (data: FormData) => ({});
-  const validateStep4Fields = (data: FormData) => ({});
-  const validateStep6Fields = (data: FormData) => ({});
-  const validateStep7Fields = (data: FormData) => ({});
-  const validateStep8Fields = (data: FormData) => ({});
-  const validateStep9Fields = (data: FormData) => ({});
+  const validateStep3Fields = (data: FormData) => validateFieldsHelper(data, financialFields);
+  const validateStep4Fields = (data: FormData) => validateFieldsHelper(data, contactFormFields);
+
+  // Brand Discovery Validations
+  const validateStep6Fields = (data: FormData) => validateFieldsHelper(data, brandIdFields);
+  const validateStep7Fields = (data: FormData) => validateFieldsHelper(data, marketFields);
+  const validateStep8Fields = (data: FormData) => validateFieldsHelper(data, scopeFields);
+  const validateStep9Fields = (data: FormData) => {
+    const errors: Record<string, string> = {};
+    assetFields.forEach((field) => {
+      if (field.fieldType === "toggle_input") {
+        const fieldValue = data[field.name] || { enabled: false, value: "" };
+        if (fieldValue.enabled && (!fieldValue.value || !fieldValue.value.trim())) {
+          errors[field.name] = "Please provide a link or details";
+        }
+      }
+    });
+    return errors;
+  };
   const validateStep11Fields = (data: FormData) => ({});
   const validateStep13Fields = (data: FormData) => ({});
   const validateStep15Fields = (data: FormData) => ({});
   const validateStep16Fields = (data: FormData) => ({});
 
   const validateCurrentStep = () => {
+    if (isBrandIdentityPage) {
+      let errors = {};
+      if (step === 2) errors = validateStep6Fields(formData);
+      if (step === 3) errors = validateStep7Fields(formData);
+      if (step === 4) errors = validateStep8Fields(formData);
+      if (step === 5) errors = validateStep9Fields(formData);
+      // Asset and Social steps (5 & 6) are optional as they contain their own internal logic or "if applicable" nature, 
+      // but user specifically pointed to 2, 3, 4. If 5 & 6 needed, I'd add them here.
+      // Keeping 5 & 6 optional for now based on "if any" phrasing in those sections usually.
+
+      if (Object.keys(errors).length > 0) {
+        // Mark fields as touched to show errors
+        if (step === 2) setTouchedStep6(brandIdFields.reduce((acc, f) => ({ ...acc, [f.name]: true }), {}));
+        if (step === 3) setTouchedStep7(marketFields.reduce((acc, f) => ({ ...acc, [f.name]: true }), {}));
+        if (step === 4) setTouchedStep8(scopeFields.reduce((acc, f) => ({ ...acc, [f.name]: true }), {}));
+        if (step === 5) setTouchedStep9(assetFields.reduce((acc, f) => ({ ...acc, [f.name]: true }), {}));
+        return false;
+      }
+    }
     return true;
   };
 
@@ -149,7 +191,7 @@ export function useOnboarding() {
         /* submit handled later */
       }
     } else if (isBrandIdentityPage) {
-      if (step === 4) {
+      if (step === 6) {
         /* submit handled later */
       }
     } else {
@@ -318,14 +360,33 @@ export function useOnboarding() {
           expectationsFromAgency: formData.expectations_creative_partner,
           previousAgencyExperience: formData.previous_agency_experience,
           specificThemesIdeas: formData.specific_themes_ideas,
-          mandatoryElements: formData.mandatory_branding_elements
+          mandatoryElements: formData.mandatory_branding_elements,
+          assetTypes: {
+            brand_logo_files: formData.brand_logo_files,
+            brand_guidelines: formData.brand_guidelines,
+            brochures_product_photos: formData.brochures_product_photos,
+            past_campaign_reports: formData.past_campaign_reports,
+            moodboards_videos: formData.moodboards_videos,
+            current_image_assets: formData.current_image_assets,
+            current_video_assets: formData.current_video_assets
+          },
+          socialAccounts: {
+            instagram: formData.instagram_profile_url,
+            facebook: formData.facebook_page_url,
+            linkedin: formData.linkedin_profile_url,
+            twitter: formData.twitter_profile_url,
+            youtube: formData.youtube_channel_url,
+            google_my_business: formData.google_business_url,
+            website: formData.website_url_social,
+            additional: formData.additional_platforms
+          }
         };
       }
 
-      const endpoint = isBrandIdentityPage 
+      const endpoint = isBrandIdentityPage
         ? "/api/v1/clients/brand-questionnaire"
-        : isClientOnboarding 
-          ? "/api/v1/clients/details" 
+        : isClientOnboarding
+          ? "/api/v1/clients/details"
           : "/api/v1/client-feedback";
 
       try {

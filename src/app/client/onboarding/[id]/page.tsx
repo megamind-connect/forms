@@ -9,6 +9,8 @@ import { StepTextQuestion } from "@/components/client/StepTextQuestion";
 import { useOnboarding } from "@/components/hooks/useOnboarding";
 import { Button } from "@/components/ui/Button";
 
+import { FormHeader } from "@/components/shared/FormHeader";
+
 export default function ClientPage() {
   const {
     step,
@@ -68,6 +70,7 @@ export default function ClientPage() {
         <SplashScreen />
       ) : (
         <>
+          <FormHeader formName="Client Onboarding" />
           {/* Step Progress Indicator */}
           <StepIndicator
             step={step}

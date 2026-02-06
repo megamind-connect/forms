@@ -5,6 +5,7 @@ import { SplashScreen } from "@/components/client/SplashScreen";
 import { Step2Form } from "@/components/client/Step2Form";
 import { StepIndicator } from "@/components/client/StepIndicator";
 import { useOnboarding } from "@/components/hooks/useOnboarding";
+import { FormHeader } from "@/components/shared/FormHeader";
 
 export default function BrandIdentityPage() {
     const {
@@ -31,6 +32,16 @@ export default function BrandIdentityPage() {
         markAllStep6FieldsTouched,
         markAllStep7FieldsTouched,
         markAllStep8FieldsTouched,
+        assetFields,
+        socialFields,
+        touchedStep9,
+        touchedStep11,
+        validateStep9Fields,
+        validateStep11Fields,
+        markStep9FieldTouched,
+        markStep11FieldTouched,
+        markAllStep9FieldsTouched,
+        markAllStep11FieldsTouched,
     } = useOnboarding();
 
     return (
@@ -39,19 +50,22 @@ export default function BrandIdentityPage() {
                 <SplashScreen />
             ) : (
                 <>
+                    {step > 1 && <FormHeader formName="Brand Discovery Feedback" />}
                     {/* Step Progress Indicator */}
-                    <StepIndicator
-                        step={step}
-                        stepStructure={stepStructure}
-                        getStepProgress={getStepProgress}
-                        handleStepClick={handleStepClick}
-                    />
+                    {step > 1 && (
+                        <StepIndicator
+                            step={step}
+                            stepStructure={stepStructure}
+                            getStepProgress={getStepProgress}
+                            handleStepClick={handleStepClick}
+                        />
+                    )}
 
                     {/* STEP 1: Tell Us Your Story (Intro) */}
                     {step === 1 && (
                         <IntroStep
                             img="/images/steps/5.png"
-                            title="Tell Us Your Story"
+                            title="Brand Discovery Feedback "
                             description="Share what you do, why you do it, and what makes you unique. Your story will guide us in creating work that feels authentically you."
                             onNext={handleNext}
                             buttonClassName="!bg-[#E31313] !text-lg text-white !font-bold"
@@ -100,6 +114,36 @@ export default function BrandIdentityPage() {
                             markFieldTouched={markStep8FieldTouched}
                             markAllFieldsTouched={markAllStep8FieldsTouched}
                             headerTitle="Project Scope & Expectations"
+                        />
+                    )}
+
+                    {/* STEP 5: Asset Types */}
+                    {step === 5 && (
+                        <Step2Form
+                            formFields={assetFields}
+                            formData={formData}
+                            onNext={handleNext}
+                            updateFormData={updateFormData}
+                            validateFields={validateStep9Fields} // Using Step 9 validation from hook
+                            touched={touchedStep9}
+                            markFieldTouched={markStep9FieldTouched}
+                            markAllFieldsTouched={markAllStep9FieldsTouched}
+                            headerTitle="Asset Types"
+                        />
+                    )}
+
+                    {/* STEP 6: Social & Digital Platform */}
+                    {step === 6 && (
+                        <Step2Form
+                            formFields={socialFields}
+                            formData={formData}
+                            onNext={handleNext}
+                            updateFormData={updateFormData}
+                            validateFields={validateStep11Fields} // Using Step 11 validation from hook
+                            touched={touchedStep11}
+                            markFieldTouched={markStep11FieldTouched}
+                            markAllFieldsTouched={markAllStep11FieldsTouched}
+                            headerTitle="Social & Digital Platform"
                             buttonText="Submit"
                         />
                     )}

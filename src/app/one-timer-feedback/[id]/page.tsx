@@ -123,7 +123,7 @@ const step3Fields = [
             { label: "Video Shoot / Production", value: "Video Shoot / Production" },
             { label: "Video Editing", value: "Video Editing" },
             { label: "Social Media Management", value: "Social Media Management" },
-            { label: "Social Media Marketing", value: "Social Media Marketing" },
+            { label: "Social Media Marketing (includes Graphic Design, Video Shoot, Video Editing, and Management)", value: "Social Media Marketing" },
             { label: "Website Development", value: "Website Development" },
             { label: "Software Development", value: "Software Development" },
             { label: "Others…", value: "other" },
@@ -135,11 +135,11 @@ const step3Fields = [
         label: "10. How well do our services align with your business goals? ",
         fieldType: "rating5",
         options: [
-            { value: "Extremely Well", label: "Extremely Well" },
-            { value: "Somewhat Well", label: "Somewhat Well" },
-            { value: "Neutral", label: "Neutral" },
-            { value: "Somewhat Not Well", label: "Somewhat Not Well" },
             { value: "Extremely Not Well", label: "Extremely Not Well" },
+            { value: "Somewhat Not Well", label: "Somewhat Not Well" },
+            { value: "Neutral", label: "Neutral" },
+            { value: "Somewhat  Well", label: "Somewhat Well" },
+            { value: "Extremely  Well", label: "Extremely Well" },
         ],
     },
     {
@@ -164,11 +164,11 @@ const step4Fields = [
         label: "12. How would you rate our content creation and creative work in representing your brand?  ",
         fieldType: "rating5",
         options: [
-            { value: "Excellent", label: "Excellent" },
-            { value: "Good", label: "Good" },
-            { value: "Average", label: "Average" },
-            { value: "Poor", label: "Poor" },
             { value: "Very Poor", label: "Very Poor" },
+            { value: "Poor", label: "Poor" },
+            { value: "Average", label: "Average" },
+            { value: "Good", label: "Good" },
+            { value: "Excellent", label: "Excellent" },
         ],
     },
     {
@@ -183,11 +183,11 @@ const step4Fields = [
         label: "14. How well did our team respond to your enquiries? ",
         fieldType: "rating5",
         options: [
-            { value: "Extremely Responsive", label: "Extremely Responsive" },
-            { value: "Responsive", label: "Responsive" },
-            { value: "Neutral", label: "Neutral" },
             { value: "Very Slow", label: "Very Slow" },
             { value: "Slow", label: "Slow" },
+            { value: "Neutral", label: "Neutral" },
+            { value: "Responsive", label: "Responsive" },
+            { value: "Extremely Responsive", label: "Extremely Responsive" },
         ],
     },
 ];
@@ -211,11 +211,11 @@ const step5Fields = [
         label: "17. How likely are you to continue using our service in future? ",
         fieldType: "rating5",
         options: [
-            { value: "Definitely Yes", label: "Definitely Yes" },
-            { value: "Probably Yes", label: "Probably Yes" },
-            { value: "Not sure yet", label: "Not sure yet" },
-            { value: "Probably Not", label: "Probably Not" },
             { value: "Definitely Not", label: "Definitely Not" },
+            { value: "Probably Not", label: "Probably Not" },
+            { value: "Not sure yet", label: "Not sure yet" },
+            { value: "Probably Yes", label: "Probably Yes" },
+            { value: "Definitely Yes", label: "Definitely Yes" },
         ],
     },
     {
@@ -224,11 +224,11 @@ const step5Fields = [
         label: "18. How likely are you to recommend Megamind to others?  ",
         fieldType: "rating5",
         options: [
-            { value: "Definitely Yes", label: "Definitely Yes" },
-            { value: "Probably Yes", label: "Probably Yes" },
-            { value: "Not sure", label: "Not sure" },
-            { value: "Probably Not", label: "Probably Not" },
             { value: "Definitely Not", label: "Definitely Not" },
+            { value: "Probably Not", label: "Probably Not" },
+            { value: "Not sure", label: "Not sure" },
+            { value: "Probably Yes", label: "Probably Yes" },
+            { value: "Definitely Yes", label: "Definitely Yes" },
         ],
     },
     {
@@ -239,8 +239,13 @@ const step5Fields = [
     },
 ];
 
-const STEPS_COUNT = 5;
-const stepStructure = { 1: 1, 2: 1, 3: 1, 4: 1, 5: 1 };
+const STEPS_COUNT = 6;
+const stepStructure = { 1: 1, 2: 1, 3: 1, 4: 1, 5: 1, 6: 1 };
+
+import { FormHeader } from "@/components/shared/FormHeader";
+
+
+import { IntroStep } from "@/components/client/IntroStep";
 
 export default function OneTimerFeedbackPage() {
     const params = useParams();
@@ -279,11 +284,11 @@ export default function OneTimerFeedbackPage() {
 
     const validateCurrentStep = () => {
         let fields: any[] = [];
-        if (step === 1) fields = step1Fields;
-        if (step === 2) fields = step2Fields;
-        if (step === 3) fields = step3Fields;
-        if (step === 4) fields = step4Fields;
-        if (step === 5) fields = step5Fields;
+        if (step === 2) fields = step1Fields;
+        if (step === 3) fields = step2Fields;
+        if (step === 4) fields = step3Fields;
+        if (step === 5) fields = step4Fields;
+        if (step === 6) fields = step5Fields;
 
         const errors = validateFields(fields);
         markAllFieldsTouched(fields);
@@ -292,7 +297,8 @@ export default function OneTimerFeedbackPage() {
     };
 
     const handleNext = () => {
-        if (!validateCurrentStep()) {
+        // Skip validation for intro step (step 1)
+        if (step > 1 && !validateCurrentStep()) {
             toast.error("Please fill all required fields");
             return;
         }
@@ -354,7 +360,7 @@ export default function OneTimerFeedbackPage() {
 
     const renderStepFields = (fields: any[]) => (
         <div className="px-4 max-w-2xl w-full pb-3 mx-auto md:px-0">
-            {step === 2 && <h2 className="text-[32px] font-medium text-primary mt-4 mb-6">Overall Experience</h2>}
+            {step === 3 && <h2 className="text-[32px] font-medium text-primary mt-4 mb-6">Overall Experience</h2>}
 
             {fields.map((field) => (
                 <DynamicField
@@ -391,14 +397,28 @@ export default function OneTimerFeedbackPage() {
 
     return (
         <div className="relative min-h-screen !bg-[#FFFBFB] flex flex-col py-10 justify-center overflow-hidden">
-            <StepIndicator
-                step={step}
-                stepStructure={stepStructure}
-                getStepProgress={(n) => n < step ? 100 : n === step ? 50 : 0}
-                handleStepClick={(n) => n < step && setStep(n)}
-            />
+            {step > 1 && <FormHeader formName="One-Timer Feedback" />}
+            {step > 1 && (
+                <StepIndicator
+                    step={step}
+                    stepStructure={stepStructure}
+                    getStepProgress={(n) => n < step ? 100 : n === step ? 50 : 0}
+                    handleStepClick={(n) => n < step && setStep(n)}
+                />
+            )}
 
             {step === 1 && (
+                <IntroStep
+                    img="/images/steps/5.png"
+                    title="One-Timer Feedback"
+                    description="Please take a few moments to share your feedback. Your insights help us improve and serve you better."
+                    onNext={handleNext}
+                    buttonClassName="!bg-[#E31313] !text-lg text-white !font-bold"
+                />
+            )}
+
+
+            {step === 2 && (
                 <Step2Form
                     formFields={step1Fields}
                     formData={formData}
@@ -413,11 +433,10 @@ export default function OneTimerFeedbackPage() {
                 />
             )}
 
-            {step >= 2 && renderStepFields(
-                step === 2 ? step2Fields :
-                    step === 3 ? step3Fields :
-                        step === 4 ? step4Fields : step5Fields
-            )}
+            {step === 3 && renderStepFields(step2Fields)}
+            {step === 4 && renderStepFields(step3Fields)}
+            {step === 5 && renderStepFields(step4Fields)}
+            {step === 6 && renderStepFields(step5Fields)}
         </div>
     );
 }

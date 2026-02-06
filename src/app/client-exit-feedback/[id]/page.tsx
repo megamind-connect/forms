@@ -51,9 +51,9 @@ const step2Fields = [
         label: "4. Do you feel our team understood your business and what you’re trying to achieve?",
         fieldType: "radio",
         options: [
-            { value: "Yes", label: "Yes" },
             { value: "No", label: "No" },
             { value: "Maybe", label: "Maybe" },
+            { value: "Yes", label: "Yes" },
         ],
     },
     {
@@ -62,11 +62,11 @@ const step2Fields = [
         label: "5. How effective was Megamind’s strategic guidance and planning in meeting your marketing needs?",
         fieldType: "radio_row",
         options: [
-            { value: "Very effective", label: "Very effective" },
-            { value: "Somewhat effective", label: "Somewhat effective" },
-            { value: "Neither", label: "Neither" },
-            { value: "Somewhat ineffective", label: "Somewhat ineffective" },
             { value: "Very ineffective", label: "Very ineffective" },
+            { value: "Somewhat ineffective", label: "Somewhat ineffective" },
+            { value: "Neither", label: "Neither" },
+            { value: "Somewhat effective", label: "Somewhat effective" },
+            { value: "Very effective", label: "Very effective" },
         ],
     },
     {
@@ -75,9 +75,9 @@ const step2Fields = [
         label: "6. Were the delivered services aligned with your brand?",
         fieldType: "radio",
         options: [
-            { value: "Yes", label: "Yes" },
             { value: "No", label: "No" },
             { value: "Maybe", label: "Maybe" },
+            { value: "Yes", label: "Yes" },
         ],
     },
 ];
@@ -89,11 +89,11 @@ const step3Fields = [
         label: "7. Please rate your overall satisfaction: Social Media Management",
         fieldType: "radio_row",
         options: [
-            { value: "Excellent", label: "Excellent" },
-            { value: "Good", label: "Good" },
-            { value: "Average", label: "Average" },
-            { value: "Fair", label: "Fair" },
             { value: "Poor", label: "Poor" },
+            { value: "Fair", label: "Fair" },
+            { value: "Average", label: "Average" },
+            { value: "Good", label: "Good" },
+            { value: "Excellent", label: "Excellent" },
         ],
     },
     {
@@ -102,11 +102,11 @@ const step3Fields = [
         label: "Graphic Design",
         fieldType: "radio_row",
         options: [
-            { value: "Excellent", label: "Excellent" },
-            { value: "Good", label: "Good" },
-            { value: "Average", label: "Average" },
-            { value: "Fair", label: "Fair" },
             { value: "Poor", label: "Poor" },
+            { value: "Fair", label: "Fair" },
+            { value: "Average", label: "Average" },
+            { value: "Good", label: "Good" },
+            { value: "Excellent", label: "Excellent" },
         ],
     },
     {
@@ -115,11 +115,11 @@ const step3Fields = [
         label: "Video Production",
         fieldType: "radio_row",
         options: [
-            { value: "Excellent", label: "Excellent" },
-            { value: "Good", label: "Good" },
-            { value: "Average", label: "Average" },
-            { value: "Fair", label: "Fair" },
             { value: "Poor", label: "Poor" },
+            { value: "Fair", label: "Fair" },
+            { value: "Average", label: "Average" },
+            { value: "Good", label: "Good" },
+            { value: "Excellent", label: "Excellent" },
         ],
     },
     {
@@ -128,11 +128,11 @@ const step3Fields = [
         label: "Video Editing",
         fieldType: "radio_row",
         options: [
-            { value: "Excellent", label: "Excellent" },
-            { value: "Good", label: "Good" },
-            { value: "Average", label: "Average" },
-            { value: "Fair", label: "Fair" },
             { value: "Poor", label: "Poor" },
+            { value: "Fair", label: "Fair" },
+            { value: "Average", label: "Average" },
+            { value: "Good", label: "Good" },
+            { value: "Excellent", label: "Excellent" },
         ],
     },
     {
@@ -141,11 +141,11 @@ const step3Fields = [
         label: "PPC Execution",
         fieldType: "radio_row",
         options: [
-            { value: "Excellent", label: "Excellent" },
-            { value: "Good", label: "Good" },
-            { value: "Average", label: "Average" },
-            { value: "Fair", label: "Fair" },
             { value: "Poor", label: "Poor" },
+            { value: "Fair", label: "Fair" },
+            { value: "Average", label: "Average" },
+            { value: "Good", label: "Good" },
+            { value: "Excellent", label: "Excellent" },
         ],
     },
     {
@@ -154,11 +154,11 @@ const step3Fields = [
         label: "Strategy",
         fieldType: "radio_row",
         options: [
-            { value: "Excellent", label: "Excellent" },
-            { value: "Good", label: "Good" },
-            { value: "Average", label: "Average" },
-            { value: "Fair", label: "Fair" },
             { value: "Poor", label: "Poor" },
+            { value: "Fair", label: "Fair" },
+            { value: "Average", label: "Average" },
+            { value: "Good", label: "Good" },
+            { value: "Excellent", label: "Excellent" },
         ],
     },
     {
@@ -167,11 +167,11 @@ const step3Fields = [
         label: "Content Writing",
         fieldType: "radio_row",
         options: [
-            { value: "Excellent", label: "Excellent" },
-            { value: "Good", label: "Good" },
-            { value: "Average", label: "Average" },
-            { value: "Fair", label: "Fair" },
             { value: "Poor", label: "Poor" },
+            { value: "Fair", label: "Fair" },
+            { value: "Average", label: "Average" },
+            { value: "Good", label: "Good" },
+            { value: "Excellent", label: "Excellent" },
         ],
     },
     {
@@ -190,11 +190,11 @@ const step4Fields = [
         label: "9. Were project deadlines and commitments consistently met?",
         fieldType: "radio",
         options: [
-            { value: "Always", label: "Always" },
-            { value: "Often", label: "Often" },
-            { value: "Sometimes", label: "Sometimes" },
-            { value: "Rarely", label: "Rarely" },
             { value: "Never", label: "Never" },
+            { value: "Rarely", label: "Rarely" },
+            { value: "Sometimes", label: "Sometimes" },
+            { value: "Often", label: "Often" },
+            { value: "Always", label: "Always" },
         ],
     },
     {
@@ -203,11 +203,11 @@ const step4Fields = [
         label: "10. How would you rate the communication and responsiveness of our project manager and team?",
         fieldType: "radio",
         options: [
-            { value: "Excellent", label: "Excellent" },
-            { value: "Good", label: "Good" },
-            { value: "Average", label: "Average" },
             { value: "Poor", label: "Poor" },
             { value: "Fair", label: "Fair" },
+            { value: "Average", label: "Average" },
+            { value: "Good", label: "Good" },
+            { value: "Excellent", label: "Excellent" },
         ],
     },
     {
@@ -223,11 +223,11 @@ const step4Fields = [
         label: "12. Did you feel heard, valued, and that your feedback was acted upon?",
         fieldType: "radio",
         options: [
-            { value: "Always", label: "Always" },
-            { value: "Often", label: "Often" },
-            { value: "Sometimes", label: "Sometimes" },
-            { value: "Rarely", label: "Rarely" },
             { value: "Never", label: "Never" },
+            { value: "Rarely", label: "Rarely" },
+            { value: "Sometimes", label: "Sometimes" },
+            { value: "Often", label: "Often" },
+            { value: "Always", label: "Always" },
         ],
     },
 ];
@@ -291,9 +291,9 @@ const step5Fields = [
         label: "19. Would you recommend Megamind to others?",
         fieldType: "radio",
         options: [
-            { value: "Yes", label: "Yes" },
-            { value: "Maybe", label: "Maybe" },
             { value: "No", label: "No" },
+            { value: "Maybe", label: "Maybe" },
+            { value: "Yes", label: "Yes" },
         ],
     },
     {
@@ -305,8 +305,13 @@ const step5Fields = [
     },
 ];
 
-const STEPS_COUNT = 5;
-const stepStructure = { 1: 1, 2: 1, 3: 1, 4: 1, 5: 1 };
+const STEPS_COUNT = 6;
+const stepStructure = { 1: 1, 2: 1, 3: 1, 4: 1, 5: 1, 6: 1 };
+
+import { FormHeader } from "@/components/shared/FormHeader";
+
+
+import { IntroStep } from "@/components/client/IntroStep";
 
 export default function ClientExitFeedbackPage() {
     const params = useParams();
@@ -348,11 +353,11 @@ export default function ClientExitFeedbackPage() {
 
     const validateCurrentStep = () => {
         let fields: any[] = [];
-        if (step === 1) fields = step1Fields;
-        if (step === 2) fields = step2Fields;
-        if (step === 3) fields = step3Fields;
-        if (step === 4) fields = step4Fields;
-        if (step === 5) fields = step5Fields;
+        if (step === 2) fields = step1Fields;
+        if (step === 3) fields = step2Fields;
+        if (step === 4) fields = step3Fields;
+        if (step === 5) fields = step4Fields;
+        if (step === 6) fields = step5Fields;
 
         const errors = validateFields(fields);
         markAllFieldsTouched(fields);
@@ -360,7 +365,8 @@ export default function ClientExitFeedbackPage() {
     };
 
     const handleNext = () => {
-        if (!validateCurrentStep()) {
+        // Skip validation for intro step (step 1)
+        if (step > 1 && !validateCurrentStep()) {
             toast.error("Please fill all required fields");
             return;
         }
@@ -432,11 +438,11 @@ export default function ClientExitFeedbackPage() {
 
     const renderStepFields = (fields: any[]) => (
         <div className="px-4 max-w-2xl w-full pb-3 mx-auto md:px-0">
-            {step === 1 && renderSectionHeader("Respondent Details")}
-            {step === 2 && renderSectionHeader("Expectations & Strategic Alignment")}
-            {step === 3 && renderSectionHeader("Service Quality & Performance")}
-            {step === 4 && renderSectionHeader("Communication & Responsiveness")}
-            {step === 5 && renderSectionHeader("Overall Experience")}
+            {step === 2 && renderSectionHeader("Respondent Details")}
+            {step === 3 && renderSectionHeader("Expectations & Strategic Alignment")}
+            {step === 4 && renderSectionHeader("Service Quality & Performance")}
+            {step === 5 && renderSectionHeader("Communication & Responsiveness")}
+            {step === 6 && renderSectionHeader("Overall Experience")}
 
             {fields.map((field) => (
                 <DynamicField
@@ -465,8 +471,20 @@ export default function ClientExitFeedbackPage() {
 
     return (
         <div className="relative min-h-screen !bg-[#FFFBFB] flex flex-col py-10 justify-center overflow-hidden">
-            <StepIndicator step={step} stepStructure={stepStructure} getStepProgress={(n) => n < step ? 100 : n === step ? 50 : 0} handleStepClick={(n) => n < step && setStep(n)} />
+            {step > 1 && <FormHeader formName="Client Exit Feedback" />}
+            {step > 1 && <StepIndicator step={step} stepStructure={stepStructure} getStepProgress={(n) => n < step ? 100 : n === step ? 50 : 0} handleStepClick={(n) => n < step && setStep(n)} />}
+
             {step === 1 && (
+                <IntroStep
+                    img="/images/steps/5.png"
+                    title="Client Exit Feedback"
+                    description="Please take a few moments to share your feedback. Your insights help us improve and serve you better."
+                    onNext={handleNext}
+                    buttonClassName="!bg-[#E31313] !text-lg text-white !font-bold"
+                />
+            )}
+
+            {step === 2 && (
                 <Step2Form
                     formFields={step1Fields}
                     formData={formData}
@@ -480,10 +498,10 @@ export default function ClientExitFeedbackPage() {
                     isClientPage={true}
                 />
             )}
-            {step >= 2 && renderStepFields(
-                step === 2 ? step2Fields :
-                    step === 3 ? step3Fields :
-                        step === 4 ? step4Fields : step5Fields
+            {step >= 3 && renderStepFields(
+                step === 3 ? step2Fields :
+                    step === 4 ? step3Fields :
+                        step === 5 ? step4Fields : step5Fields
             )}
         </div>
     );
