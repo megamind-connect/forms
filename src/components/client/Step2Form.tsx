@@ -229,7 +229,7 @@ export function Step2Form({
                   type="text"
                   value={inputValue}
                   placeholder={placeholderText}
-                  className="!border-[#D9D9D9] placeholder:text-[#8F8881]"
+                  className="border-[#D9D9D9]! placeholder:text-[#8F8881]"
                   onChange={(e) => handleInputChange(e.target.value)}
                   onBlur={() => handleBlur(field.name)}
                 />
@@ -240,7 +240,10 @@ export function Step2Form({
         }
 
         if (field.fieldType === "radio" || field.fieldType === "radio_stacked") {
-          const selectedValue = formData[field.name] != null ? String(formData[field.name]) : "";
+          const rawValue = formData[field.name];
+          const selectedValue = typeof rawValue === 'object' && rawValue !== null ? rawValue.selected : (rawValue != null ? String(rawValue) : "");
+          const isOtherSelected = selectedValue === "others";
+
           return (
             <div key={index} className="space-y-2 w-full max-w-2xl text-left">
               <label className="text-xl font-medium text-[#57534E]">{field.label}</label>
@@ -252,13 +255,44 @@ export function Step2Form({
                       name={field.name}
                       value={String(option.value)}
                       checked={selectedValue === String(option.value)}
-                      onChange={(e) => updateFormData({ [field.name]: e.target.value })}
+                      onChange={(e) => {
+                        const val = e.target.value;
+                        if (val === "others") {
+                          updateFormData({
+                            [field.name]: {
+                              selected: "others",
+                              otherText: typeof rawValue === 'object' && rawValue !== null ? rawValue.otherText : ""
+                            }
+                          });
+                        } else {
+                          updateFormData({ [field.name]: val });
+                        }
+                      }}
                       className="w-4 h-4 text-[#E31212] focus:ring-[#E31212]"
                     />
                     <span className="text-sm text-gray-700">{option.label}</span>
                   </label>
                 ))}
               </div>
+              {isOtherSelected && (
+                <div className="mt-2">
+                  <Input
+                    type="text"
+                    placeholder="Please specify your role..."
+                    value={typeof rawValue === 'object' && rawValue !== null ? rawValue.otherText : ""}
+                    className="border-[#D9D9D9]! placeholder:text-[#8F8881]"
+                    onChange={(e) => {
+                      updateFormData({
+                        [field.name]: {
+                          selected: "others",
+                          otherText: e.target.value
+                        }
+                      });
+                    }}
+                    onBlur={() => handleBlur(field.name)}
+                  />
+                </div>
+              )}
               {isTouched && fieldError && <p className="text-red-600 text-xs mt-1">{fieldError}</p>}
             </div>
           )

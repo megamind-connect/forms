@@ -126,6 +126,13 @@ export function useOnboarding() {
       if (!value || (typeof value === "string" && !value.trim())) {
         errors[field.name] = "This field is required";
       }
+
+      // Handle 'Others' validation for radio/radio_stacked
+      if (typeof value === 'object' && value !== null && value.selected === 'others') {
+        if (!value.otherText || !value.otherText.trim()) {
+          errors[field.name] = "Please specify your role";
+        }
+      }
     });
     return errors;
   };
@@ -314,7 +321,9 @@ export function useOnboarding() {
         payload = {
           ...payload,
           name: formData.full_name,
-          position_role: formData.role_in_organisation,
+          position_role: typeof formData.role_in_organisation === 'object' && formData.role_in_organisation !== null
+            ? (formData.role_in_organisation.selected === 'others' ? formData.role_in_organisation.otherText : formData.role_in_organisation.selected)
+            : formData.role_in_organisation,
           overall_experience: formData.overall_experience_rating,
           impact_assessment: formData.service_impact_rating,
           quality_of_services: formData.service_quality_rating,
