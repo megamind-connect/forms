@@ -129,6 +129,8 @@ export default function BrandIdentityPage() {
                             markFieldTouched={markStep9FieldTouched}
                             markAllFieldsTouched={markAllStep9FieldsTouched}
                             headerTitle="Asset Types"
+                            hideToggleInput={true}
+                            
                         />
                     )}
 

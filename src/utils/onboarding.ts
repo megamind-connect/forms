@@ -22,10 +22,10 @@ export const generalFields = [
       { label: "Real Estate", value: "real_estate" },
       { label: "Finance", value: "finance" },
       { label: "Manufacturing", value: "manufacturing" },
-      { label: "Others", value: "others" },
+      { label: "Others", value: "other" },
     ],
   },
-  { id: "gstin_gen", name: "gstin", label: "GSTIN (if applicable)", placeholder: "Enter Here", fieldType: "text" },
+  { id: "gstin_gen", name: "gstin", label: "GSTIN (if applicable)", placeholder: "Enter Here", fieldType: "text", optional: true },
   {
     id: "reg_addr",
     name: "registered_business_address",
@@ -40,13 +40,14 @@ export const generalFields = [
     placeholder: "Kindly fill if different from the registered business address",
     fieldType: "textarea",
   },
-  { id: "email", name: "business_email_id", label: "Business Email ID", placeholder: "Official business email", fieldType: "text" },
+  { id: "email", name: "business_email_id", label: "Business Email ID", placeholder: "Official business email", fieldType: "email" },
   {
     id: "landline",
     name: "business_landline_numbers",
     label: "Business Landline Number(s)",
     placeholder: "Official business landline number",
     fieldType: "array",
+    optional: true,
   },
   {
     id: "mobile",
@@ -61,15 +62,16 @@ export const generalFields = [
     label: "WhatsApp Business (If Available)",
     placeholder: "Whatsapp Business API Number",
     fieldType: "text",
+    optional: true,
   },
-  {
-    id: "wa_link",
-    name: "whatsapp_business_link",
-    label: "WhatsApp Business API Link",
-    placeholder: "Whatsapp Business API Link",
-    fieldType: "text",
-  },
-  { id: "website", name: "website_url", label: "Website URL (If Available)", placeholder: "Official website URL", fieldType: "text" },
+  // {
+  //   id: "wa_link",
+  //   name: "whatsapp_business_link",
+  //   label: "WhatsApp Business API Link",
+  //   placeholder: "Whatsapp Business API Link",
+  //   fieldType: "text",
+  // },
+  { id: "website", name: "website_url", label: "Website URL (If Available)", placeholder: "Official website URL", fieldType: "text", optional: true },
   { id: "est_year", name: "year_of_establishment", label: "Year of Establishment", placeholder: "YYYY", fieldType: "text" },
   {
     id: "legal_structure",
@@ -83,6 +85,7 @@ export const generalFields = [
       { label: "Proprietorship", value: "proprietorship" },
       { label: "Partnership", value: "partnership" },
       { label: "Public Ltd", value: "public_ltd" },
+      { label: "Other", value: "other" },
     ],
   },
   {
@@ -137,8 +140,8 @@ export const financialLegalFields = [
   {
     id: "company_reg",
     name: "company_registration_number",
-    label: "Company Registration Number",
-    placeholder: "Company Registration Number",
+    label: "GST Registration Number",
+    placeholder: "GST Registration Number:",
     fieldType: "text",
     hideLabel: true,
   },
@@ -160,19 +163,19 @@ export const contactFields = [
   // Primary Contact
   { id: "primary_header", name: "", label: "Primary Contact Person", fieldType: "header" },
   { id: "p_name", name: "primary_contact_name", label: "Name", placeholder: "", fieldType: "text" },
-  { id: "p_email", name: "primary_contact_email", label: "Email", placeholder: "", fieldType: "text" },
+  { id: "p_email", name: "primary_contact_email", label: "Email", placeholder: "", fieldType: "email" },
   { id: "p_phone", name: "primary_contact_phone", label: "Phone", placeholder: "Phone", fieldType: "phone" },
 
   // Alternate Contact
   { id: "alt_header", name: "", label: "Alternate Contact (optional)", fieldType: "header" },
-  { id: "alt_name", name: "alternate_contact_name", label: "Name", placeholder: "", fieldType: "text" },
-  { id: "alt_email", name: "alternate_contact_email", label: "Email", placeholder: "", fieldType: "text" },
-  { id: "alt_phone", name: "alternate_contact_phone", label: "Phone", placeholder: "Phone", fieldType: "phone" },
+  { id: "alt_name", name: "alternate_contact_name", label: "Name", placeholder: "", fieldType: "text", optional: true },
+  { id: "alt_email", name: "alternate_contact_email", label: "Email", placeholder: "", fieldType: "email", optional: true },
+  { id: "alt_phone", name: "alternate_contact_phone", label: "Phone", placeholder: "Phone", fieldType: "phone", optional: true },
 
   // Finance Department Contact
   { id: "fin_header", name: "", label: "Finance Department Contact", fieldType: "header" },
   { id: "fin_name", name: "finance_contact_name", label: "Name", placeholder: "", fieldType: "text" },
-  { id: "fin_email", name: "finance_contact_email", label: "Email", placeholder: "", fieldType: "text" },
+  { id: "fin_email", name: "finance_contact_email", label: "Email", placeholder: "", fieldType: "email" },
   { id: "fin_phone", name: "finance_contact_phone", label: "Phone", placeholder: "Phone", fieldType: "phone" },
 ];
 
@@ -325,14 +328,14 @@ export const marketAudienceFields = [
     fieldType: "textarea",
     placeholder: "Why do they stand out?",
   },
-   {
+  {
     id: "ma_9",
     name: "themes_ideas_concerns",
     label: "Do you have any specific themes, ideas, or concerns you want us to be aware of?",
     fieldType: "textarea",
     placeholder: "Share any themes, ideas, or concerns that should guide our work together.",
   },
-   {
+  {
     id: "ma_10",
     name: "mandatory_elements",
     label: "Are there any mandatory elements, guidelines, or messages that must be included in all branding materials?",
@@ -374,7 +377,6 @@ export const projectScopeFields = [
 
 export const socialPlatformFields = [
   { id: "sp_2", name: "instagram_profile_url", label: "Instagram", fieldType: "text", placeholder: "Official Instagram Profile URL" },
-
   { id: "sp_1", name: "facebook_page_url", label: "Facebook Page", fieldType: "text", placeholder: "Facebook Page URL" },
   { id: "sp_3", name: "linkedin_profile_url", label: "LinkedIn Page", fieldType: "text", placeholder: "LinkedIn Profile URL" },
   { id: "sp_4", name: "twitter_profile_url", label: "Twitter / X", fieldType: "text", placeholder: "Twitter (X) Profile URL" },
@@ -391,7 +393,19 @@ export const socialPlatformFields = [
 ];
 
 export const socialMediaAccessFields = [
-  { id: "sma_header_1", name: "meta_header", label: "Meta (Facebook & Instagram)", fieldType: "subheader" },
+  { id: "sma_header_0", name: "instagram_header", label: "Instagram", fieldType: "subheader" },
+  {
+    id: "sma_ig_desc",
+    name: "instagram_description",
+    // label: "Please invite our email: studiomegamind@gmail.com",
+    fieldType: "subheader",
+    hideLabel: true,
+    placeholder: "Please invite our email: studiomegamind@gmail.com",
+  },
+  { id: "sma_0a", name: "instagram_email", label: "User ID", fieldType: "text", placeholder: "User ID" },
+  { id: "sma_0b", name: "instagram_password", label: "Password", fieldType: "password", placeholder: "Password" },
+
+  { id: "sma_header_1", name: "meta_header", label: "Meta (Facebook)", fieldType: "subheader" },
   {
     id: "sma_meta_desc",
     name: "meta_description",
@@ -400,7 +414,7 @@ export const socialMediaAccessFields = [
     hideLabel: true,
     placeholder: "Please invite our email: studiomegamind@gmail.com",
   },
-  { id: "sma_1a", name: "meta_email", label: "Email", fieldType: "text", placeholder: "Email" },
+  { id: "sma_1a", name: "meta_email", label: "Email", fieldType: "email", placeholder: "Email" },
   { id: "sma_1b", name: "meta_password", label: "Password", fieldType: "password", placeholder: "Password" },
 
   { id: "sma_header_2", name: "linkedin_header", label: "LinkedIn", fieldType: "subheader" },
@@ -412,7 +426,7 @@ export const socialMediaAccessFields = [
     hideLabel: true,
     placeholder: "Please invite our email: studiomegamind@gmail.com",
   },
-  { id: "sma_2a", name: "linkedin_email", label: "Email", fieldType: "text", placeholder: "Email" },
+  { id: "sma_2a", name: "linkedin_email", label: "Email", fieldType: "email", placeholder: "Email" },
   { id: "sma_2b", name: "linkedin_password", label: "Password", fieldType: "password", placeholder: "Password" },
 
   { id: "sma_header_3", name: "twitter_header", label: "Twitter (X)", fieldType: "subheader" },
@@ -424,7 +438,7 @@ export const socialMediaAccessFields = [
     hideLabel: true,
     placeholder: "Please invite our email: studiomegamind@gmail.com",
   },
-  { id: "sma_3a", name: "twitter_email", label: "Email", fieldType: "text", placeholder: "Email" },
+  { id: "sma_3a", name: "twitter_email", label: "Email", fieldType: "email", placeholder: "Email" },
   { id: "sma_3b", name: "twitter_password", label: "Password", fieldType: "password", placeholder: "Password" },
 ];
 
@@ -435,7 +449,7 @@ export const assetTypesFields = [
     label: "If you have any of the following assets, please toggle 'Yes' and provide the link for each.",
     fieldType: "header",
   },
-{
+  {
     id: "asset_1",
     name: "company_deck",
     label: "Company Deck",
@@ -444,8 +458,8 @@ export const assetTypesFields = [
   },
 
   { id: "asset_2", name: "brand_logo_files", label: "Brand Logo Files", fieldType: "toggle_input", placeholder: "In AI, EPS, SVG, PNG file types" },
-  
-  
+
+
   {
     id: "asset_3",
     name: "brand_guidelines",
@@ -589,7 +603,7 @@ export const accountDetailsFields = [
     hideLabel: true,
     placeholder: "Please invite our email: studiomegamind@gmail.com",
   },
-  { id: "acc_1a", name: "youtube_email", label: "Email", fieldType: "text", placeholder: "Email" },
+  { id: "acc_1a", name: "youtube_email", label: "Email", fieldType: "email", placeholder: "Email" },
   { id: "acc_1b", name: "youtube_password", label: "Password", fieldType: "password", placeholder: "Password" },
 
   { id: "acc_header_2", name: "google_ads_header", label: "Google Ads", fieldType: "subheader" },
@@ -601,7 +615,7 @@ export const accountDetailsFields = [
     hideLabel: true,
     placeholder: "Please invite our email: studiomegamind@gmail.com",
   },
-  { id: "acc_2a", name: "google_ads_email", label: "Email", fieldType: "text", placeholder: "Email" },
+  { id: "acc_2a", name: "google_ads_email", label: "Email", fieldType: "email", placeholder: "Email" },
   { id: "acc_2b", name: "google_ads_password", label: "Password", fieldType: "password", placeholder: "Password" },
 
   { id: "acc_header_3", name: "google_analytics_header", label: "Google Analytics", fieldType: "subheader" },
@@ -613,7 +627,7 @@ export const accountDetailsFields = [
     hideLabel: true,
     placeholder: "Please invite our email: studiomegamind@gmail.com",
   },
-  { id: "acc_3a", name: "google_analytics_email", label: "Email", fieldType: "text", placeholder: "Email" },
+  { id: "acc_3a", name: "google_analytics_email", label: "Email", fieldType: "email", placeholder: "Email" },
   { id: "acc_3b", name: "google_analytics_password", label: "Password", fieldType: "password", placeholder: "Password" },
 
   { id: "acc_header_4", name: "google_tag_manager_header", label: "Google Tag Manager", fieldType: "subheader" },
@@ -625,7 +639,7 @@ export const accountDetailsFields = [
     hideLabel: true,
     placeholder: "Please invite our email: studiomegamind@gmail.com",
   },
-  { id: "acc_4a", name: "google_tag_manager_email", label: "Email", fieldType: "text", placeholder: "Email" },
+  { id: "acc_4a", name: "google_tag_manager_email", label: "Email", fieldType: "email", placeholder: "Email" },
   { id: "acc_4b", name: "google_tag_manager_password", label: "Password", fieldType: "password", placeholder: "Password" },
 
   { id: "acc_header_5", name: "google_search_console_header", label: "Google Search Console", fieldType: "subheader" },
@@ -637,7 +651,7 @@ export const accountDetailsFields = [
     hideLabel: true,
     placeholder: "Please invite our email: studiomegamind@gmail.com",
   },
-  { id: "acc_5a", name: "google_search_console_email", label: "Email", fieldType: "text", placeholder: "Email" },
+  { id: "acc_5a", name: "google_search_console_email", label: "Email", fieldType: "email", placeholder: "Email" },
   { id: "acc_5b", name: "google_search_console_password", label: "Password", fieldType: "password", placeholder: "Password" },
 ];
 
@@ -678,7 +692,7 @@ export const businessVerificationFields = [
     fieldType: "phone",
     placeholder: "Contact Number for (Customer Query)",
   },
-  { id: "biz_7", name: "email_customer_id", label: "Email ID for (Customer ID)", fieldType: "text", placeholder: "Email ID for (Customer ID)" },
+  { id: "biz_7", name: "email_customer_id", label: "Email ID for (Customer ID)", fieldType: "email", placeholder: "Email ID for (Customer ID)" },
   {
     id: "biz_8",
     name: "contact_number_business",
@@ -686,5 +700,5 @@ export const businessVerificationFields = [
     fieldType: "phone",
     placeholder: "Contact Number for (Business)",
   },
-  { id: "biz_9", name: "email_business", label: "Email ID for (Business)", fieldType: "text", placeholder: "Email ID for (Business)" },
+  { id: "biz_9", name: "email_business", label: "Email ID for (Business)", fieldType: "email", placeholder: "Email ID for (Business)" },
 ];

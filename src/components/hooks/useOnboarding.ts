@@ -60,7 +60,7 @@ export function useOnboarding() {
   const [brandIdFields] = useState(brandIdentityFields);
   const [marketFields] = useState(marketAudienceFields);
   const [scopeFields] = useState(projectScopeFields);
-  const [socialFields] = useState(socialPlatformFields);
+  const [socialFields] = useState(isBrandIdentityPage ? socialPlatformFields : []);
   const [socialAccessFields] = useState(socialMediaAccessFields);
   const [assetFields] = useState(assetTypesFields);
   const [websiteFields] = useState(websiteDetailsFields);
@@ -95,7 +95,7 @@ export function useOnboarding() {
 
   const stepStructure: Record<number, number> = isClientOnboarding
     ? {
-      1: 1, 2: 1, 3: 1, 4: 1, 5: 1, 6: 1, 7: 1, 8: 1, 9: 1, 10: 1, 11: 1, 12: 1,
+      1: 1, 2: 1, 3: 1, 4: 1, 5: 1, 6: 1,
     }
     : isBrandIdentityPage
       ? {
@@ -115,22 +115,40 @@ export function useOnboarding() {
         6: 1,
       };
 
-  const totalSteps = isClientOnboarding ? 12 : isBrandIdentityPage ? 6 : 6;
+  const totalSteps = isClientOnboarding ? 6 : isBrandIdentityPage ? 6 : 6;
 
   const validateFieldsHelper = (data: FormData, fields: any[]): Record<string, string> => {
     const errors: Record<string, string> = {};
     fields.forEach((field) => {
-      if (field.fieldType === "header" || field.fieldType === "subheader" || field.fieldType === "file") return;
+      if (field.fieldType === "header" || field.fieldType === "subheader" || field.fieldType === "file" || field.optional) return;
 
       const value = data[field.name];
       if (!value || (typeof value === "string" && !value.trim())) {
         errors[field.name] = "This field is required";
       }
 
+      // Email validation
+      if (field.fieldType === "email" && value && typeof value === "string") {
+        // Validation for standard email format (e.g., user@example.com)
+        const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+        if (!emailRegex.test(value)) {
+          errors[field.name] = "Please enter a valid email address (e.g., example@gmail.com)";
+        }
+      }
+
       // Handle 'Others' validation for radio/radio_stacked
       if (typeof value === 'object' && value !== null && value.selected === 'others') {
         if (!value.otherText || !value.otherText.trim()) {
-          errors[field.name] = "Please specify your role";
+          errors[field.name] = `Please specify your ${field.label.toLowerCase()}`;
+        }
+      }
+
+      // Handle 'Other' validation for dropdowns ( specifically legal_structure for now )
+      if (field.name === 'legal_structure' && value === 'other') {
+        if (!formData[`${field.name}_other`] || !formData[`${field.name}_other`].trim()) {
+          errors[`${field.name}_other`] = `Please specify your ${field.label.toLowerCase()}`;
+          // Also mark the main field as error if needed, or just relying on the specific field error
+          // errors[field.name] = "Required"; 
         }
       }
     });
@@ -194,7 +212,7 @@ export function useOnboarding() {
       return;
     }
     if (isClientOnboarding) {
-      if (step === 16) {
+      if (step === 6) {
         /* submit handled later */
       }
     } else if (isBrandIdentityPage) {
@@ -223,7 +241,8 @@ export function useOnboarding() {
           clientId: clientId,
           brandName: formData.brand_name,
           legalName: formData.registered_legal_name,
-          industryCategory: formData.industry_category,
+          legalStructure: formData.legal_structure === 'other' ? formData.legal_structure_other : formData.legal_structure,
+          industryCategory: formData.industry_category === 'other' ? formData.industry_category_other : formData.industry_category,
           gstin: formData.gstin,
           registeredBusinessAddress: formData.registered_business_address,
           officialBillingAddress: formData.official_billing_address,
@@ -281,6 +300,7 @@ export function useOnboarding() {
             additional: formData.additional_platforms
           },
           platformAccess: {
+            instagram: { email: formData.instagram_email, password: formData.instagram_password },
             meta: { email: formData.meta_email, password: formData.meta_password },
             linkedin: { email: formData.linkedin_email, password: formData.linkedin_password },
             twitter: { email: formData.twitter_email, password: formData.twitter_password },

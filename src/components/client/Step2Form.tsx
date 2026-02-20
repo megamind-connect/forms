@@ -4,6 +4,8 @@ import { Input } from "@/components/ui/Input";
 import { Textarea } from "@/components/ui/Textarea";
 import { FileUpload } from "@/components/ui/FileUpload";
 import { CustomSelect } from "@/components/ui/CustomSelect";
+import PhoneInput from 'react-phone-input-2';
+import 'react-phone-input-2/lib/style.css';
 
 import { useState } from "react";
 
@@ -15,6 +17,7 @@ interface FormField {
   fieldType: string;
   options?: { label: string; value: string | number | boolean }[] | null;
   hideLabel?: boolean;
+  optional?: boolean;
 }
 
 interface Step2FormProps {
@@ -29,6 +32,7 @@ interface Step2FormProps {
   headerTitle?: string;
   isClientPage?: boolean;
   buttonText?: string;
+  hideToggleInput?: boolean;
 }
 
 export function Step2Form({
@@ -40,9 +44,10 @@ export function Step2Form({
   touched,
   markFieldTouched,
   markAllFieldsTouched,
-  headerTitle = "General Information",
+  headerTitle = "Brand Name",
   isClientPage = false,
-  buttonText
+  buttonText,
+  hideToggleInput = false
 }: Step2FormProps) {
   const [snackbar, setSnackbar] = useState<{ type: 'error' | 'success'; message: string } | null>(null);
 
@@ -224,7 +229,7 @@ export function Step2Form({
                   />
                 </button>
               </div>
-              {isEnabled && (
+              {isEnabled && !hideToggleInput && (
                 <Input
                   type="text"
                   value={inputValue}
@@ -346,14 +351,14 @@ export function Step2Form({
           <div key={index} className="space-y-1 w-full max-w-2xl text-left">
             {!field.hideLabel && <label className="text-xl font-medium text-[#57534E]">{field.label}</label>}
 
-            {field.fieldType === "text" && (
+            {(field.fieldType === "text" || field.fieldType === "email") && (
               <Input
-                type="text"
+                type={field.fieldType}
                 name={field.name}
                 value={formData[field.name] != null ? String(formData[field.name]) : ""}
                 placeholder={placeholderText}
                 className="!border-[#D9D9D9] placeholder:text-[#8F8881]"
-                required={!isClientPage && !["gstin", "whatsapp_business_number", "whatsapp_business_link", "website_url"].includes(field.name)}
+                required={!field.optional && !isClientPage && !["gstin", "whatsapp_business_number", "whatsapp_business_link", "website_url"].includes(field.name)}
                 onChange={handleChange}
                 onBlur={() => handleBlur(field.name)}
               />
@@ -381,44 +386,70 @@ export function Step2Form({
             )}
 
             {field.fieldType === "phone" && (
-              <div className="flex w-full border border-[#D9D9D9] rounded-md overflow-hidden bg-white">
-                <div className="border-r border-[#D9D9D9] bg-[#FAFAFA] px-3 flex items-center justify-center">
-                  <span className="text-[#57534E] text-sm md:text-base pr-2">+91</span>
-                  <svg width="8" height="5" viewBox="0 0 8 5" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M4 5L0 0H8L4 5Z" fill="#57534E" />
-                  </svg>
-                </div>
-                <Input
-                  type="tel"
-                  name={field.name}
+              <div className="w-full">
+                <PhoneInput
+                  country={'in'}
                   value={formData[field.name] != null ? String(formData[field.name]) : ""}
+                  onChange={(phone) => updateFormData({ [field.name]: phone })}
+                  inputStyle={{
+                    width: '100%',
+                    height: '45px',
+                    fontSize: '16px',
+                    paddingLeft: '48px',
+                    border: '1px solid #D9D9D9',
+                    borderRadius: '6px',
+                    backgroundColor: 'white',
+                    color: 'black'
+                  }}
+                  buttonStyle={{
+                    border: '1px solid #D9D9D9',
+                    borderRight: 'none',
+                    borderRadius: '6px 0 0 6px',
+                    backgroundColor: '#FAFAFA'
+                  }}
+                  dropdownStyle={{
+                    width: '300px',
+                    color: 'black'
+                  }}
                   placeholder={placeholderText}
-                  className="!border-none flex-1 focus:!ring-0 rounded-none placeholder:text-[#8F8881]"
-                  onChange={handleChange}
-                  onBlur={() => handleBlur(field.name)}
                 />
               </div>
             )}
 
             {field.fieldType === "dropdown" && field.options && (
               <div className="relative w-full">
-                {(() => {
-                  const selectOptions = field.options?.map(opt => ({
-                    label: opt.label,
-                    value: String(opt.value)
-                  }));
+                <CustomSelect
+                  name={field.name}
+                  options={field.options.map(opt => ({ label: opt.label, value: String(opt.value) }))}
+                  value={formData[field.name] || ""}
+                  onChange={(e) => {
+                    const val = e.target.value;
+                    updateFormData({ [field.name]: val });
+                    if (val !== 'other') {
+                      updateFormData({ [`${field.name}_other`]: "" });
+                    }
+                  }}
+                  onBlur={() => handleBlur(field.name)}
+                  placeholder={placeholderText}
+                />
 
-                  return (
-                    <CustomSelect
-                      name={field.name}
-                      value={formData[field.name] != null ? String(formData[field.name]) : ""}
-                      options={selectOptions}
-                      placeholder={placeholderText}
-                      onChange={(e) => updateFormData({ [field.name]: e.target.value })}
-                      onBlur={() => handleBlur(field.name)}
+                {formData[field.name] === "other" && (
+                  <div className="mt-2 text-left">
+                    <Input
+                      type="text"
+                      name={`${field.name}_other`}
+                      value={formData[`${field.name}_other`] || ""}
+                      placeholder={`Please specify your ${field.label.toLowerCase()}...`}
+                      className="!border-[#D9D9D9] placeholder:text-[#8F8881]"
+                      required={true}
+                      onChange={handleChange}
+                      onBlur={() => handleBlur(`${field.name}_other`)}
                     />
-                  );
-                })()}
+                    {touched[`${field.name}_other`] && errors[`${field.name}_other`] && (
+                      <p className="text-red-600 text-xs mt-1">{errors[`${field.name}_other`]}</p>
+                    )}
+                  </div>
+                )}
               </div>
             )}
 

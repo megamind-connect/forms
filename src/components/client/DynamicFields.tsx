@@ -2,6 +2,8 @@
 
 import { Textarea } from "../ui/Textarea";
 import { FileUpload } from "../ui/FileUpload";
+import PhoneInput from 'react-phone-input-2';
+import 'react-phone-input-2/lib/style.css';
 
 interface DynamicFieldProps {
   field: {
@@ -365,7 +367,7 @@ export default function DynamicField({ field, value, onChange }: DynamicFieldPro
 
 
   /* ---------------------------- SHORT INPUT ---------------------------- */
-  if (fieldType === "short" || fieldType === "text" || fieldType === "short_text") {
+  if (fieldType === "short" || fieldType === "text" || fieldType === "short_text" || fieldType === "email") {
     return (
       <div className="w-full flex flex-col  rounded-sm gap-2 pb-5 md:pb-10">
         <label className="text-base md:text-[24px] font-medium text-[#202020]">
@@ -373,7 +375,7 @@ export default function DynamicField({ field, value, onChange }: DynamicFieldPro
         </label>
 
         <input
-          type="text"
+          type={fieldType === "email" ? "email" : "text"}
           className="border-b border-gray-300 text-[#8F8881] placeholder:text-[#8F8881] 
                      placeholder:text-sm md:placeholder:text-base focus:border-gray-800 outline-none 
                      py-1 text-lg font-medium mt-6"
@@ -419,26 +421,32 @@ export default function DynamicField({ field, value, onChange }: DynamicFieldPro
           {label}
         </label>
 
-        <div className="flex w-full border border-[#D9D9D9] rounded-md overflow-hidden bg-white">
-          {/* Country Code Selector (Static for now based on image, or simple select) */}
-          <div className="border-r border-[#D9D9D9] bg-[#FAFAFA] px-3 flex items-center justify-center">
-            <select className="bg-transparent text-[#57534E] text-sm md:text-base outline-none cursor-pointer appearance-none pr-4 relative z-10">
-              <option value="+91">+91</option>
-            </select>
-            {/* Arrow Icon */}
-            <span className="absolute ml-6 pointer-events-none">
-              <svg width="8" height="5" viewBox="0 0 8 5" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M4 5L0 0H8L4 5Z" fill="#57534E" />
-              </svg>
-            </span>
-          </div>
-
-          <input
-            type="tel"
-            className="flex-1 p-3 text-sm md:text-base outline-none text-[#202020] placeholder:text-[#8F8881]"
-            placeholder={placeholder || "Phone"}
+        <div className="w-full">
+          <PhoneInput
+            country={'in'}
             value={value || ""}
-            onChange={(e) => onChange(e.target.value)}
+            onChange={(phone) => onChange(phone)}
+            inputStyle={{
+              width: '100%',
+              height: '45px',
+              fontSize: '16px',
+              paddingLeft: '48px',
+              border: '1px solid #D9D9D9',
+              borderRadius: '6px',
+              backgroundColor: 'white',
+              color: 'black'
+            }}
+            buttonStyle={{
+              border: '1px solid #D9D9D9',
+              borderRight: 'none',
+              borderRadius: '6px 0 0 6px',
+              backgroundColor: '#FAFAFA'
+            }}
+            dropdownStyle={{
+              width: '300px',
+              color: 'black'
+            }}
+            placeholder={placeholder || "Phone"}
           />
         </div>
       </div>
