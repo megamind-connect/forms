@@ -321,6 +321,22 @@ export function Step2Form({
           )
         }
 
+        if (field.fieldType === "or_divider") {
+          return (
+            <div key={index} className="w-full py-2 max-w-2xl text-left">
+              <p className="text-lg italic font-medium text-[#57534E]">{field.label}</p>
+            </div>
+          )
+        }
+
+        if (field.fieldType === "description_text") {
+          return (
+            <div key={index} className="w-full pb-4 max-w-2xl text-left">
+              <p className="text-base italic text-[#57534E]">{field.label}</p>
+            </div>
+          )
+        }
+
         if (field.fieldType === "subheader") {
           return (
             <div key={index} className="w-full pt-4 pb-1 max-w-2xl">

@@ -394,52 +394,52 @@ export const socialPlatformFields = [
 
 export const socialMediaAccessFields = [
   { id: "sma_header_0", name: "instagram_header", label: "Instagram", fieldType: "subheader" },
-  {
-    id: "sma_ig_desc",
-    name: "instagram_description",
-    // label: "Please invite our email: studiomegamind@gmail.com",
-    fieldType: "subheader",
-    hideLabel: true,
-    placeholder: "Please invite our email: studiomegamind@gmail.com",
-  },
   { id: "sma_0a", name: "instagram_email", label: "User ID", fieldType: "text", placeholder: "User ID" },
   { id: "sma_0b", name: "instagram_password", label: "Password", fieldType: "password", placeholder: "Password" },
 
-  { id: "sma_header_1", name: "meta_header", label: "Meta (Facebook)", fieldType: "subheader" },
-  {
-    id: "sma_meta_desc",
-    name: "meta_description",
-    label: "Please invite our email: studiomegamind@gmail.com",
-    fieldType: "subheader",
-    hideLabel: true,
-    placeholder: "Please invite our email: studiomegamind@gmail.com",
-  },
-  { id: "sma_1a", name: "meta_email", label: "Email", fieldType: "email", placeholder: "Email" },
+  { id: "sma_header_1", name: "meta_header", label: "Facebook Page", fieldType: "header" },
+  { id: "sma_1_access_title", name: "meta_access_title", label: "Access of Facebook Account", fieldType: "subheader" },
+  { id: "sma_1a", name: "meta_email", label: "User id", fieldType: "text", placeholder: "User id" },
   { id: "sma_1b", name: "meta_password", label: "Password", fieldType: "password", placeholder: "Password" },
+  { id: "sma_1_or", name: "meta_or", label: "Or", fieldType: "or_divider" },
+  { id: "sma_1_invite_title", name: "meta_invite_title", label: "Provide access via an official platform invite", fieldType: "subheader" },
+  { id: "sma_1_invite_desc", name: "meta_invite_desc", label: "Facebook Page → Professional dashboard → All tools → Page access → Add People – Vishnu Pradeep -> Access - Admin / Full Control", fieldType: "description_text" },
 
-  { id: "sma_header_2", name: "linkedin_header", label: "LinkedIn", fieldType: "subheader" },
-  {
-    id: "sma_linkedin_desc",
-    name: "linkedin_description",
-    label: "Please invite our email: studiomegamind@gmail.com",
-    fieldType: "subheader",
-    hideLabel: true,
-    placeholder: "Please invite our email: studiomegamind@gmail.com",
-  },
-  { id: "sma_2a", name: "linkedin_email", label: "Email", fieldType: "email", placeholder: "Email" },
+  { id: "sma_header_bm", name: "bm_header", label: "Meta Business Manager", fieldType: "header" },
+  { id: "sma_bm_invite_title", name: "bm_invite_title", label: "Provide access via an official platform invite", fieldType: "subheader" },
+  { id: "sma_bm_invite_desc", name: "bm_invite_desc", label: "Business Manager + Ads Manager + Facebook + Instagram Setting – Users – People –> Click on Invite -> add the emails -> Studiosmegamind@gmail.com & Vishnuklyd123@gmail.com -> Click on everything to grant full access (business tools and Facebook)", fieldType: "description_text" },
+
+  { id: "sma_header_2", name: "linkedin_header", label: "LinkedIn Page", fieldType: "header" },
+  { id: "sma_2_access_title", name: "linkedin_access_title", label: "Access of LinkedIn Account", fieldType: "subheader" },
+  { id: "sma_2a", name: "linkedin_email", label: "User Id", fieldType: "text", placeholder: "User Id" },
   { id: "sma_2b", name: "linkedin_password", label: "Password", fieldType: "password", placeholder: "Password" },
+  { id: "sma_2_or", name: "linkedin_or", label: "Or", fieldType: "or_divider" },
+  { id: "sma_2_invite_title", name: "linkedin_invite_title", label: "Provide access via an official platform invite", fieldType: "subheader" },
+  { id: "sma_2_invite_desc", name: "linkedin_invite_desc", label: "LinkedIn Page -> Settings -> Manage Admins -> Add Admin -> Search for the member – Vishnu Pradeep -> Assign – Super Admin -> Save", fieldType: "description_text" },
 
-  { id: "sma_header_3", name: "twitter_header", label: "Twitter (X)", fieldType: "subheader" },
-  {
-    id: "sma_twitter_desc",
-    name: "twitter_description",
-    label: "Please invite our email: studiomegamind@gmail.com",
-    fieldType: "subheader",
-    hideLabel: true,
-    placeholder: "Please invite our email: studiomegamind@gmail.com",
-  },
-  { id: "sma_3a", name: "twitter_email", label: "Email", fieldType: "email", placeholder: "Email" },
-  { id: "sma_3b", name: "twitter_password", label: "Password", fieldType: "password", placeholder: "Password" },
+  { id: "sma_header_yt", name: "yt_header", label: "YouTube Channel", fieldType: "header" },
+  { id: "sma_yta", name: "youtube_email", label: "Email Id", fieldType: "email", placeholder: "Email Id" },
+  { id: "sma_ytb", name: "youtube_password", label: "Password", fieldType: "password", placeholder: "Password" },
+  { id: "sma_yt_or", name: "yt_or", label: "Or", fieldType: "or_divider" },
+  { id: "sma_yt_invite_desc", name: "yt_invite_desc", label: "YouTube -> YouTube Studio -> Setting -> Permissions -> Invite -> add the email id- Studiosmegamind@gmail.com & Give Manager Access -> Save", fieldType: "description_text" },
+
+  { id: "sma_header_gmb", name: "gmb_header", label: "Google My Business", fieldType: "header" },
+  { id: "sma_gmba", name: "google_business_email", label: "Email Id", fieldType: "email", placeholder: "Email Id" },
+  { id: "sma_gmbb", name: "google_business_password", label: "Password", fieldType: "password", placeholder: "Password" },
+  { id: "sma_gmb_or", name: "gmb_or", label: "Or", fieldType: "or_divider" },
+  { id: "sma_gmb_invite_desc", name: "gmb_invite_desc", label: "Google Business Profile ->Three Button click -> Business Profile Setting -> People and Access -> Add -> Email Id - Studiosmegamind@gmail.com -> Access – Owner -> Invite", fieldType: "description_text" },
+
+  // { id: "sma_header_3", name: "twitter_header", label: "Twitter (X)", fieldType: "subheader" },
+  // {
+  //   id: "sma_twitter_desc",
+  //   name: "twitter_description",
+  //   label: "Please invite our email: studiomegamind@gmail.com",
+  //   fieldType: "subheader",
+  //   hideLabel: true,
+  //   placeholder: "Please invite our email: studiomegamind@gmail.com",
+  // },
+  // { id: "sma_3a", name: "twitter_email", label: "Email", fieldType: "email", placeholder: "Email" },
+  // { id: "sma_3b", name: "twitter_password", label: "Password", fieldType: "password", placeholder: "Password" },
 ];
 
 export const assetTypesFields = [
@@ -594,17 +594,11 @@ export const websiteDetailsFields = [
 ];
 
 export const accountDetailsFields = [
-  { id: "acc_header_1", name: "youtube_header", label: "YouTube Channel", fieldType: "subheader" },
-  {
-    id: "acc_youtube_desc",
-    name: "youtube_description",
-    label: "Please invite our email: studiomegamind@gmail.com",
-    fieldType: "subheader",
-    hideLabel: true,
-    placeholder: "Please invite our email: studiomegamind@gmail.com",
-  },
-  { id: "acc_1a", name: "youtube_email", label: "Email", fieldType: "email", placeholder: "Email" },
+  { id: "acc_header_1", name: "youtube_header", label: "YouTube Channel", fieldType: "header" },
+  { id: "acc_1a", name: "youtube_email", label: "Email Id", fieldType: "email", placeholder: "Email Id" },
   { id: "acc_1b", name: "youtube_password", label: "Password", fieldType: "password", placeholder: "Password" },
+  { id: "acc_1_or", name: "youtube_or", label: "Or", fieldType: "or_divider" },
+  { id: "acc_1_invite_desc", name: "youtube_invite_desc", label: "YouTube -> YouTube Studio -> Setting -> Permissions -> Invite -> add the email id- Studiosmegamind@gmail.com & Give Manager Access -> Save", fieldType: "description_text" },
 
   { id: "acc_header_2", name: "google_ads_header", label: "Google Ads", fieldType: "subheader" },
   {

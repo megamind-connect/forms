@@ -305,6 +305,7 @@ export function useOnboarding() {
             linkedin: { email: formData.linkedin_email, password: formData.linkedin_password },
             twitter: { email: formData.twitter_email, password: formData.twitter_password },
             youtube: { email: formData.youtube_email, password: formData.youtube_password },
+            google_my_business: { email: formData.google_business_email, password: formData.google_business_password },
             google_ads: { email: formData.google_ads_email, password: formData.google_ads_password },
             google_analytics: { email: formData.google_analytics_email, password: formData.google_analytics_password },
             google_tag_manager: { email: formData.google_tag_manager_email, password: formData.google_tag_manager_password },
