@@ -47,6 +47,7 @@ export function useOnboarding() {
   const params = useParams();
   const clientId = params?.id as string;
   const isBrandIdentityPage = pathname.includes("/brand-discovery");
+  const isOperationsOnboarding = pathname.includes("/operations/onboarding");
   const isClientOnboarding = pathname.includes("/client/onboarding") && !isBrandIdentityPage;
 
   const [step, setStep] = useState(1);
@@ -95,32 +96,40 @@ export function useOnboarding() {
 
   const stepStructure: Record<number, number> = isClientOnboarding
     ? {
-      1: 1, 2: 1, 3: 1, 4: 1, 5: 1, 6: 1,
+      1: 1, 2: 1, 3: 1, 4: 1,
     }
-    : isBrandIdentityPage
+    : isOperationsOnboarding
       ? {
         1: 1, // Intro
-        2: 1, // Brand Identity & Overview (Step 6 in Onboarding)
-        3: 1, // Market, Audience & Positioning (Step 7 in Onboarding)
-        4: 1, // Project Scope & Expectations (Step 8 in Onboarding)
-        5: 1, // Asset Types (Step 9)
-        6: 1, // Social Platforms (Step 11)
+        2: 1, // Asset Types
+        3: 1, // Platform ID & Password
       }
-      : {
-        1: 1,
-        2: 1,
-        3: 1,
-        4: 3,
-        5: step6Questions.length,
-        6: 1,
-      };
+      : isBrandIdentityPage
+        ? {
+          1: 1, // Intro
+          2: 1, // Brand Identity & Overview (Step 6 in Onboarding)
+          3: 1, // Market, Audience & Positioning (Step 7 in Onboarding)
+          4: 1, // Project Scope & Expectations (Step 8 in Onboarding)
+          5: 1, // Asset Types (Step 9)
+          6: 1, // Social Platforms (Step 11)
+        }
+        : {
+          1: 1,
+          2: 1,
+          3: 1,
+          4: 3,
+          5: step6Questions.length,
+          6: 1,
+        };
 
-  const totalSteps = isClientOnboarding ? 6 : isBrandIdentityPage ? 6 : 6;
+  const totalSteps = isClientOnboarding ? 4 : isOperationsOnboarding ? 3 : isBrandIdentityPage ? 6 : 6;
 
   const validateFieldsHelper = (data: FormData, fields: any[]): Record<string, string> => {
     const errors: Record<string, string> = {};
     fields.forEach((field) => {
-      if (field.fieldType === "header" || field.fieldType === "subheader" || field.fieldType === "file" || field.optional) return;
+      if (field.fieldType === "header" || field.fieldType === "subheader" || field.fieldType === "toggle" || field.fieldType === "file" || field.optional) return;
+
+      if (field.dependsOn !== undefined && !data[field.dependsOn]) return;
 
       const value = data[field.name];
       if (!value || (typeof value === "string" && !value.trim())) {
@@ -177,7 +186,43 @@ export function useOnboarding() {
     });
     return errors;
   };
-  const validateStep11Fields = (data: FormData) => ({});
+  const validateStep11Fields = (data: FormData) => {
+    const errors: Record<string, string> = {};
+    const platforms = [
+      { prefix: "meta", label: "Facebook Page", emailField: "meta_email", passwordField: "meta_password" },
+      { prefix: "bm", label: "Meta Business Manager", emailField: "bm_email", passwordField: "bm_password" },
+      { prefix: "linkedin", label: "LinkedIn Page", emailField: "linkedin_email", passwordField: "linkedin_password" },
+      { prefix: "yt", label: "YouTube Channel", emailField: "youtube_email", passwordField: "youtube_password" },
+      { prefix: "gmb", label: "Google My Business", emailField: "google_business_email", passwordField: "google_business_password" },
+    ];
+
+    if (!data.instagram_email || !data.instagram_email.trim()) {
+      errors.instagram_header = "Instagram User ID is required";
+    }
+    if (!data.instagram_password || !data.instagram_password.trim()) {
+      errors.instagram_header = "Instagram Password is required";
+    }
+
+    platforms.forEach(({ prefix, label, emailField, passwordField }) => {
+      const accessToggle = data[`${prefix}_access_toggle`];
+      const inviteToggle = data[`${prefix}_invite_toggle`];
+
+      if (!accessToggle && !inviteToggle) {
+        errors[`${prefix}_header`] = `Please select an option to provide access for ${label}`;
+      }
+
+      if (accessToggle) {
+        if (!data[emailField] || !data[emailField].trim()) {
+          errors[emailField] = `${label} User ID is required`;
+        }
+        if (!data[passwordField] || !data[passwordField].trim()) {
+          errors[passwordField] = `${label} Password is required`;
+        }
+      }
+    });
+
+    return errors;
+  };
   const validateStep13Fields = (data: FormData) => ({});
   const validateStep15Fields = (data: FormData) => ({});
   const validateStep16Fields = (data: FormData) => ({});
@@ -189,9 +234,7 @@ export function useOnboarding() {
       if (step === 3) errors = validateStep7Fields(formData);
       if (step === 4) errors = validateStep8Fields(formData);
       if (step === 5) errors = validateStep9Fields(formData);
-      // Asset and Social steps (5 & 6) are optional as they contain their own internal logic or "if applicable" nature, 
-      // but user specifically pointed to 2, 3, 4. If 5 & 6 needed, I'd add them here.
-      // Keeping 5 & 6 optional for now based on "if any" phrasing in those sections usually.
+      if (step === 6) errors = validateStep11Fields(formData);
 
       if (Object.keys(errors).length > 0) {
         // Mark fields as touched to show errors
@@ -199,12 +242,23 @@ export function useOnboarding() {
         if (step === 3) setTouchedStep7(marketFields.reduce((acc, f) => ({ ...acc, [f.name]: true }), {}));
         if (step === 4) setTouchedStep8(scopeFields.reduce((acc, f) => ({ ...acc, [f.name]: true }), {}));
         if (step === 5) setTouchedStep9(assetFields.reduce((acc, f) => ({ ...acc, [f.name]: true }), {}));
+        if (step === 6) setTouchedStep11([...socialFields, ...socialAccessFields].reduce((acc, f) => ({ ...acc, [f.name]: true }), {}));
+        return false;
+      }
+    }
+    if (isOperationsOnboarding) {
+      let errors = {};
+      if (step === 2) errors = validateStep9Fields(formData);
+      if (step === 3) errors = validateStep11Fields(formData);
+
+      if (Object.keys(errors).length > 0) {
+        if (step === 2) setTouchedStep9(assetFields.reduce((acc, f) => ({ ...acc, [f.name]: true }), {}));
+        if (step === 3) setTouchedStep11([...socialFields, ...socialAccessFields].reduce((acc, f) => ({ ...acc, [f.name]: true }), {}));
         return false;
       }
     }
     return true;
   };
-
 
   const handleNext = async () => {
     if (!validateCurrentStep()) {
@@ -212,7 +266,11 @@ export function useOnboarding() {
       return;
     }
     if (isClientOnboarding) {
-      if (step === 6) {
+      if (step === 4) {
+        /* submit handled later */
+      }
+    } else if (isOperationsOnboarding) {
+      if (step === 3) {
         /* submit handled later */
       }
     } else if (isBrandIdentityPage) {
@@ -279,37 +337,6 @@ export function useOnboarding() {
               email: formData.finance_contact_email,
               phone: formData.finance_contact_phone
             }
-          },
-          assetTypes: {
-            brand_logo_files: formData.brand_logo_files,
-            brand_guidelines: formData.brand_guidelines,
-            brochures_product_photos: formData.brochures_product_photos,
-            past_campaign_reports: formData.past_campaign_reports,
-            moodboards_videos: formData.moodboards_videos,
-            current_image_assets: formData.current_image_assets,
-            current_video_assets: formData.current_video_assets
-          },
-          socialAccounts: {
-            instagram: formData.instagram_profile_url,
-            facebook: formData.facebook_page_url,
-            linkedin: formData.linkedin_profile_url,
-            twitter: formData.twitter_profile_url,
-            youtube: formData.youtube_channel_url,
-            google_my_business: formData.google_business_url,
-            website: formData.website_url_social,
-            additional: formData.additional_platforms
-          },
-          platformAccess: {
-            instagram: { email: formData.instagram_email, password: formData.instagram_password },
-            meta: { email: formData.meta_email, password: formData.meta_password },
-            linkedin: { email: formData.linkedin_email, password: formData.linkedin_password },
-            twitter: { email: formData.twitter_email, password: formData.twitter_password },
-            youtube: { email: formData.youtube_email, password: formData.youtube_password },
-            google_my_business: { email: formData.google_business_email, password: formData.google_business_password },
-            google_ads: { email: formData.google_ads_email, password: formData.google_ads_password },
-            google_analytics: { email: formData.google_analytics_email, password: formData.google_analytics_password },
-            google_tag_manager: { email: formData.google_tag_manager_email, password: formData.google_tag_manager_password },
-            google_search_console: { email: formData.google_search_console_email, password: formData.google_search_console_password }
           },
           websiteTechDetails: {
             hasDomain: formData.has_domain,
@@ -411,11 +438,47 @@ export function useOnboarding() {
             additional: formData.additional_platforms
           }
         };
+      } else if (isOperationsOnboarding) {
+        payload = {
+          clientId: clientId,
+          assetTypes: {
+            brand_logo_files: formData.brand_logo_files,
+            brand_guidelines: formData.brand_guidelines,
+            brochures_product_photos: formData.brochures_product_photos,
+            past_campaign_reports: formData.past_campaign_reports,
+            moodboards_videos: formData.moodboards_videos,
+            current_image_assets: formData.current_image_assets,
+            current_video_assets: formData.current_video_assets
+          },
+          socialAccounts: {
+            instagram: formData.instagram_profile_url,
+            facebook: formData.facebook_page_url,
+            linkedin: formData.linkedin_profile_url,
+            twitter: formData.twitter_profile_url,
+            youtube: formData.youtube_channel_url,
+            google_my_business: formData.google_business_url,
+            website: formData.website_url_social,
+            additional: formData.additional_platforms
+          },
+          platformAccess: {
+            instagram: { email: formData.instagram_email, password: formData.instagram_password },
+            meta: { email: formData.meta_email, password: formData.meta_password },
+            meta_business_manager: { email: formData.bm_email, password: formData.bm_password },
+            linkedin: { email: formData.linkedin_email, password: formData.linkedin_password },
+            twitter: { email: formData.twitter_email, password: formData.twitter_password },
+            youtube: { email: formData.youtube_email, password: formData.youtube_password },
+            google_my_business: { email: formData.google_business_email, password: formData.google_business_password },
+            google_ads: { email: formData.google_ads_email, password: formData.google_ads_password },
+            google_analytics: { email: formData.google_analytics_email, password: formData.google_analytics_password },
+            google_tag_manager: { email: formData.google_tag_manager_email, password: formData.google_tag_manager_password },
+            google_search_console: { email: formData.google_search_console_email, password: formData.google_search_console_password }
+          }
+        };
       }
 
       const endpoint = isBrandIdentityPage
         ? "/api/v1/clients/brand-questionnaire"
-        : isClientOnboarding
+        : (isClientOnboarding || isOperationsOnboarding)
           ? "/api/v1/clients/details"
           : "/api/v1/client-feedback";
 
@@ -444,7 +507,7 @@ export function useOnboarding() {
   const getStepProgress = (num: number) => {
     if (num < step) return 100;
     if (num > step) return 0;
-    if (!isClientOnboarding && !isBrandIdentityPage) {
+    if (!isClientOnboarding && !isBrandIdentityPage && !isOperationsOnboarding) {
       if (num === 4) return ((subStep - 1) / 3) * 100;
       if (num === 5) return ((subStep - 1) / step6Questions.length) * 100;
     }

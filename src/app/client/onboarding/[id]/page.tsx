@@ -121,7 +121,7 @@ export default function ClientPage() {
             </div>
           )}
 
-          {/* STEP 4: Contact Information */}
+          {/* STEP 4: Contact Information (Final Step) */}
           {step === 4 && (
             <div className="flex flex-col h-full w-full">
               <Step2Form
@@ -134,40 +134,10 @@ export default function ClientPage() {
                 markFieldTouched={markStep4FieldTouched}
                 markAllFieldsTouched={markAllStep4FieldsTouched}
                 headerTitle="Contact Information"
+                buttonText="Submit"
+                isClientPage={true}
               />
             </div>
-          )}
-
-          {/* STEP 5: Asset Types */}
-          {step === 5 && (
-            <Step2Form
-              formFields={assetFields}
-              formData={formData}
-              onNext={handleNext}
-              updateFormData={updateFormData}
-              validateFields={validateStep9Fields}
-              touched={touchedStep9}
-              markFieldTouched={markStep9FieldTouched}
-              markAllFieldsTouched={markAllStep9FieldsTouched}
-              headerTitle="Asset Types"
-            />
-          )}
-
-          {/* STEP 6: Social Presence Form (Final Step) */}
-          {step === 6 && (
-            <Step2Form
-              formFields={[...socialFields, ...socialAccessFields]}
-              formData={formData}
-              onNext={handleNext}
-              updateFormData={updateFormData}
-              validateFields={validateStep11Fields}
-              touched={touchedStep11}
-              markFieldTouched={markStep11FieldTouched}
-              markAllFieldsTouched={markAllStep11FieldsTouched}
-              headerTitle="Platform User ID & Password"
-              buttonText="Submit"
-              isClientPage={true}
-            />
           )}
 
         </>

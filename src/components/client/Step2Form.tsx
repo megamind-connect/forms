@@ -18,6 +18,7 @@ interface FormField {
   options?: { label: string; value: string | number | boolean }[] | null;
   hideLabel?: boolean;
   optional?: boolean;
+  dependsOn?: string;
 }
 
 interface Step2FormProps {
@@ -91,6 +92,10 @@ export function Step2Form({
       <h2 className={`${isClientPage ? 'text-[32px]' : 'text-[44px]'} font-medium w-full text-black mb-4`}>{headerTitle}</h2>
 
       {formFields.map((field, index) => {
+        if (field.dependsOn !== undefined && !formData[field.dependsOn]) {
+          return null;
+        }
+
         const fieldError = errors[field.name];
         const isTouched = touched[field.name] || false;
 
@@ -102,6 +107,7 @@ export function Step2Form({
           return (
             <div key={index} className="w-full pt-6 pb-2 max-w-2xl">
               <h3 className="text-2xl font-medium text-[#202020]">{field.label}</h3>
+              {isTouched && fieldError && <p className="text-red-600 text-xs mt-1">{fieldError}</p>}
             </div>
           )
         }
@@ -341,8 +347,58 @@ export function Step2Form({
           return (
             <div key={index} className="w-full pt-4 pb-1 max-w-2xl">
               <h3 className="text-xl font-medium text-[#202020]">{field.label}</h3>
+              {isTouched && fieldError && <p className="text-red-600 text-xs mt-1">{fieldError}</p>}
             </div>
           )
+        }
+
+        if (field.fieldType === "header") {
+          return (
+            <div key={index} className="w-full pt-6 pb-2 max-w-2xl">
+              <h3 className="text-2xl font-medium text-[#202020]">{field.label}</h3>
+              {isTouched && fieldError && <p className="text-red-600 text-xs mt-1">{fieldError}</p>}
+            </div>
+          )
+        }
+
+        if (field.fieldType === "toggle") {
+          const isEnabled = formData[field.name] || false;
+
+          const handleToggle = () => {
+            updateFormData({ [field.name]: !isEnabled });
+            markFieldTouched(field.name);
+          };
+
+          return (
+            <div key={index} className="flex flex-col w-full pt-4 pb-1 max-w-2xl text-left">
+              <div className="flex items-center justify-between w-full">
+                <h3 className="text-xl font-medium text-[#202020]">{field.label}</h3>
+                <button
+                  type="button"
+                  onClick={handleToggle}
+                  className={`relative w-14 h-6 rounded-full transition-colors flex items-center ${isEnabled ? "bg-[#FFEAED]" : "bg-[#D9D9D9]"
+                    }`}
+                >
+                  <span
+                    className={`absolute left-2 text-[10px] font-normal text-[#931C2A] transition-opacity duration-300 ${isEnabled ? "opacity-100" : "opacity-0"
+                      }`}
+                  >
+                    Yes
+                  </span>
+                  <span
+                    className={`absolute right-2 text-[10px] font-normal text-[#303030] transition-opacity duration-300 ${!isEnabled ? "opacity-100" : "opacity-0"
+                      }`}
+                  >
+                    No
+                  </span>
+                  <span
+                    className={`absolute top-1 left-1 w-4 h-4 rounded-full transition-transform duration-300 shadow-sm ${isEnabled ? "translate-x-7 bg-[#E31313]" : "bg-[#656565] translate-x-0"
+                      }`}
+                  />
+                </button>
+              </div>
+            </div>
+          );
         }
 
         if (field.fieldType === "password") {
