@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { usePathname, useParams } from "next/navigation";
+import { usePathname, useParams, useSearchParams } from "next/navigation";
 import {
   generalFields,
   clientPageGeneralFields,
@@ -10,6 +10,11 @@ import {
   projectScopeFields,
   socialPlatformFields,
   socialMediaAccessFields,
+  ppcAccessFields,
+  ppcSpecificFields,
+  websiteAccessFields,
+  websiteSpecificFields,
+  ppcWebAccessFields,
   assetTypesFields,
   websiteDetailsFields,
   accountDetailsFields,
@@ -45,6 +50,8 @@ const step6Questions = [
 export function useOnboarding() {
   const pathname = usePathname();
   const params = useParams();
+  const searchParams = useSearchParams();
+  const typeParam = searchParams?.get('type');
   const clientId = params?.id as string;
   const isBrandIdentityPage = pathname.includes("/brand-discovery");
   const isOperationsOnboarding = pathname.includes("/operations/onboarding");
@@ -54,7 +61,9 @@ export function useOnboarding() {
   const [subStep, setSubStep] = useState(1);
   const [showSplash, setShowSplash] = useState(true);
 
-  // Cleaned up form fields usage
+  // Parse operations types (e.g., "?type=social,ppc,website")
+  const operationsTypes = typeParam ? typeParam.split(',').map(t => t.trim().toLowerCase()) : ["social"];
+
   const [generalFormFields] = useState(isClientOnboarding ? generalFields : clientPageGeneralFields);
   const [financialFields] = useState(financialLegalFields);
   const [contactFormFields] = useState(contactFields);
@@ -62,7 +71,74 @@ export function useOnboarding() {
   const [marketFields] = useState(marketAudienceFields);
   const [scopeFields] = useState(projectScopeFields);
   const [socialFields] = useState(isBrandIdentityPage ? socialPlatformFields : []);
-  const [socialAccessFields] = useState(socialMediaAccessFields);
+  const [socialAccessFields, setSocialAccessFields] = useState(socialMediaAccessFields);
+
+  // Operations Dynamic Steps Configuration
+  const [operationsStepsConfig, setOperationsStepsConfig] = useState<any[]>([]);
+
+  useEffect(() => {
+    if (isOperationsOnboarding) {
+      const steps = [];
+      const hasSocial = operationsTypes.includes("social");
+      const hasPpc = operationsTypes.includes("ppc");
+      const hasWebsite = operationsTypes.includes("website");
+
+      if (hasSocial) {
+        steps.push({
+          id: "social",
+          title: "Platform User ID & Password",
+          fields: socialMediaAccessFields
+        });
+      }
+
+      if (hasPpc) {
+        // If it's JUST PPC (no social), it shows the full ppcAccessFields (which includes social platforms + PPC)
+        // Wait, the user said: "if the type=ppc, then i only need the ppc question , no socail questions needs to be shown there"
+        // This contradicts ppcAccessFields directly because ppcAccessFields INCLUDES socialMediaAccessFields.
+        // Therefore we should ALWAYS use ppcSpecificFields for the "PPC" step to ensure no social questions appear,
+        // UNLESS the user expects "type=ppc" to just ask about Google Ads, GA4, GTM, GSC.
+        steps.push({
+          id: "ppc",
+          title: "PPC Settings",
+          fields: ppcSpecificFields
+        });
+      }
+
+      if (hasWebsite) {
+        let webFields = websiteSpecificFields;
+        if (hasPpc) {
+          // If PPC is present, remove GA4, GTM, GSC questions from website to avoid asking twice
+          webFields = webFields.filter(f => !["ga4_header", "ga4_invite_toggle", "ga4_invite_desc", "gtm_header", "gtm_invite_toggle", "gtm_invite_desc", "gsc_header", "gsc_invite_toggle", "gsc_invite_desc"].includes(f.name));
+        }
+        steps.push({
+          id: "website",
+          title: "Website Details",
+          fields: webFields
+        });
+      }
+
+      // Fallback if none matches
+      if (steps.length === 0) {
+        steps.push({
+          id: "social",
+          title: "Platform User ID & Password",
+          fields: socialMediaAccessFields
+        });
+      }
+      setOperationsStepsConfig(steps);
+      return;
+    }
+
+    if (typeParam === 'ppc') {
+      setSocialAccessFields(ppcAccessFields);
+    } else if (typeParam === 'website') {
+      setSocialAccessFields(websiteAccessFields);
+    } else if (typeParam === 'ppc&web') {
+      setSocialAccessFields(ppcWebAccessFields);
+    } else {
+      setSocialAccessFields(socialMediaAccessFields);
+    }
+  }, [typeParam, isOperationsOnboarding]);
   const [assetFields] = useState(assetTypesFields);
   const [websiteFields] = useState(websiteDetailsFields);
   const [accountFields] = useState(accountDetailsFields);
@@ -102,7 +178,11 @@ export function useOnboarding() {
       ? {
         1: 1, // Intro
         2: 1, // Asset Types
-        3: 1, // Platform ID & Password
+        // Dynamic steps 3 to (3 + ConfigLength - 1)
+        ...Array.from({ length: Math.max(0, operationsStepsConfig.length) }).reduce((acc: Record<number, number>, _, idx) => {
+          acc[3 + idx] = 1;
+          return acc;
+        }, {} as Record<number, number>)
       }
       : isBrandIdentityPage
         ? {
@@ -122,7 +202,7 @@ export function useOnboarding() {
           6: 1,
         };
 
-  const totalSteps = isClientOnboarding ? 4 : isOperationsOnboarding ? 3 : isBrandIdentityPage ? 6 : 6;
+  const totalSteps = isClientOnboarding ? 4 : isOperationsOnboarding ? (2 + Math.max(1, operationsStepsConfig.length)) : isBrandIdentityPage ? 6 : 6;
 
   const validateFieldsHelper = (data: FormData, fields: any[]): Record<string, string> => {
     const errors: Record<string, string> = {};
@@ -186,7 +266,7 @@ export function useOnboarding() {
     });
     return errors;
   };
-  const validateStep11Fields = (data: FormData) => {
+  const validateStep11Fields = (data: FormData, customFields?: any[]) => {
     const errors: Record<string, string> = {};
     const platforms = [
       { prefix: "meta", label: "Facebook Page", emailField: "meta_email", passwordField: "meta_password" },
@@ -196,30 +276,83 @@ export function useOnboarding() {
       { prefix: "gmb", label: "Google My Business", emailField: "google_business_email", passwordField: "google_business_password" },
     ];
 
-    if (!data.instagram_email || !data.instagram_email.trim()) {
-      errors.instagram_header = "Instagram User ID is required";
+    if (typeParam === 'ppc' || typeParam === 'ppc&web' || (isOperationsOnboarding && operationsTypes.includes("ppc"))) {
+      platforms.push({ prefix: "google_ads", label: "Google Ads", emailField: "google_ads_email", passwordField: "google_ads_password" });
     }
-    if (!data.instagram_password || !data.instagram_password.trim()) {
-      errors.instagram_header = "Instagram Password is required";
+
+    // Check if instagram header exists in this set of fields before validating
+    const fieldsToValidate = customFields || socialAccessFields;
+    const hasInstagram = fieldsToValidate.some(f => f.name === "instagram_header");
+
+    if (hasInstagram) {
+      if (!data.instagram_email || !data.instagram_email.trim()) {
+        errors.instagram_header = "Instagram User ID is required";
+      }
+      if (!data.instagram_password || !data.instagram_password.trim()) {
+        errors.instagram_header = "Instagram Password is required";
+      }
     }
 
     platforms.forEach(({ prefix, label, emailField, passwordField }) => {
-      const accessToggle = data[`${prefix}_access_toggle`];
-      const inviteToggle = data[`${prefix}_invite_toggle`];
+      const hasPrefixHeader = fieldsToValidate.some(f => f.name === `${prefix}_header` || (prefix === 'yt' && f.name === 'youtube_header') || (prefix === 'gmb' && f.name === 'google_business_header') || (prefix === 'meta' && f.name === 'meta_header') || (prefix === 'bm' && f.name === 'bm_header') || (prefix === 'linkedin' && f.name === 'linkedin_header'));
 
-      if (!accessToggle && !inviteToggle) {
-        errors[`${prefix}_header`] = `Please select an option to provide access for ${label}`;
-      }
+      // If we are passing custom fields, and the field is not in the array, do not validate.
+      // But we have to be loose with matching because the array might contain just specific names.
+      // Actually simpler logic: We only validate it if either CustomFields is undefined (default behaviour)
+      // OR if the invite_toggle or access_toggle field exists in CustomFields
+      const fieldExists = !customFields || customFields.some(f => f.name === `${prefix}_access_toggle` || f.name === `${prefix}_invite_toggle`);
 
-      if (accessToggle) {
-        if (!data[emailField] || !data[emailField].trim()) {
-          errors[emailField] = `${label} User ID is required`;
+      if (fieldExists) {
+        const accessToggle = data[`${prefix}_access_toggle`];
+        const inviteToggle = data[`${prefix}_invite_toggle`];
+
+        if (!accessToggle && !inviteToggle) {
+          errors[`${prefix}_header`] = `Please select an option to provide access for ${label}`;
         }
-        if (!data[passwordField] || !data[passwordField].trim()) {
-          errors[passwordField] = `${label} Password is required`;
+
+        if (accessToggle) {
+          if (!data[emailField] || !data[emailField].trim()) {
+            errors[emailField] = `${label} User ID is required`;
+          }
+          if (!data[passwordField] || !data[passwordField].trim()) {
+            errors[passwordField] = `${label} Password is required`;
+          }
         }
       }
     });
+
+    if (typeParam === 'ppc' || typeParam === 'ppc&web' || typeParam === 'website' || isOperationsOnboarding) {
+      const inviteOnlyPlatforms = [
+        { prefix: "ga4", label: "Google Analytics (GA4)" },
+        { prefix: "gtm", label: "Google Tag Manager" },
+        { prefix: "gsc", label: "Google Search Console" },
+      ];
+      inviteOnlyPlatforms.forEach(({ prefix, label }) => {
+        const inviteExists = !customFields || customFields.some(f => f.name === `${prefix}_invite_toggle`);
+        if (inviteExists) {
+          const inviteToggle = data[`${prefix}_invite_toggle`];
+          if (!inviteToggle) {
+            errors[`${prefix}_header`] = `Please acknowledge the invite step for ${label}`;
+          }
+        }
+      });
+    }
+
+    // Dynamic fields validation (for simple texts and toggles required)
+    if (customFields) {
+      customFields.forEach(field => {
+        if (field.fieldType === "toggle_input") {
+          const fieldValue = data[field.name];
+          if (fieldValue && fieldValue.enabled && (!fieldValue.value || !fieldValue.value.trim())) {
+            errors[field.name] = "Please provide details";
+          }
+        }
+        else if (field.fieldType === "textarea" && field.name.startsWith("web_") && field.name !== "web_11" && field.name !== "web_7" && field.name !== "web_6" && field.name !== "web_5" && field.name !== "web_4" && field.name !== "hosting_server_details" && field.name !== "source_code_storage" && field.name !== "current_website_management" && field.name !== "form_data_storage" && field.name !== "third_party_tools_integration") {
+          // Basic non-empty textareas, we usually do not mark them rigidly required but let's be loose if needed.
+          // Leaving out as strict require because user didn't specify strict validation for everything in Website.
+        }
+      });
+    }
 
     return errors;
   };
@@ -249,11 +382,22 @@ export function useOnboarding() {
     if (isOperationsOnboarding) {
       let errors = {};
       if (step === 2) errors = validateStep9Fields(formData);
-      if (step === 3) errors = validateStep11Fields(formData);
+
+      if (step > 2) {
+        const configIndex = step - 3; // 3 corresponds to index 0
+        if (configIndex >= 0 && configIndex < operationsStepsConfig.length) {
+          errors = validateStep11Fields(formData, operationsStepsConfig[configIndex].fields);
+        }
+      }
 
       if (Object.keys(errors).length > 0) {
         if (step === 2) setTouchedStep9(assetFields.reduce((acc, f) => ({ ...acc, [f.name]: true }), {}));
-        if (step === 3) setTouchedStep11([...socialFields, ...socialAccessFields].reduce((acc, f) => ({ ...acc, [f.name]: true }), {}));
+        if (step > 2) {
+          const configIndex = step - 3;
+          if (configIndex >= 0 && configIndex < operationsStepsConfig.length) {
+            setTouchedStep11([...socialFields, ...operationsStepsConfig[configIndex].fields].reduce((acc, f) => ({ ...acc, [f.name]: true }), {}));
+          }
+        }
         return false;
       }
     }
@@ -270,7 +414,7 @@ export function useOnboarding() {
         /* submit handled later */
       }
     } else if (isOperationsOnboarding) {
-      if (step === 3) {
+      if (step === totalSteps) {
         /* submit handled later */
       }
     } else if (isBrandIdentityPage) {
@@ -472,6 +616,19 @@ export function useOnboarding() {
             google_analytics: { email: formData.google_analytics_email, password: formData.google_analytics_password },
             google_tag_manager: { email: formData.google_tag_manager_email, password: formData.google_tag_manager_password },
             google_search_console: { email: formData.google_search_console_email, password: formData.google_search_console_password }
+          },
+          websiteTechDetails: {
+            hasDomain: formData.has_domain,
+            hasCmsPlatform: formData.has_cms_platform,
+            hasThirdPartyPlatform: formData.has_third_party_platform,
+            formDataStorage: formData.form_data_storage,
+            hostingServerDetails: formData.hosting_server_details,
+            sourceCodeStorage: formData.source_code_storage,
+            currentWebsiteManagement: formData.current_website_management,
+            googleAnalyticsGa4: formData.ga4_invite_toggle,
+            googleTagManager: formData.gtm_invite_toggle,
+            googleSearchConsole: formData.gsc_invite_toggle,
+            thirdPartyToolsIntegration: formData.third_party_tools_integration
           }
         };
       }
@@ -553,6 +710,7 @@ export function useOnboarding() {
     validateStep8Fields,
     validateStep9Fields,
     validateStep11Fields,
+    validateOperationsDynamicStep: (data: FormData, fields: any[]) => validateStep11Fields(data, fields),
     validateStep13Fields,
     validateStep15Fields,
     validateStep16Fields,
@@ -587,5 +745,6 @@ export function useOnboarding() {
     websiteFields,
     accountFields,
     businessVerificationFields: businessVerificationFields_state,
+    operationsStepsConfig,
   };
 }

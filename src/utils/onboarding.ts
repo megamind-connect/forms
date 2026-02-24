@@ -117,7 +117,7 @@ export const clientPageGeneralFields = [
       { label: "PR Head", value: "pr_head" },
       { label: "Others", value: "others" },
     ],
-  }, 
+  },
 ];
 
 export const financialLegalFields = [
@@ -438,6 +438,114 @@ export const socialMediaAccessFields = [
   { id: "sma_gmb_invite_desc", name: "gmb_invite_desc", label: "Google Business Profile ->Three Button click -> Business Profile Setting -> People and Access -> Add -> Email Id - Studiosmegamind@gmail.com -> Access – Owner -> Invite", fieldType: "description_text", dependsOn: "gmb_invite_toggle" },
 ];
 
+export const ppcSpecificFields = [
+  { id: "ppc_header_gads", name: "google_ads_header", label: "Google Ads", fieldType: "header" },
+  { id: "ppc_gads_access_title", name: "google_ads_access_toggle", label: "Access of Google Ads", fieldType: "toggle" },
+  { id: "ppc_gadsa", name: "google_ads_email", label: "User Id", fieldType: "text", placeholder: "User Id", dependsOn: "google_ads_access_toggle" },
+  { id: "ppc_gadsb", name: "google_ads_password", label: "Password", fieldType: "password", placeholder: "Password", dependsOn: "google_ads_access_toggle" },
+  { id: "ppc_gads_or", name: "google_ads_or", label: "Or", fieldType: "or_divider" },
+  { id: "ppc_gads_invite_title", name: "google_ads_invite_toggle", label: "Provide access via an official platform invite", fieldType: "toggle" },
+  { id: "ppc_gads_invite_desc", name: "google_ads_invite_desc", label: "Google Ads → admin → Access and security →Users-> Add User (Studiosmegamind@gmail.com) -> Admin Access", fieldType: "description_text", dependsOn: "google_ads_invite_toggle" },
+
+  { id: "ppc_header_ga4", name: "ga4_header", label: "Google Analytics (GA4)", fieldType: "header" },
+  { id: "ppc_ga4_invite_title", name: "ga4_invite_toggle", label: "Provide access via an official platform invite", fieldType: "toggle" },
+  { id: "ppc_ga4_invite_desc", name: "ga4_invite_desc", label: "Google Analytics → Admin → Account Access Management → Add Users (Studiosmegamind@gmail.com) -> Administrator Role", fieldType: "description_text", dependsOn: "ga4_invite_toggle" },
+
+  { id: "ppc_header_gtm", name: "gtm_header", label: "Google Tag Manager", fieldType: "header" },
+  { id: "ppc_gtm_invite_title", name: "gtm_invite_toggle", label: "Provide access via an official platform invite", fieldType: "toggle" },
+  { id: "ppc_gtm_invite_desc", name: "gtm_invite_desc", label: "Google Tag Manager → Admin → User Management/Container permissions → Add User (Studiosmegamind@gmail.com) -> Administrator Role (Admin / User)", fieldType: "description_text", dependsOn: "gtm_invite_toggle" },
+
+  { id: "ppc_header_gsc", name: "gsc_header", label: "Google Search Console", fieldType: "header" },
+  { id: "ppc_gsc_invite_title", name: "gsc_invite_toggle", label: "Provide access via an official platform invite", fieldType: "toggle" },
+  { id: "ppc_gsc_invite_desc", name: "gsc_invite_desc", label: "Google Search Console → Settings → Users & Permissions → Add User (Studiosmegamind@gmail.com) -> Full User / Owner", fieldType: "description_text", dependsOn: "gsc_invite_toggle" },
+];
+
+export const ppcAccessFields = [
+  ...socialMediaAccessFields,
+  ...ppcSpecificFields
+];
+
+export const websiteSpecificFields = [
+  { id: "web_spec_header", name: "web_spec_header", label: "Website Specific Questions", fieldType: "header" },
+  {
+    id: "web_1",
+    name: "has_domain",
+    label: "Existing Domain : Do you currently have a domain?",
+    fieldType: "toggle_input",
+    placeholder: "Please specify domain details",
+  },
+  {
+    id: "web_2",
+    name: "has_cms_platform",
+    label: "Existing CMS (if any) : Do you currently have a CMS in place?",
+    fieldType: "toggle_input",
+    placeholder: "Please specify CMS platform",
+  },
+  {
+    id: "web_3",
+    name: "has_third_party_platform",
+    label: "Existing Third-Party Platforms : Do you use any third-party platforms such as a booking engine, payment gateway, or Google Maps API?",
+    fieldType: "toggle_input",
+    placeholder: "Please specify third-party platforms",
+  },
+  {
+    id: "web_4",
+    name: "form_data_storage",
+    label: "Forms & Data Handling : Where is the data currently collected from website forms being stored or sent?",
+    fieldType: "textarea",
+    placeholder: "e.g., Google Sheets, email notifications, booking engine, etc.",
+  },
+  {
+    id: "web_5",
+    name: "hosting_server_details",
+    label: "Hosting Server Details (If Any)",
+    fieldType: "textarea",
+    placeholder: "Provide Hosting Server Details",
+  },
+  {
+    id: "web_6",
+    name: "source_code_storage",
+    label: "Source Code Management : Where should the website's source code be stored and managed?",
+    fieldType: "textarea",
+    placeholder: "e.g., GitHub, GitLab, Bitbucket, hosting server, etc.",
+  },
+  {
+    id: "web_7",
+    name: "current_website_management",
+    label: "Existing CMS/FTP : If you already have a website, please describe how it is currently managed.",
+    fieldType: "textarea",
+    placeholder: "Describe how it is managed",
+  },
+  { id: "web_header_ga4", name: "ga4_header", label: "Google Analytics (GA4)", fieldType: "header" },
+  { id: "web_ga4_invite_title", name: "ga4_invite_toggle", label: "Provide access via an official platform invite", fieldType: "toggle" },
+  { id: "web_ga4_invite_desc", name: "ga4_invite_desc", label: "Please use your GA4 Admin panel to invite our agency email, studiosmegamind@gmail.com, with \"Editor\" or \"Administrator\" access", fieldType: "description_text", dependsOn: "ga4_invite_toggle" },
+  { id: "web_header_gtm", name: "gtm_header", label: "Google Tag Manager", fieldType: "header" },
+  { id: "web_gtm_invite_title", name: "gtm_invite_toggle", label: "Provide access via an official platform invite", fieldType: "toggle" },
+  { id: "web_gtm_invite_desc", name: "gtm_invite_desc", label: "Please use your GTM Admin panel to invite our agency email, studiosmegamind@gmail.com, with \"Publish\" or \"Administrator\" access.", fieldType: "description_text", dependsOn: "gtm_invite_toggle" },
+  { id: "web_header_gsc", name: "gsc_header", label: "Google Search Console", fieldType: "header" },
+  { id: "web_gsc_invite_title", name: "gsc_invite_toggle", label: "Provide access via an official platform invite", fieldType: "toggle" },
+  { id: "web_gsc_invite_desc", name: "gsc_invite_desc", label: "Please use your GSC Admin panel to invite our agency email, studiosmegamind@gmail.com, as an \"Owner\" or \"Full\" user.", fieldType: "description_text", dependsOn: "gsc_invite_toggle" },
+  {
+    id: "web_11",
+    name: "third_party_tools_integration",
+    label: "Integrations : Which third-party tools or services should be integrated with the website?",
+    fieldType: "textarea",
+    placeholder: "Which third-party tools or services should be integrated with the website?",
+  },
+];
+
+export const websiteAccessFields = [
+  ...socialMediaAccessFields,
+  ...websiteSpecificFields
+];
+
+const ppcFieldNames = new Set(ppcAccessFields.map((f) => f.name).filter(Boolean));
+
+export const ppcWebAccessFields = [
+  ...ppcAccessFields,
+  ...websiteAccessFields.filter((f) => !f.name || !ppcFieldNames.has(f.name))
+];
+
 export const assetTypesFields = [
   {
     id: "asset_desc",
@@ -505,31 +613,22 @@ export const websiteDetailsFields = [
     id: "web_1",
     name: "has_domain",
     label: "Do you currently have a domain?",
-    fieldType: "radio",
-    options: [
-      { label: "Yes", value: "yes" },
-      { label: "No", value: "no" },
-    ],
+    fieldType: "toggle_input",
+    placeholder: "Please specify domain details",
   },
   {
     id: "web_2",
     name: "has_cms_platform",
     label: "Do you currently have a CMS platform?",
-    fieldType: "radio",
-    options: [
-      { label: "Yes", value: "yes" },
-      { label: "No", value: "no" },
-    ],
+    fieldType: "toggle_input",
+    placeholder: "Please specify CMS platform",
   },
   {
     id: "web_3",
     name: "has_third_party_platform",
     label: "Does the third party platform such as Shopify, bookingsengine, payment gateway, or Google Maps API?",
-    fieldType: "radio",
-    options: [
-      { label: "Yes", value: "yes" },
-      { label: "No", value: "no" },
-    ],
+    fieldType: "toggle_input",
+    placeholder: "Please specify third-party platforms",
   },
   {
     id: "web_4",

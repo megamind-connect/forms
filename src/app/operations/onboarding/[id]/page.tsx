@@ -23,11 +23,12 @@ export default function OperationsOnboardingPage() {
         getStepProgress,
         updateFormData,
         validateStep9Fields,
-        validateStep11Fields,
+        validateOperationsDynamicStep,
         markStep9FieldTouched,
-        markStep11FieldTouched,
         markAllStep9FieldsTouched,
-        markAllStep11FieldsTouched,
+        operationsStepsConfig,
+        markStep11FieldTouched,
+        markAllStep11FieldsTouched
     } = useOnboarding();
 
     return (
@@ -72,22 +73,27 @@ export default function OperationsOnboardingPage() {
                         />
                     )}
 
-                    {/* STEP 3: Social Presence Form (Previously Step 6 globally) */}
-                    {step === 3 && (
-                        <Step2Form
-                            formFields={[...socialFields, ...socialAccessFields]}
-                            formData={formData}
-                            onNext={handleNext}
-                            updateFormData={updateFormData}
-                            validateFields={validateStep11Fields}
-                            touched={touchedStep11}
-                            markFieldTouched={markStep11FieldTouched}
-                            markAllFieldsTouched={markAllStep11FieldsTouched}
-                            headerTitle="Platform User ID & Password"
-                            buttonText="Submit"
-                            isClientPage={true}
-                        />
-                    )}
+                    {/* STEP 3+: Dynamic Form Configurations (Social, PPC, Website) */}
+                    {operationsStepsConfig.map((config, index) => {
+                        const currentStepIndex = 3 + index;
+                        const isLastStep = currentStepIndex === 2 + operationsStepsConfig.length;
+                        return step === currentStepIndex && (
+                            <Step2Form
+                                key={config.id}
+                                formFields={config.fields}
+                                formData={formData}
+                                onNext={handleNext}
+                                updateFormData={updateFormData}
+                                validateFields={(data) => validateOperationsDynamicStep(data, config.fields)}
+                                touched={touchedStep11} // Using touchedStep11 as the common dictionary for these forms
+                                markFieldTouched={markStep11FieldTouched}
+                                markAllFieldsTouched={markAllStep11FieldsTouched}
+                                headerTitle={config.title}
+                                buttonText={isLastStep ? "Submit" : "Next"}
+                                isClientPage={true}
+                            />
+                        );
+                    })}
                 </>
             )}
         </div>

@@ -209,12 +209,12 @@ export function Step2Form({
 
           return (
             <div key={index} className="space-y-2 w-full max-w-2xl text-left">
-              <div className="flex items-center justify-between">
-                <label className="text-lg font-medium text-[#57534E]">{field.label}</label>
+              <div className="flex items-center justify-between gap-4">
+                <label className="text-lg font-medium text-[#57534E] flex-1">{field.label}</label>
                 <button
                   type="button"
                   onClick={handleToggle}
-                  className={`relative w-14 h-6 rounded-full transition-colors flex items-center ${isEnabled ? "bg-[#FFEAED]" : "bg-[#D9D9D9]"
+                  className={`relative w-14 h-6 shrink-0 rounded-full transition-colors flex items-center ${isEnabled ? "bg-[#FFEAED]" : "bg-[#D9D9D9]"
                     }`}
                 >
                   <span
@@ -330,7 +330,7 @@ export function Step2Form({
         if (field.fieldType === "or_divider") {
           return (
             <div key={index} className="w-full py-2 max-w-2xl text-left">
-              <p className="text-lg italic font-medium text-[#57534E]">{field.label}</p>
+              <p className="text-lg italic font-medium text-[#E31212]">{field.label}</p>
             </div>
           )
         }
@@ -371,12 +371,12 @@ export function Step2Form({
 
           return (
             <div key={index} className="flex flex-col w-full pt-4 pb-1 max-w-2xl text-left">
-              <div className="flex items-center justify-between w-full">
-                <h3 className="text-xl font-medium text-[#202020]">{field.label}</h3>
+              <div className="flex items-center justify-between w-full gap-4">
+                <h3 className="text-xl font-medium text-[#202020] flex-1">{field.label}</h3>
                 <button
                   type="button"
                   onClick={handleToggle}
-                  className={`relative w-14 h-6 rounded-full transition-colors flex items-center ${isEnabled ? "bg-[#FFEAED]" : "bg-[#D9D9D9]"
+                  className={`relative w-14 h-6 shrink-0 rounded-full transition-colors flex items-center ${isEnabled ? "bg-[#FFEAED]" : "bg-[#D9D9D9]"
                     }`}
                 >
                   <span
