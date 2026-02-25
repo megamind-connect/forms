@@ -70,21 +70,23 @@ export default function ClientPage() {
         <SplashScreen />
       ) : (
         <>
-          <FormHeader formName="Client Onboarding" />
+          {step > 1 && <FormHeader formName="Client Onboarding" />}
           {/* Step Progress Indicator */}
-          <StepIndicator
-            step={step}
-            stepStructure={stepStructure}
-            getStepProgress={getStepProgress}
-            handleStepClick={handleStepClick}
-          />
+          {step > 1 && (
+            <StepIndicator
+              step={step}
+              stepStructure={stepStructure}
+              getStepProgress={getStepProgress}
+              handleStepClick={handleStepClick}
+            />
+          )}
 
           {/* STEP 1: INTRO */}
           {step === 1 && (
             <IntroStep
               img="/images/onb-steps/1.png"
-              title="Let’s Start With the Essentials"
-              description="We’ll start with your core brand and contact details so we can identify you clearly and keep our communication accurate from day one."
+              title="Client Onboarding Form"
+              description="This form collects your basic business information."
               onNext={handleNext}
               buttonClassName="!bg-[#E31313] !text-lg text-white !font-bold"
             />
@@ -121,7 +123,7 @@ export default function ClientPage() {
             </div>
           )}
 
-          {/* STEP 4: Contact Information */}
+          {/* STEP 4: Contact Information (Final Step) */}
           {step === 4 && (
             <div className="flex flex-col h-full w-full">
               <Step2Form
@@ -134,116 +136,10 @@ export default function ClientPage() {
                 markFieldTouched={markStep4FieldTouched}
                 markAllFieldsTouched={markAllStep4FieldsTouched}
                 headerTitle="Contact Information"
-              />
+                buttonText="Submit"
+                isClientPage={true}
+                />
             </div>
-          )}
-
-          {/* STEP 5: Asset Types */}
-          {step === 5 && (
-            <Step2Form
-              formFields={assetFields}
-              formData={formData}
-              onNext={handleNext}
-              updateFormData={updateFormData}
-              validateFields={validateStep9Fields}
-              touched={touchedStep9}
-              markFieldTouched={markStep9FieldTouched}
-              markAllFieldsTouched={markAllStep9FieldsTouched}
-              headerTitle="Asset Types"
-            />
-          )}
-
-          {/* STEP 6: Social Presence Intro */}
-          {step === 6 && (
-            <IntroStep
-              img="/images/steps/6.png"
-              title="Let’s Align Your Social Presence"
-              description="Share access to your social media and digital channels so we can manage, optimise, and grow your online presence efficiently. Wherever possible, please add our agency email instead of sharing passwords."
-              onNext={handleNext}
-              buttonClassName="!bg-[#E31313] !text-lg text-white !font-bold"
-            />
-          )}
-
-          {/* STEP 7: Social Presence Form (URLs + Access) */}
-          {step === 7 && (
-            <Step2Form
-              formFields={[...socialFields, ...socialAccessFields]}
-              formData={formData}
-              onNext={handleNext}
-              updateFormData={updateFormData}
-              validateFields={validateStep11Fields}
-              touched={touchedStep11}
-              markFieldTouched={markStep11FieldTouched}
-              markAllFieldsTouched={markAllStep11FieldsTouched}
-              headerTitle="Account Details"
-            />
-          )}
-
-          {/* STEP 8: Let's Get Your Website Ready (Intro) */}
-          {step === 8 && (
-            <IntroStep
-              img="/images/steps/7.png"
-              title="Let's Get Your Website Ready"
-              description="Share access to your website platforms and upload any relevant documents so we can review, manage, and optimise your site smoothly. Wherever possible, please add our agency email instead of sharing passwords."
-              onNext={handleNext}
-              buttonClassName="!bg-[#E31313] !text-lg text-white !font-bold"
-            />
-          )}
-
-          {/* STEP 9: Website Details */}
-          {step === 9 && (
-            <Step2Form
-              formFields={websiteFields}
-              formData={formData}
-              onNext={handleNext}
-              updateFormData={updateFormData}
-              validateFields={validateStep13Fields}
-              touched={touchedStep13}
-              markFieldTouched={markStep13FieldTouched}
-              markAllFieldsTouched={markAllStep13FieldsTouched}
-              headerTitle="Website Details"
-            />
-          )}
-
-          {/* STEP 10: Let's Get Your Ads Running (Intro) */}
-          {step === 10 && (
-            <IntroStep
-              img="/images/onb-steps/1.png"
-              title="Let's Get Your Ads Running"
-              description="Upload the relevant documents and grant us access to your advertising accounts so we can review, manage, and optimise your campaigns effectively. Wherever possible, please add our agency email instead of sharing passwords."
-              onNext={handleNext}
-              buttonClassName="!bg-[#E31313] !text-lg text-white !font-bold"
-            />
-          )}
-
-          {/* STEP 11: Account Details (Ads Form) */}
-          {step === 11 && (
-            <Step2Form
-              formFields={accountFields}
-              formData={formData}
-              onNext={handleNext}
-              updateFormData={updateFormData}
-              validateFields={validateStep15Fields}
-              touched={touchedStep15}
-              markFieldTouched={markStep15FieldTouched}
-              markAllFieldsTouched={markAllStep15FieldsTouched}
-              headerTitle="Account Details"
-            />
-          )}
-
-          {/* STEP 12: Business Verification Documents & Contact Details */}
-          {step === 12 && (
-            <Step2Form
-              formFields={businessVerificationFields}
-              formData={formData}
-              onNext={handleNext}
-              updateFormData={updateFormData}
-              validateFields={validateStep16Fields}
-              touched={touchedStep16}
-              markFieldTouched={markStep16FieldTouched}
-              markAllFieldsTouched={markAllStep16FieldsTouched}
-              headerTitle="Business Verification Documents & Contact Details"
-            />
           )}
 
         </>
