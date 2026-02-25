@@ -207,7 +207,7 @@ export function useOnboarding() {
     fields.forEach((field) => {
       if (field.fieldType === "header") {
         const headerState = data[field.name];
-        isCurrentHeaderVisible = field.hasToggle ? (headerState === undefined ? true : headerState) : true;
+        isCurrentHeaderVisible = field.hasToggle ? (headerState === undefined ? false : headerState) : true;
       }
 
       if (!isCurrentHeaderVisible && field.fieldType !== "header") return;
@@ -288,7 +288,7 @@ export function useOnboarding() {
     // Check if instagram header exists in this set of fields before validating
     const fieldsToValidate = customFields || socialAccessFields;
     const hasInstagram = fieldsToValidate.some(f => f.name === "instagram_header");
-    const isInstagramEnabled = data.instagram_header === undefined ? true : data.instagram_header;
+    const isInstagramEnabled = data.instagram_header === undefined ? false : data.instagram_header;
 
     if (hasInstagram && isInstagramEnabled) {
       if (!data.instagram_email || !data.instagram_email.trim()) {
@@ -307,7 +307,7 @@ export function useOnboarding() {
       // Actually simpler logic: We only validate it if either CustomFields is undefined (default behaviour)
       // OR if the invite_toggle or access_toggle field exists in CustomFields
       const fieldExists = !customFields || customFields.some(f => f.name === `${prefix}_access_toggle` || f.name === `${prefix}_invite_toggle`);
-      const isHeaderEnabled = data[`${prefix}_header`] === undefined ? true : data[`${prefix}_header`];
+      const isHeaderEnabled = data[`${prefix}_header`] === undefined ? false : data[`${prefix}_header`];
 
       if (fieldExists && isHeaderEnabled) {
         const accessToggle = data[`${prefix}_access_toggle`];
@@ -336,7 +336,7 @@ export function useOnboarding() {
       ];
       inviteOnlyPlatforms.forEach(({ prefix, label }) => {
         const inviteExists = !customFields || customFields.some(f => f.name === `${prefix}_invite_toggle`);
-        const isHeaderEnabled = data[`${prefix}_header`] === undefined ? true : data[`${prefix}_header`];
+        const isHeaderEnabled = data[`${prefix}_header`] === undefined ? false : data[`${prefix}_header`];
 
         if (inviteExists && isHeaderEnabled) {
           const inviteToggle = data[`${prefix}_invite_toggle`];
@@ -354,7 +354,7 @@ export function useOnboarding() {
       customFields.forEach(field => {
         if (field.fieldType === "header") {
           const headerState = data[field.name];
-          isCurrentHeaderVisible = field.hasToggle ? (headerState === undefined ? true : headerState) : true;
+          isCurrentHeaderVisible = field.hasToggle ? (headerState === undefined ? false : headerState) : true;
         }
 
         if (!isCurrentHeaderVisible && field.fieldType !== "header") return;

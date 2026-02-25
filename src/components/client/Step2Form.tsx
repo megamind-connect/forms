@@ -98,7 +98,7 @@ export function Step2Form({
         return formFields.map((field, index) => {
           if (field.fieldType === "header") {
             const headerState = formData[field.name];
-            isCurrentHeaderVisible = field.hasToggle ? (headerState === undefined ? true : headerState) : true;
+            isCurrentHeaderVisible = field.hasToggle ? (headerState === undefined ? false : headerState) : true;
           }
 
           if (field.dependsOn !== undefined && !formData[field.dependsOn]) {
@@ -117,9 +117,9 @@ export function Step2Form({
 
           // Custom Layout Logic based on fieldType
           if (field.fieldType === "header") {
-            const isEnabled = formData[field.name] === undefined ? true : formData[field.name];
+            const isEnabled = formData[field.name] === undefined ? false : formData[field.name];
             return (
-              <div key={index} className="flex flex-col w-full pt-6 pb-2 max-w-2xl text-left">
+              <div key={index} className={`flex flex-col w-full pb-2 max-w-2xl text-left ${index !== 0 ? 'border-t border-[#D9D9D9] mt-6 pt-6' : 'pt-6'}`}>
                 <div className="flex items-center justify-between w-full gap-4">
                   <h3 className="text-2xl font-medium text-[#202020] flex-1">{field.label}</h3>
                   {field.hasToggle && (

@@ -412,7 +412,7 @@ export const socialMediaAccessFields = [
   { id: "sma_1_invite_title", name: "meta_invite_toggle", label: "Provide access via an official platform invite", fieldType: "toggle" },
   { id: "sma_1_invite_desc", name: "meta_invite_desc", label: "Facebook Page → Professional dashboard → All tools → Page access → Add People – Vishnu Pradeep -> Access - Admin / Full Control", fieldType: "description_text", dependsOn: "meta_invite_toggle" },
 
-  { id: "sma_header_bm", name: "bm_header", label: "Meta Business Manager", fieldType: "header", hasToggle: true },
+  { id: "sma_header_bm", name: "bm_header", label: "Meta Business Manager", fieldType: "header", hasToggle: true   },
   { id: "sma_bm_access_title", name: "bm_access_toggle", label: "Access of Meta Business Manager", fieldType: "toggle" },
   { id: "sma_bma", name: "bm_email", label: "User id", fieldType: "text", placeholder: "User id", dependsOn: "bm_access_toggle" },
   { id: "sma_bmb", name: "bm_password", label: "Password", fieldType: "password", placeholder: "Password", dependsOn: "bm_access_toggle" },
