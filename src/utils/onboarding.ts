@@ -10,7 +10,7 @@ export const generalFields = [
   {
     id: "industry",
     name: "industry_category",
-    label: "Industry Category",
+    label: "Industry / Business Category",
     placeholder: "E.g. Food & Beverage, Technology, Retail",
     fieldType: "dropdown",
     options: [
@@ -44,18 +44,18 @@ export const generalFields = [
   {
     id: "landline",
     name: "business_landline_numbers",
-    label: "Business Landline Number(s)",
+    label: "Landline/ Mobile Number(s):",
     placeholder: "Official business landline number",
     fieldType: "array",
     optional: true,
   },
-  {
-    id: "mobile",
-    name: "business_mobile_numbers",
-    label: "Business Mobile Number(s)",
-    placeholder: "Official business Mobile Number",
-    fieldType: "array",
-  },
+  // {
+  //   id: "mobile",
+  //   name: "business_mobile_numbers",
+  //   label: "Business Mobile Number(s)",
+  //   placeholder: "Official business Mobile Number",
+  //   fieldType: "array",
+  // },
   {
     id: "wa_num",
     name: "whatsapp_business_number",
@@ -88,6 +88,13 @@ export const generalFields = [
       { label: "Other", value: "other" },
     ],
   },
+  // {
+  //   id: "contact-person",
+  //   name: "contact_person",
+  //   label: "Primary Contact Person",
+  //   placeholder: "Name, Email, Phone",
+  //   fieldType: "text",
+  // },
   {
     id: "timings",
     name: "business_operating_timings",

@@ -63,6 +63,9 @@ export function useOnboarding() {
 
   // Parse operations types (e.g., "?type=social,ppc,website")
   const operationsTypes = typeParam ? typeParam.split(',').map(t => t.trim().toLowerCase()) : ["social"];
+  const hasSocial = operationsTypes.includes("social");
+  const hasPpc = operationsTypes.includes("ppc") || operationsTypes.includes("ppc&web");
+  const hasWebsite = operationsTypes.includes("website") || operationsTypes.includes("ppc&web");
 
   const [generalFormFields] = useState(isClientOnboarding ? generalFields : clientPageGeneralFields);
   const [financialFields] = useState(financialLegalFields);
@@ -80,8 +83,8 @@ export function useOnboarding() {
     if (isOperationsOnboarding) {
       const steps = [];
       const hasSocial = operationsTypes.includes("social");
-      const hasPpc = operationsTypes.includes("ppc");
-      const hasWebsite = operationsTypes.includes("website");
+      const hasPpc = operationsTypes.includes("ppc") || operationsTypes.includes("ppc&web");
+      const hasWebsite = operationsTypes.includes("website") || operationsTypes.includes("ppc&web");
 
       if (hasSocial) {
         steps.push({
@@ -99,7 +102,7 @@ export function useOnboarding() {
         // UNLESS the user expects "type=ppc" to just ask about Google Ads, GA4, GTM, GSC.
         steps.push({
           id: "ppc",
-          title: "PPC Settings",
+          title: "PPC Service Onboarding Section",
           fields: ppcSpecificFields
         });
       }
@@ -129,16 +132,16 @@ export function useOnboarding() {
       return;
     }
 
-    if (typeParam === 'ppc') {
-      setSocialAccessFields(ppcAccessFields);
-    } else if (typeParam === 'website') {
-      setSocialAccessFields(websiteAccessFields);
-    } else if (typeParam === 'ppc&web') {
+    if (hasPpc && hasWebsite) {
       setSocialAccessFields(ppcWebAccessFields);
+    } else if (hasPpc) {
+      setSocialAccessFields(ppcAccessFields);
+    } else if (hasWebsite) {
+      setSocialAccessFields(websiteAccessFields);
     } else {
       setSocialAccessFields(socialMediaAccessFields);
     }
-  }, [typeParam, isOperationsOnboarding]);
+  }, [hasPpc, hasWebsite, isOperationsOnboarding]);
   const [assetFields] = useState(assetTypesFields);
   const [websiteFields] = useState(websiteDetailsFields);
   const [accountFields] = useState(accountDetailsFields);
@@ -276,7 +279,7 @@ export function useOnboarding() {
       { prefix: "gmb", label: "Google My Business", emailField: "google_business_email", passwordField: "google_business_password" },
     ];
 
-    if (typeParam === 'ppc' || typeParam === 'ppc&web' || (isOperationsOnboarding && operationsTypes.includes("ppc"))) {
+    if (hasPpc) {
       platforms.push({ prefix: "google_ads", label: "Google Ads", emailField: "google_ads_email", passwordField: "google_ads_password" });
     }
 
@@ -321,7 +324,7 @@ export function useOnboarding() {
       }
     });
 
-    if (typeParam === 'ppc' || typeParam === 'ppc&web' || typeParam === 'website' || isOperationsOnboarding) {
+    if (hasPpc || hasWebsite) {
       const inviteOnlyPlatforms = [
         { prefix: "ga4", label: "Google Analytics (GA4)" },
         { prefix: "gtm", label: "Google Tag Manager" },
@@ -458,6 +461,32 @@ export function useOnboarding() {
           companyPan: formData.company_pan_number,
           companyTan: formData.company_tan_number,
           companyRegNumber: formData.company_registration_number,
+
+          // --- Client Feedback Parameters ---
+          name: formData.full_name,
+          position_role: typeof formData.role_in_organisation === 'object' && formData.role_in_organisation !== null
+            ? (formData.role_in_organisation.selected === 'others' ? formData.role_in_organisation.otherText : formData.role_in_organisation.selected)
+            : formData.role_in_organisation,
+          overall_experience: formData.overall_experience_rating,
+          impact_assessment: formData.service_impact_rating,
+          quality_of_services: formData.service_quality_rating,
+          delivery_time: formData.delivery_time_option,
+          brand_strategy_alignment: formData.strategy_alignment_rating,
+          services_provided: formData.services_provided?.list || [],
+          other_service_description: formData.services_provided?.other_service_description,
+          services_align_with_goals: formData.goal_alignment_rating,
+          meet_deadlines_rating: formData.deadline_efficiency_rating,
+          feedback_understood_rating: formData.feedback_understanding_rating,
+          digital_marketing_results: formData.marketing_results_rating,
+          content_creation_rating: formData.brand_representation_rating,
+          surprised_deliverables: formData.pleasant_surprise,
+          team_responsiveness: formData.responsiveness_rating,
+          working_relationship_description: formData.experience_description,
+          additional_services_improvements: formData.additional_services,
+          likelihood_to_continue: formData.service_continuation_rating,
+          likelihood_to_recommend: formData.recommendation_likelihood_rating,
+          other_comments: formData.final_feedback_text,
+
           onboardingFiles: {
             certificate_of_incorporation: formData.certificate_of_incorporation,
             gst_registration_certificate: formData.gst_registration_certificate,
@@ -483,9 +512,12 @@ export function useOnboarding() {
             }
           },
           websiteTechDetails: {
-            hasDomain: formData.has_domain,
-            hasCmsPlatform: formData.has_cms_platform,
-            hasThirdPartyPlatform: formData.has_third_party_platform,
+            hasDomain: formData.has_domain?.enabled || false,
+            domainName: formData.has_domain?.value || '',
+            hasCmsPlatform: formData.has_cms_platform?.enabled || false,
+            cmsPlatformName: formData.has_cms_platform?.value || '',
+            hasThirdPartyPlatform: formData.has_third_party_platform?.enabled || false,
+            thirdPartyPlatformName: formData.has_third_party_platform?.value || '',
             formDataStorage: formData.form_data_storage,
             hostingServerDetails: formData.hosting_server_details,
             sourceCodeStorage: formData.source_code_storage,
@@ -618,9 +650,12 @@ export function useOnboarding() {
             google_search_console: { email: formData.google_search_console_email, password: formData.google_search_console_password }
           },
           websiteTechDetails: {
-            hasDomain: formData.has_domain,
-            hasCmsPlatform: formData.has_cms_platform,
-            hasThirdPartyPlatform: formData.has_third_party_platform,
+            hasDomain: formData.has_domain?.enabled || false,
+            domainName: formData.has_domain?.value || '',
+            hasCmsPlatform: formData.has_cms_platform?.enabled || false,
+            cmsPlatformName: formData.has_cms_platform?.value || '',
+            hasThirdPartyPlatform: formData.has_third_party_platform?.enabled || false,
+            thirdPartyPlatformName: formData.has_third_party_platform?.value || '',
             formDataStorage: formData.form_data_storage,
             hostingServerDetails: formData.hosting_server_details,
             sourceCodeStorage: formData.source_code_storage,
@@ -633,12 +668,18 @@ export function useOnboarding() {
         };
       }
 
-      const endpoint = isBrandIdentityPage
-        ? "/api/v1/clients/brand-questionnaire"
-        : (isClientOnboarding || isOperationsOnboarding)
-          ? "/api/v1/clients/details"
-          : "/api/v1/client-feedback";
+      const isFeedback = !isClientOnboarding && !isBrandIdentityPage && !isOperationsOnboarding;
+      const finalPayload = isFeedback ? payload : { data: payload };
 
+      const endpoint = isBrandIdentityPage
+        ? `/api/v1/client/onboarding/${clientId}/brand-assets`
+        : isClientOnboarding
+          ? `/api/v1/client/onboarding/${clientId}`
+          : isOperationsOnboarding
+            ? `/api/v1/operations/onboarding/${clientId}`
+            : "/api/v1/client-feedback";
+
+      console.log("Dataaaa", finalPayload);
       try {
         await apiClient.post(endpoint, payload);
         toast.success("Thank you! Your information has been submitted.");
