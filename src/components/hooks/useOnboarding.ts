@@ -62,7 +62,7 @@ export function useOnboarding() {
   const [showSplash, setShowSplash] = useState(true);
 
   // Parse operations types (e.g., "?type=social,ppc,website")
-  const operationsTypes = typeParam ? typeParam.split(',').map(t => t.trim().toLowerCase()) : ["social"];
+  const operationsTypes = typeParam ? typeParam.split(',').map(t => t.trim().toLowerCase()) : [];
   const hasSocial = operationsTypes.includes("social");
   const hasPpc = operationsTypes.includes("ppc") || operationsTypes.includes("ppc&web");
   const hasWebsite = operationsTypes.includes("website") || operationsTypes.includes("ppc&web");
@@ -115,19 +115,12 @@ export function useOnboarding() {
         }
         steps.push({
           id: "website",
-          title: "Website Details",
+          title: "Website Service Onboarding Section",
           fields: webFields
         });
       }
 
-      // Fallback if none matches
-      if (steps.length === 0) {
-        steps.push({
-          id: "social",
-          title: "Platform User ID & Password",
-          fields: socialMediaAccessFields
-        });
-      }
+      // Fallback if none matches - Removed as per user request to stop at Asset Types when no type is passed
       setOperationsStepsConfig(steps);
       return;
     }
@@ -209,7 +202,16 @@ export function useOnboarding() {
 
   const validateFieldsHelper = (data: FormData, fields: any[]): Record<string, string> => {
     const errors: Record<string, string> = {};
+    let isCurrentHeaderVisible = true;
+
     fields.forEach((field) => {
+      if (field.fieldType === "header") {
+        const headerState = data[field.name];
+        isCurrentHeaderVisible = field.hasToggle ? (headerState === undefined ? true : headerState) : true;
+      }
+
+      if (!isCurrentHeaderVisible && field.fieldType !== "header") return;
+
       if (field.fieldType === "header" || field.fieldType === "subheader" || field.fieldType === "toggle" || field.fieldType === "file" || field.optional) return;
 
       if (field.dependsOn !== undefined && !data[field.dependsOn]) return;
@@ -286,8 +288,9 @@ export function useOnboarding() {
     // Check if instagram header exists in this set of fields before validating
     const fieldsToValidate = customFields || socialAccessFields;
     const hasInstagram = fieldsToValidate.some(f => f.name === "instagram_header");
+    const isInstagramEnabled = data.instagram_header === undefined ? true : data.instagram_header;
 
-    if (hasInstagram) {
+    if (hasInstagram && isInstagramEnabled) {
       if (!data.instagram_email || !data.instagram_email.trim()) {
         errors.instagram_header = "Instagram User ID is required";
       }
@@ -304,8 +307,9 @@ export function useOnboarding() {
       // Actually simpler logic: We only validate it if either CustomFields is undefined (default behaviour)
       // OR if the invite_toggle or access_toggle field exists in CustomFields
       const fieldExists = !customFields || customFields.some(f => f.name === `${prefix}_access_toggle` || f.name === `${prefix}_invite_toggle`);
+      const isHeaderEnabled = data[`${prefix}_header`] === undefined ? true : data[`${prefix}_header`];
 
-      if (fieldExists) {
+      if (fieldExists && isHeaderEnabled) {
         const accessToggle = data[`${prefix}_access_toggle`];
         const inviteToggle = data[`${prefix}_invite_toggle`];
 
@@ -332,7 +336,9 @@ export function useOnboarding() {
       ];
       inviteOnlyPlatforms.forEach(({ prefix, label }) => {
         const inviteExists = !customFields || customFields.some(f => f.name === `${prefix}_invite_toggle`);
-        if (inviteExists) {
+        const isHeaderEnabled = data[`${prefix}_header`] === undefined ? true : data[`${prefix}_header`];
+
+        if (inviteExists && isHeaderEnabled) {
           const inviteToggle = data[`${prefix}_invite_toggle`];
           if (!inviteToggle) {
             errors[`${prefix}_header`] = `Please acknowledge the invite step for ${label}`;
@@ -343,7 +349,16 @@ export function useOnboarding() {
 
     // Dynamic fields validation (for simple texts and toggles required)
     if (customFields) {
+      let isCurrentHeaderVisible = true;
+
       customFields.forEach(field => {
+        if (field.fieldType === "header") {
+          const headerState = data[field.name];
+          isCurrentHeaderVisible = field.hasToggle ? (headerState === undefined ? true : headerState) : true;
+        }
+
+        if (!isCurrentHeaderVisible && field.fieldType !== "header") return;
+
         if (field.fieldType === "toggle_input") {
           const fieldValue = data[field.name];
           if (fieldValue && fieldValue.enabled && (!fieldValue.value || !fieldValue.value.trim())) {

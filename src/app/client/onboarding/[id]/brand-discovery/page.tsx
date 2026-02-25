@@ -50,7 +50,7 @@ export default function BrandIdentityPage() {
                 <SplashScreen />
             ) : (
                 <>
-                    {step > 1 && <FormHeader formName="Brand Discovery Feedback" />}
+                    {step > 1 && <FormHeader formName="Brand Discovery" />}
                     {/* Step Progress Indicator */}
                     {step > 1 && (
                         <StepIndicator
@@ -65,7 +65,7 @@ export default function BrandIdentityPage() {
                     {step === 1 && (
                         <IntroStep
                             img="/images/steps/5.png"
-                            title="Brand Discovery Feedback "
+                            title="Brand Discovery Form "
                             description="Share what you do, why you do it, and what makes you unique. Your story will guide us in creating work that feels authentically you."
                             onNext={handleNext}
                             buttonClassName="!bg-[#E31313] !text-lg text-white !font-bold"

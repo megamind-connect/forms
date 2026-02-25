@@ -70,21 +70,23 @@ export default function ClientPage() {
         <SplashScreen />
       ) : (
         <>
-          <FormHeader formName="Client Onboarding" />
+          {step > 1 && <FormHeader formName="Client Onboarding" />}
           {/* Step Progress Indicator */}
-          <StepIndicator
-            step={step}
-            stepStructure={stepStructure}
-            getStepProgress={getStepProgress}
-            handleStepClick={handleStepClick}
-          />
+          {step > 1 && (
+            <StepIndicator
+              step={step}
+              stepStructure={stepStructure}
+              getStepProgress={getStepProgress}
+              handleStepClick={handleStepClick}
+            />
+          )}
 
           {/* STEP 1: INTRO */}
           {step === 1 && (
             <IntroStep
               img="/images/onb-steps/1.png"
-              title="Let’s Start With the Essentials"
-              description="We’ll start with your core brand and contact details so we can identify you clearly and keep our communication accurate from day one."
+              title="Client Onboarding Form"
+              description="This form collects your basic business information."
               onNext={handleNext}
               buttonClassName="!bg-[#E31313] !text-lg text-white !font-bold"
             />
@@ -136,7 +138,7 @@ export default function ClientPage() {
                 headerTitle="Contact Information"
                 buttonText="Submit"
                 isClientPage={true}
-              />
+                />
             </div>
           )}
 

@@ -37,22 +37,25 @@ export default function OperationsOnboardingPage() {
                 <SplashScreen />
             ) : (
                 <>
-                    <FormHeader formName="Operations Onboarding" />
+                    {step > 1 && <FormHeader formName="Operations Onboarding" />}
 
                     {/* Step Progress Indicator */}
-                    <StepIndicator
-                        step={step}
-                        stepStructure={stepStructure}
-                        getStepProgress={getStepProgress}
-                        handleStepClick={handleStepClick}
-                    />
+                    {step > 1 && (
+                        <StepIndicator
+                            step={step}
+                            stepStructure={stepStructure}
+                            getStepProgress={getStepProgress}
+                            handleStepClick={handleStepClick}
+                        />
+                    )}
 
                     {/* STEP 1: INTRO */}
                     {step === 1 && (
                         <IntroStep
                             img="/images/onb-steps/1.png"
-                            title="Let’s Gather Your Technical Assets"
-                            description="We need your technical assets and platform access credentials to properly set up and manage your accounts."
+                            title="Operations Onboarding Form"
+                            description="Platform Access Information
+This form collects all required platform access, account credentials and technical details."
                             onNext={handleNext}
                             buttonClassName="!bg-[#E31313] !text-lg text-white !font-bold"
                         />
@@ -70,6 +73,8 @@ export default function OperationsOnboardingPage() {
                             markFieldTouched={markStep9FieldTouched}
                             markAllFieldsTouched={markAllStep9FieldsTouched}
                             headerTitle="Asset Types"
+                            buttonText={operationsStepsConfig.length === 0 ? "Submit" : "Next"}
+                            isClientPage={true}
                         />
                     )}
 
