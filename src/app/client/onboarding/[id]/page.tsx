@@ -86,7 +86,7 @@ export default function ClientPage() {
             <IntroStep
               img="/images/onb-steps/1.png"
               title="Client Onboarding Form"
-              description="This form collects your basic business information."
+              description={<>This form collects your basic business information. <br /> Kindly note: If any field is not applicable, please mention “NA”.</>}
               onNext={handleNext}
               buttonClassName="!bg-[#E31313] !text-lg text-white !font-bold"
             />

@@ -2,9 +2,11 @@
 import { Button } from "@/components/ui/Button";
 import Image from "next/image";
 
+import { ReactNode } from "react";
+
 interface IntroStepProps {
   title: string;
-  description: string;
+  description: ReactNode;
   buttonLabel?: string;
   onNext: () => void;
   buttonClassName?: string;
