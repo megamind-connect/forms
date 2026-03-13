@@ -135,7 +135,9 @@ export function useOnboarding() {
       setSocialAccessFields(socialMediaAccessFields);
     }
   }, [hasPpc, hasWebsite, isOperationsOnboarding]);
-  const [assetFields] = useState(assetTypesFields);
+  const assetFields = isBrandIdentityPage 
+    ? assetTypesFields.map(field => field.id === "asset_desc" ? { ...field, label: "If you have any of the following assets, please toggle 'Yes'." } : field)
+    : assetTypesFields;
   const [websiteFields] = useState(websiteDetailsFields);
   const [accountFields] = useState(accountDetailsFields);
   const [businessVerificationFields_state] = useState(businessVerificationFields);
@@ -261,6 +263,8 @@ export function useOnboarding() {
   const validateStep8Fields = (data: FormData) => validateFieldsHelper(data, scopeFields);
   const validateStep9Fields = (data: FormData) => {
     const errors: Record<string, string> = {};
+    if (isBrandIdentityPage) return errors; // Skip validation for brand discovery form toggles
+
     assetFields.forEach((field) => {
       if (field.fieldType === "toggle_input") {
         const fieldValue = data[field.name] || { enabled: false, value: "" };
