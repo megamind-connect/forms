@@ -4,13 +4,21 @@ import React from 'react';
 // We can add variants later (e.g., for primary, secondary, destructive buttons)
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   isLoading?: boolean;
+  variant?: 'primary' | 'outline' | 'ghost' | 'destructive';
 }
 
 export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ className, children, isLoading, ...props }, ref) => {
+  ({ className, children, isLoading, variant = 'primary', ...props }, ref) => {
+    const variants = {
+      primary: 'bg-[#F43F46] text-white hover:bg-red-600 shadow-lg shadow-red-200',
+      outline: 'border-2 border-gray-200 text-gray-700 hover:bg-gray-50',
+      ghost: 'bg-transparent text-gray-600 hover:bg-gray-100',
+      destructive: 'bg-red-600 text-white hover:bg-red-700',
+    };
+
     return (
       <button
-        className={`inline-flex items-center justify-center rounded-md px-4 cursor-pointer py-2 text-sm font-medium transition-colors focus:outline-none outline-none  disabled:pointer-events-none disabled:opacity-50 bg-blue-600 text-white hover:bg-blue-700 ${className}`}
+        className={`inline-flex items-center justify-center rounded-md px-4 cursor-pointer py-2 text-sm font-medium transition-all focus:outline-none outline-none disabled:pointer-events-none disabled:opacity-50 ${variants[variant]} ${className}`}
         ref={ref}
         disabled={isLoading}
         {...props}
