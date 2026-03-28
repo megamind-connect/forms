@@ -68,8 +68,8 @@ export default function DynamicField({ field, value, onChange }: DynamicFieldPro
   // ✅ Searchable Field
   if (fieldType === "searchable") {
     return (
-      <div className="w-full flex flex-col rounded-md gap-2 bg-white p-5 md:p-10 relative">
-        <label className="text-base md:text-[24px] font-medium text-[#202020]">
+      <div className="w-full flex flex-col rounded-md gap-4 bg-white p-5 md:p-10 relative">
+        <label className="text-base md:text-[24px] font-medium text-[#202020] mb-1">
           {label} <span className="text-red-500">*</span>
         </label>
 
@@ -123,7 +123,7 @@ export default function DynamicField({ field, value, onChange }: DynamicFieldPro
     return (
       <div className="w-full space-y-3 bg-white rounded-md p-5 md:p-10">
         <div className="flex flex-col md:flex-row justify-between items-start gap-2">
-          <p className="text-base md:text-[24px] font-medium text-[#202020] leading-tight">
+          <p className="text-base md:text-[24px] font-medium text-[#202020] leading-tight mb-2">
             {(() => {
               const words = label.trim().split(/\s+/);
               const last = words.pop();
@@ -186,8 +186,8 @@ export default function DynamicField({ field, value, onChange }: DynamicFieldPro
   // ✅ Short Input (No Changes)
   if (fieldType === "short") {
     return (
-      <div className="w-full flex flex-col rounded-sm gap-2 bg-white p-5 md:p-10">
-        <label className="text-base md:text-[24px] font-medium text-[#202020]">
+      <div className="w-full flex flex-col rounded-sm gap-4 bg-white p-5 md:p-10">
+        <label className="text-base md:text-[24px] font-medium text-[#202020] mb-1">
           {label} <span className="text-red-500">*</span>
         </label>
 

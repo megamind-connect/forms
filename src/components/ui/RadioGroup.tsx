@@ -22,7 +22,7 @@ export function RadioGroup({
   className = "",
 }: RadioGroupProps) {
   return (
-    <div className={`flex gap-6 ${className}`}>
+    <div className={`flex flex-wrap gap-x-8 gap-y-4 ${className}`}>
       {options.map((opt, idx) => (
         <label
           key={idx}
