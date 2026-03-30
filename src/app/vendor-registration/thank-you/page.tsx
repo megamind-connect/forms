@@ -1,28 +1,35 @@
-"use client";
+import Image from "next/image";
+import React from "react";
 
-import React from 'react';
-import Link from 'next/link';
-import { Button } from '@/components/ui';
-import { CheckCircle2 } from 'lucide-react';
+const ThankYouPage = () => {
+    return (
+        <div className="min-h-screen bg-[#F9F9F9] flex items-center justify-center px-6">
+            <div className="flex flex-col md:flex-row items-center gap-10 text-[#E31313]">
+                {/* Text Content */}
+                <div className="text-center md:text-left">
+                    <h1 className="text-4xl md:text-[90px] font-bold mb-4 leading-tight">Thank You!</h1>
+                    <p className="text-lg md:text-[32px] font-medium leading-relaxed">
+                        Your Vendor Registration information <br className="hidden md:block" /> has been submitted successfully.
+                    </p>
+                    <p className="text-sm md:text-lg text-gray-600 mt-6 max-w-md">
+                        Our team will review your application and get back to you shortly.
+                    </p>
+                </div>
 
-export default function ThankYouPage() {
-  return (
-    <div className="min-h-screen bg-[#FDFDFD] flex items-center justify-center px-4">
-      <div className="max-w-md w-full bg-white rounded-2xl shadow-sm border border-gray-100 p-10 text-center space-y-6">
-        <div className="flex justify-center">
-          <CheckCircle2 className="w-20 h-20 text-green-500" />
+                {/* Illustration */}
+                <div className="relative">
+                    <Image
+                        src="/images/thankyou.png"
+                        alt="Thank you illustration"
+                        width={500}
+                        height={500}
+                        className="object-cover"
+                        priority
+                    />
+                </div>
+            </div>
         </div>
-        <h1 className="text-3xl font-bold text-[#202020]">Thank You!</h1>
-        <p className="text-[#57534E]">
-          Your vendor registration has been submitted successfully. 
-          Our team will review your application and get back to you soon.
-        </p>
-        <Link href="/" className="block">
-          <Button className="w-full bg-[#F43F46] hover:bg-red-600 text-white h-12">
-            Return Home
-          </Button>
-        </Link>
-      </div>
-    </div>
-  );
-}
+    );
+};
+
+export default ThankYouPage;

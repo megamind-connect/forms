@@ -18,20 +18,20 @@ export function Checkbox({
   className = "",
 }: CheckboxProps) {
   return (
-    <label className={`flex items-start gap-3 cursor-pointer ${className}`}>
-      <div className="relative mt-1">
+    <label className={`flex items-start gap-3 cursor-pointer ${className} group`}>
+      <div className="relative flex items-center justify-center w-5 h-5 shrink-0 mt-0.5 md:mt-1">
         <input
           type="checkbox"
           name={name}
           checked={checked}
           onChange={(e) => onChange(name, e.target.checked)}
-          className="appearance-none w-5 h-5 border-2 border-[#D9D9D9] rounded-md cursor-pointer checked:border-[#F43F46] checked:bg-[#F43F46] transition-all"
+          className="peer absolute m-0 appearance-none w-full h-full border-2 border-[#D9D9D9] rounded-md cursor-pointer checked:border-[#F43F46] checked:bg-[#F43F46] transition-all"
         />
         {checked && (
-          <Check className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-4 h-4 text-white pointer-events-none" />
+          <Check className="relative z-10 w-3.5 h-3.5 text-white pointer-events-none" strokeWidth={3} />
         )}
       </div>
-      {label && <span className="text-sm font-medium text-[#57534E] leading-relaxed">{label}</span>}
+      {label && <span className="text-sm font-medium text-[#57534E] leading-relaxed group-hover:text-black transition-colors">{label}</span>}
     </label>
   );
 }
