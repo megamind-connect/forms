@@ -1,154 +1,235 @@
 "use client";
 
-import DynamicField from "@/components/client/DynamicFields";
-import { IntroStep } from "@/components/client/IntroStep";
+import React, { useState } from "react";
+import { useRouter } from "next/navigation";
+import Image from "next/image";
+import toast from "react-hot-toast";
+
+import { Input } from "@/components/ui/Input";
+import { CustomSelect } from "@/components/ui/CustomSelect";
+import { FileUpload } from "@/components/ui/FileUpload";
+import { Button } from "@/components/ui/Button";
 import { SplashScreen } from "@/components/client/SplashScreen";
-import { Step2Form } from "@/components/client/Step2Form";
-import { StepIndicator } from "@/components/client/StepIndicator";
 import { useVendorOnboarding } from "@/components/hooks/useVendorOnboarding";
-import { FormHeader } from "@/components/shared/FormHeader";
 
 export default function VendorOnboardingPage() {
+  const router = useRouter();
   const {
-    step,
     showSplash,
     formData,
-    stepStructure,
     vendorStep1Fields,
     vendorStep2Fields,
     vendorStep3Fields,
     vendorStep4Fields,
     vendorStep5Fields,
     vendorStep6Fields,
-    touchedSteps,
-    handleNext,
-    handleStepClick,
-    getStepProgress,
     updateFormData,
-    markFieldTouched,
-    markAllFieldsTouched,
     validateFields,
   } = useVendorOnboarding();
 
+  const [touched, setTouched] = useState<Record<string, boolean>>({});
+  const [isLoading, setIsLoading] = useState(false);
+
+  const allFields = [
+    ...vendorStep1Fields,
+    ...vendorStep2Fields,
+    ...vendorStep3Fields,
+    ...vendorStep4Fields,
+    ...vendorStep5Fields,
+    ...vendorStep6Fields,
+  ];
+
+  const handleGlobalSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    // Mark all as touched for validation UI
+    const allTouched: Record<string, boolean> = {};
+    allFields.forEach((f) => {
+      allTouched[f.name] = true;
+    });
+    setTouched(allTouched);
+
+    const errors = validateFields(allFields);
+    if (Object.keys(errors).length > 0) {
+      toast.error("Please complete all required fields.");
+      return;
+    }
+
+    setIsLoading(true);
+    try {
+      // Mimicking original submission logic from handleNext
+      toast.success("Thank you! Vendor onboarding information submitted.");
+      router.push("/thank-you");
+    } catch (error) {
+      toast.error("Failed to submit. Please try again.");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const renderField = (field: any) => {
+    const error = validateFields([field])[field.name];
+    const isTouched = touched[field.name];
+
+    if (field.fieldType === "file") {
+      return (
+        <div key={field.id} className="flex flex-col space-y-1">
+          <FileUpload
+            label={field.label}
+            placeholder={field.placeholder}
+            value={formData[field.name]}
+            onChange={(file) => updateFormData({ [field.name]: file })}
+            className=""
+          />
+          {isTouched && error && (
+            <p className="text-red-600 text-xs mt-1">{error}</p>
+          )}
+        </div>
+      );
+    }
+
+    return (
+      <div key={field.id} className="space-y-4">
+        <label className="text-sm font-medium text-[#57534E]">
+          {field.label} {!field.optional && "*"}
+        </label>
+
+        {(field.fieldType === "text" || field.fieldType === "email") && (
+          <Input
+            type={field.fieldType}
+            placeholder={field.placeholder}
+            value={formData[field.name] || ""}
+            onChange={(e) => updateFormData({ [field.name]: e.target.value })}
+            onBlur={() => setTouched((prev) => ({ ...prev, [field.name]: true }))}
+          />
+        )}
+
+        {field.fieldType === "dropdown" && (
+          <div className="relative w-full">
+            <CustomSelect
+              name={field.name}
+              options={field.options?.map((o: any) => ({
+                label: o.label,
+                value: o.value,
+              })) || []}
+              placeholder={field.placeholder}
+              value={formData[field.name] || ""}
+              onChange={(e) => {
+                updateFormData({ [field.name]: e.target.value });
+                setTouched((prev) => ({ ...prev, [field.name]: true }));
+                if (e.target.value !== "other") {
+                  updateFormData({ [`${field.name}_other`]: "" });
+                }
+              }}
+            />
+            {formData[field.name] === "other" && (
+              <div className="mt-2 text-left">
+                <Input
+                  type="text"
+                  name={`${field.name}_other`}
+                  value={formData[`${field.name}_other`] || ""}
+                  placeholder={`Please specify your ${field.label.toLowerCase()}...`}
+                  onChange={(e) =>
+                    updateFormData({ [`${field.name}_other`]: e.target.value })
+                  }
+                  onBlur={() =>
+                    setTouched((prev) => ({
+                      ...prev,
+                      [`${field.name}_other`]: true,
+                    }))
+                  }
+                  required
+                />
+              </div>
+            )}
+          </div>
+        )}
+
+        {isTouched && error && (
+          <p className="text-red-600 text-xs mt-1">{error}</p>
+        )}
+      </div>
+    );
+  };
+
+  const renderSection = (title: string, fields: any[]) => (
+    <section className="space-y-10">
+      <h2 className="text-xl font-bold text-[#202020] uppercase border-b pb-2">
+        {title}
+      </h2>
+      <div
+        className={`grid grid-cols-1 md:grid-cols-2 ${
+          fields.some((f) => f.fieldType === "file")
+            ? "md:grid-cols-3"
+            : "lg:grid-cols-3"
+        } gap-8`}
+      >
+        {fields.map(renderField)}
+      </div>
+    </section>
+  );
+
   return (
-    <div className="relative min-h-screen !bg-[#FFFBFB] flex flex-col py-10 justify-center overflow-hidden">
+    <div className="min-h-screen bg-[#FDFDFD] py-10 px-4">
       {showSplash ? (
         <SplashScreen />
       ) : (
-        <>
-          {step > 1 && <FormHeader formName="Vendor Onboarding" />}
-          
-          {step > 1 && (
-            <StepIndicator
-              step={step}
-              stepStructure={stepStructure}
-              getStepProgress={getStepProgress}
-              handleStepClick={handleStepClick}
+        <div className="max-w-4xl mx-auto flex-1 bg-white rounded-2xl shadow-sm border border-gray-100 p-8 md:p-12">
+          {/* Header Banner */}
+          <div className="w-full relative flex justify-center items-center mb-6">
+            <Image
+              src="/images/feedBackImage.png"
+              alt="Vendor Registration"
+              width={1400}
+              height={300}
+              className="w-full object-cover rounded-md"
             />
-          )}
+            <div className="absolute left-0 top-[30%] -translate-y-1/2">
+              <h1 className="text-xl lg:text-[50px] font-bold text-red ml-10">
+                Vendor Registration
+              </h1>
+            </div>
+          </div>
 
-          {/* INTRO STEP */}
-          {step === 1 && (
-            <IntroStep
-              img="/images/onb-steps/1.png"
-              title="Vendor Onboarding Form"
-              description="Welcome! Please complete the following steps to onboard as a vendor."
-              onNext={handleNext}
-              buttonClassName="!bg-[#E31313] !text-lg text-white !font-bold"
-            />
-          )}
+          <form onSubmit={handleGlobalSubmit} className="space-y-16 mt-10">
+            {renderSection("Basic Details", vendorStep1Fields)}
+            {renderSection("Contact Details", vendorStep2Fields)}
+            {renderSection("Address Details", vendorStep3Fields)}
+            {renderSection("Bank Account Details", vendorStep4Fields)}
+            {renderSection("Business & Tax Information", vendorStep5Fields)}
 
-          {/* STEP 1 */}
-          {step === 2 && (
-            <Step2Form
-              headerTitle="Basic Vendor Details"
-              formFields={vendorStep1Fields}
-              formData={formData}
-              onNext={handleNext}
-              updateFormData={updateFormData}
-              validateFields={() => validateFields(vendorStep1Fields)}
-              touched={touchedSteps[2]}
-              markFieldTouched={(name) => markFieldTouched(2, name)}
-              markAllFieldsTouched={() => markAllFieldsTouched(2)}
-            />
-          )}
+            <section className="space-y-10">
+              <h2 className="text-xl font-bold text-[#202020] uppercase border-b pb-2">
+                Document Uploads
+              </h2>
+              <p className="text-sm text-gray-500 italic">
+                Upload clear copies of the following documents for verification.
+              </p>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                {vendorStep6Fields.map(renderField)}
+              </div>
+            </section>
 
-          {/* STEP 2 */}
-          {step === 3 && (
-            <Step2Form
-              headerTitle="Contact Details"
-              formFields={vendorStep2Fields}
-              formData={formData}
-              onNext={handleNext}
-              updateFormData={updateFormData}
-              validateFields={() => validateFields(vendorStep2Fields)}
-              touched={touchedSteps[3]}
-              markFieldTouched={(name) => markFieldTouched(3, name)}
-              markAllFieldsTouched={() => markAllFieldsTouched(3)}
-            />
-          )}
-
-          {/* STEP 3 */}
-          {step === 4 && (
-            <Step2Form
-              headerTitle="Address Details"
-              formFields={vendorStep3Fields}
-              formData={formData}
-              onNext={handleNext}
-              updateFormData={updateFormData}
-              validateFields={() => validateFields(vendorStep3Fields)}
-              touched={touchedSteps[4]}
-              markFieldTouched={(name) => markFieldTouched(4, name)}
-              markAllFieldsTouched={() => markAllFieldsTouched(4)}
-            />
-          )}
-
-          {/* STEP 4 */}
-          {step === 5 && (
-            <Step2Form
-              headerTitle="Bank Account Details"
-              formFields={vendorStep4Fields}
-              formData={formData}
-              onNext={handleNext}
-              updateFormData={updateFormData}
-              validateFields={() => validateFields(vendorStep4Fields)}
-              touched={touchedSteps[5]}
-              markFieldTouched={(name) => markFieldTouched(5, name)}
-              markAllFieldsTouched={() => markAllFieldsTouched(5)}
-            />
-          )}
-
-          {/* STEP 5 */}
-          {step === 6 && (
-            <Step2Form
-              headerTitle="Business & Tax Information"
-              formFields={vendorStep5Fields}
-              formData={formData}
-              onNext={handleNext}
-              updateFormData={updateFormData}
-              validateFields={() => validateFields(vendorStep5Fields)}
-              touched={touchedSteps[6]}
-              markFieldTouched={(name) => markFieldTouched(6, name)}
-              markAllFieldsTouched={() => markAllFieldsTouched(6)}
-            />
-          )}
-
-          {/* STEP 6 */}
-          {step === 7 && (
-            <Step2Form
-              headerTitle="Document Uploads"
-              formFields={vendorStep6Fields}
-              formData={formData}
-              onNext={handleNext}
-              updateFormData={updateFormData}
-              validateFields={() => validateFields(vendorStep6Fields)}
-              touched={touchedSteps[7]}
-              markFieldTouched={(name) => markFieldTouched(7, name)}
-              markAllFieldsTouched={() => markAllFieldsTouched(7)}
-              buttonText="Submit"
-            />
-          )}
-        </>
+            <div className="flex flex-col md:flex-row justify-end gap-4 pt-6 border-t mt-8">
+              <Button
+                variant="outline"
+                type="button"
+                className="bg-white text-[#F43F46] border border-[#F43F46] hover:bg-gray-100 px-10 h-14"
+                onClick={() => router.back()}
+                disabled={isLoading}
+              >
+                Cancel
+              </Button>
+              <Button
+                type="submit"
+                className="bg-[#F43F46] hover:bg-red-600 text-white px-10 h-14"
+                isLoading={isLoading}
+              >
+                Submit Onboarding
+              </Button>
+            </div>
+          </form>
+        </div>
       )}
     </div>
   );
