@@ -48,9 +48,9 @@ export function FileUpload({
   };
 
   return (
-    <div className={`space-y-1 w-full text-left  ${className}`}>
+    <div className={`flex flex-col h-full w-full text-left ${className}`}>
       <label
-        className="text-xl font-medium text-[#57534E] mb-3 block p-0"
+        className="text-xl font-medium text-[#57534E] block p-0"
         style={{ marginBottom: value ? "1.25rem" : "0.75rem" }}
       >
         {label}
@@ -62,7 +62,7 @@ export function FileUpload({
       </label>
       <div
         className={`
-                border-2 border-dashed rounded-lg p-8 flex flex-col items-center justify-center cursor-pointer transition-colors
+                border-2 border-dashed rounded-lg p-8 flex flex-col items-center justify-center cursor-pointer transition-colors mt-auto
                 ${dragActive
             ? "border-red-500 bg-red-50"
             : "border-[#E5E5E5] bg-transparent"
