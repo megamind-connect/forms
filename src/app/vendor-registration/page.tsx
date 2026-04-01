@@ -207,7 +207,7 @@ export default function VendorOnboardingPage() {
         <div className="w-full relative flex justify-center items-center mb-6">
           <Image src="/images/feedBackImage.png" alt="Vendor Registration" width={1400} height={300} className="w-full object-cover rounded-md" />
           <div className="absolute left-0 top-[30%] -translate-y-1/2">
-            <h1 className="text-xl lg:text-[50px] font-bold text-red ml-10">Vendor Registration</h1>
+            <h1 className="text-xl lg:text-[50px] font-bold text-red ">Vendor Registration <br /> Form</h1>
           </div>
         </div>
 
@@ -235,7 +235,7 @@ export default function VendorOnboardingPage() {
               Cancel
             </Button>
             <Button type="submit" className="bg-[#F43F46] hover:bg-red-600 text-white px-10 h-14" isLoading={isLoading}>
-              Submit Onboarding
+              Submit
             </Button>
           </div>
         </form>
