@@ -14,7 +14,7 @@ export default function ThankYouPage() {
         </div>
         <h1 className="text-3xl font-bold text-[#202020]">Thank You!</h1>
         <p className="text-[#57534E]">
-          Your Creative Partner registration has been submitted successfully. 
+          Your Freelancer registration has been submitted successfully. 
           Our team will review your application and get back to you soon.
         </p>
         <Link href="/" className="block">
