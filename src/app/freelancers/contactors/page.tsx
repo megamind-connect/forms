@@ -129,7 +129,7 @@ const FreelancerRegistration = () => {
       });
 
       toast.success("Registration submitted successfully!");
-      router.push('/creative-partner-registration/thank-you');
+      router.push('/freelancers/contactors/thank-you');
     } catch (error: any) {
       console.error("Submission error:", error);
       toast.error(error.response?.data?.message || "Failed to submit registration. Please try again.");
@@ -161,7 +161,7 @@ const FreelancerRegistration = () => {
 
           <div className="absolute left-0 top-[30%] -translate-y-1/2">
             {/* <h1 className="text-xl lg:text-[80px] font-bold text-[#E31313]">{month}</h1> */}
-            <h1 className="text-xl lg:text-[50px] font-bold text-[#E31313]">Creative Partner <br /> Registration</h1>
+            <h1 className="text-xl lg:text-[50px] font-bold text-[#E31313]">Freelancers</h1>
           </div>
         </div>
         <form onSubmit={handleSubmit} className="space-y-16">
