@@ -81,46 +81,54 @@ export function useOnboarding() {
 
   useEffect(() => {
     if (isOperationsOnboarding) {
-      const steps = [];
+      const steps: any[] = [];
       const hasSocial = operationsTypes.includes("social");
       const hasPpc = operationsTypes.includes("ppc") || operationsTypes.includes("ppc&web");
       const hasWebsite = operationsTypes.includes("website") || operationsTypes.includes("ppc&web");
 
-      if (hasSocial) {
-        steps.push({
-          id: "social",
-          title: "Platform User ID & Password",
-          fields: socialMediaAccessFields
+      const seenFieldNames = new Set<string>();
+      const addStepWithDeduplication = (id: string, title: string, baseFields: any[]) => {
+        const uniqueFields = baseFields.filter(f => {
+          if (f.name && seenFieldNames.has(f.name)) return false;
+          return true;
         });
+
+        uniqueFields.forEach(f => {
+          if (f.name) seenFieldNames.add(f.name);
+        });
+
+        if (uniqueFields.length > 0) {
+          steps.push({ id, title, fields: uniqueFields });
+        }
+      };
+
+      if (hasSocial) {
+        addStepWithDeduplication(
+          "social",
+          "Platform User Id & Password",
+          socialMediaAccessFields
+        );
       }
 
       if (hasPpc) {
-        // If it's JUST PPC (no social), it shows the full ppcAccessFields (which includes social platforms + PPC)
-        // Wait, the user said: "if the type=ppc, then i only need the ppc question , no socail questions needs to be shown there"
-        // This contradicts ppcAccessFields directly because ppcAccessFields INCLUDES socialMediaAccessFields.
-        // Therefore we should ALWAYS use ppcSpecificFields for the "PPC" step to ensure no social questions appear,
-        // UNLESS the user expects "type=ppc" to just ask about Google Ads, GA4, GTM, GSC.
-        steps.push({
-          id: "ppc",
-          title: "PPC Service Onboarding Section",
-          fields: ppcSpecificFields
-        });
+        // Keep using ppcSpecificFields as previously decided implicitly, but deduplicating common questions 
+        // with the social fields (like "bm_header" - Meta Business Manager) etc.
+        addStepWithDeduplication(
+          "ppc",
+          "PPC Service Onboarding Section",
+          ppcSpecificFields
+        );
       }
 
       if (hasWebsite) {
-        let webFields = websiteSpecificFields;
-        if (hasPpc) {
-          // If PPC is present, remove GA4, GTM, GSC questions from website to avoid asking twice
-          webFields = webFields.filter(f => !["ga4_header", "ga4_invite_toggle", "ga4_invite_desc", "gtm_header", "gtm_invite_toggle", "gtm_invite_desc", "gsc_header", "gsc_invite_toggle", "gsc_invite_desc"].includes(f.name));
-        }
-        steps.push({
-          id: "website",
-          title: "Website Service Onboarding Section",
-          fields: webFields
-        });
+        // Deduplicate any common questions (like ga4, gtm, gsc) with the previous steps 
+        addStepWithDeduplication(
+          "website",
+          "Website Service Onboarding Section",
+          websiteSpecificFields
+        );
       }
 
-      // Fallback if none matches - Removed as per user request to stop at Asset Types when no type is passed
       setOperationsStepsConfig(steps);
       return;
     }
@@ -200,7 +208,7 @@ export function useOnboarding() {
           6: 1,
         };
 
-  const totalSteps = isClientOnboarding ? 4 : isOperationsOnboarding ? (2 + Math.max(1, operationsStepsConfig.length)) : isBrandIdentityPage ? 6 : 6;
+  const totalSteps = isClientOnboarding ? 4 : isOperationsOnboarding ? (2 + operationsStepsConfig.length) : isBrandIdentityPage ? 6 : 6;
 
   const validateFieldsHelper = (data: FormData, fields: any[]): Record<string, string> => {
     const errors: Record<string, string> = {};
@@ -296,7 +304,7 @@ export function useOnboarding() {
 
     if (hasInstagram && isInstagramEnabled) {
       if (!data.instagram_email || !data.instagram_email.trim()) {
-        errors.instagram_header = "Instagram User ID is required";
+        errors.instagram_header = "Instagram User Id is required";
       }
       if (!data.instagram_password || !data.instagram_password.trim()) {
         errors.instagram_header = "Instagram Password is required";
@@ -323,7 +331,7 @@ export function useOnboarding() {
 
         if (accessToggle) {
           if (!data[emailField] || !data[emailField].trim()) {
-            errors[emailField] = `${label} User ID is required`;
+            errors[emailField] = `${label} User Id is required`;
           }
           if (!data[passwordField] || !data[passwordField].trim()) {
             errors[passwordField] = `${label} Password is required`;

@@ -54,8 +54,11 @@ export default function OperationsOnboardingPage() {
                         <IntroStep
                             img="/images/onb-steps/1.png"
                             title="Operations Onboarding Form"
-                            description="Platform Access Information
-This form collects all required platform access, account credentials and technical details."
+                            description={<>
+                                This form collects all required platform access, account credentials and technical details.
+                                <br />
+                                Kindly note: If any field is not applicable, please mention “NA”.
+                            </>}
                             onNext={handleNext}
                             buttonClassName="!bg-[#E31313] !text-lg text-white !font-bold"
                         />

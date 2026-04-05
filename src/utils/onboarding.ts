@@ -45,7 +45,7 @@ export const generalFields = [
     id: "landline",
     name: "business_landline_numbers",
     label: "Landline/ Mobile Number(s):",
-    placeholder: "Official business landline number",
+    placeholder: "Official business landline/Mobile number",
     fieldType: "array",
     optional: true,
   },
@@ -60,7 +60,7 @@ export const generalFields = [
     id: "wa_num",
     name: "whatsapp_business_number",
     label: "WhatsApp Business (If Available)",
-    placeholder: "Whatsapp Business API Number",
+    placeholder: "Whatsapp Business Number",
     fieldType: "text",
     optional: true,
   },
@@ -401,32 +401,32 @@ export const socialPlatformFields = [
 
 export const socialMediaAccessFields = [
   { id: "sma_header_0", name: "instagram_header", label: "Instagram", fieldType: "header", hasToggle: true },
-  { id: "sma_0a", name: "instagram_email", label: "User ID", fieldType: "text", placeholder: "User ID" },
+  { id: "sma_0a", name: "instagram_email", label: "User Id", fieldType: "text", placeholder:  " User Id" },
   { id: "sma_0b", name: "instagram_password", label: "Password", fieldType: "password", placeholder: "Password" },
 
   { id: "sma_header_1", name: "meta_header", label: "Facebook Page", fieldType: "header", hasToggle: true },
   { id: "sma_1_access_title", name: "meta_access_toggle", label: "Access of Facebook Account", fieldType: "toggle" },
-  { id: "sma_1a", name: "meta_email", label: "User id", fieldType: "text", placeholder: "User id", dependsOn: "meta_access_toggle" },
+  { id: "sma_1a", name: "meta_email", label: "User Id", fieldType: "text", placeholder:  " User Id", dependsOn: "meta_access_toggle" },
   { id: "sma_1b", name: "meta_password", label: "Password", fieldType: "password", placeholder: "Password", dependsOn: "meta_access_toggle" },
   { id: "sma_1_or", name: "meta_or", label: "Or", fieldType: "or_divider" },
   { id: "sma_1_invite_title", name: "meta_invite_toggle", label: "Provide access via an official platform invite", fieldType: "toggle" },
-  { id: "sma_1_invite_desc", name: "meta_invite_desc", label: "Facebook Page → Professional dashboard → All tools → Page access → Add People – Vishnu Pradeep -> Access - Admin / Full Control", fieldType: "description_text", dependsOn: "meta_invite_toggle" },
+  { id: "sma_1_invite_desc", name: "meta_invite_desc", label: "Facebook Page → Professional dashboard → All tools → Page access → Add People – Vishnu Pradeep → Access - Admin / Full Control", fieldType: "description_text", dependsOn: "meta_invite_toggle" },
 
   { id: "sma_header_bm", name: "bm_header", label: "Meta Business Manager", fieldType: "header", hasToggle: true   },
   { id: "sma_bm_access_title", name: "bm_access_toggle", label: "Access of Meta Business Manager", fieldType: "toggle" },
-  { id: "sma_bma", name: "bm_email", label: "User id", fieldType: "text", placeholder: "User id", dependsOn: "bm_access_toggle" },
+  { id: "sma_bma", name: "bm_email", label: "User Id", fieldType: "text", placeholder:  " User Id", dependsOn: "bm_access_toggle" },
   { id: "sma_bmb", name: "bm_password", label: "Password", fieldType: "password", placeholder: "Password", dependsOn: "bm_access_toggle" },
   { id: "sma_bm_or", name: "bm_or", label: "Or", fieldType: "or_divider" },
   { id: "sma_bm_invite_title", name: "bm_invite_toggle", label: "Provide access via an official platform invite", fieldType: "toggle" },
-  { id: "sma_bm_invite_desc", name: "bm_invite_desc", label: "Business Manager + Ads Manager + Facebook + Instagram Setting – Users – People –> Click on Invite -> add the emails -> Studiosmegamind@gmail.com & Vishnuklyd123@gmail.com -> Click on everything to grant full access (business tools and Facebook)", fieldType: "description_text", dependsOn: "bm_invite_toggle" },
+  { id: "sma_bm_invite_desc", name: "bm_invite_desc", label: "Setting – Users – People → Click on Invite → Add Email IDs → Studiosmegamind@gmail.com & Vishnuklyd123@gmail.com → Click on Everything to Grant Full Access (Business Manager + Ads Manager + Facebook + Instagram)", fieldType: "description_text", dependsOn: "bm_invite_toggle" },
 
   { id: "sma_header_2", name: "linkedin_header", label: "LinkedIn Page", fieldType: "header", hasToggle: true },
   { id: "sma_2_access_title", name: "linkedin_access_toggle", label: "Access of LinkedIn Account", fieldType: "toggle" },
-  { id: "sma_2a", name: "linkedin_email", label: "User Id", fieldType: "text", placeholder: "User Id", dependsOn: "linkedin_access_toggle" },
+  { id: "sma_2a", name: "linkedin_email", label: "User Id", fieldType: "text", placeholder:  " User Id", dependsOn: "linkedin_access_toggle" },
   { id: "sma_2b", name: "linkedin_password", label: "Password", fieldType: "password", placeholder: "Password", dependsOn: "linkedin_access_toggle" },
   { id: "sma_2_or", name: "linkedin_or", label: "Or", fieldType: "or_divider" },
   { id: "sma_2_invite_title", name: "linkedin_invite_toggle", label: "Provide access via an official platform invite", fieldType: "toggle" },
-  { id: "sma_2_invite_desc", name: "linkedin_invite_desc", label: "LinkedIn Page -> Settings -> Manage Admins -> Add Admin -> Search for the member – Vishnu Pradeep -> Assign – Super Admin -> Save", fieldType: "description_text", dependsOn: "linkedin_invite_toggle" },
+  { id: "sma_2_invite_desc", name: "linkedin_invite_desc", label: "LinkedIn Page → Settings → Manage Admins → Add Admin → Search for the member – Vishnu Pradeep → Assign – Super Admin → Save", fieldType: "description_text", dependsOn: "linkedin_invite_toggle" },
 
   { id: "sma_header_yt", name: "yt_header", label: "YouTube Channel", fieldType: "header", hasToggle: true },
   { id: "sma_yt_access_title", name: "yt_access_toggle", label: "Access of YouTube Channel", fieldType: "toggle" },
@@ -434,7 +434,7 @@ export const socialMediaAccessFields = [
   { id: "sma_ytb", name: "youtube_password", label: "Password", fieldType: "password", placeholder: "Password", dependsOn: "yt_access_toggle" },
   { id: "sma_yt_or", name: "yt_or", label: "Or", fieldType: "or_divider" },
   { id: "sma_yt_invite_title", name: "yt_invite_toggle", label: "Provide access via an official platform invite", fieldType: "toggle" },
-  { id: "sma_yt_invite_desc", name: "yt_invite_desc", label: "YouTube -> YouTube Studio -> Setting -> Permissions -> Invite -> add the email id- Studiosmegamind@gmail.com & Give Manager Access -> Save", fieldType: "description_text", dependsOn: "yt_invite_toggle" },
+  { id: "sma_yt_invite_desc", name: "yt_invite_desc", label: "YouTube → YouTube Studio → Setting → Permissions → Invite → Add the Email Id- Studiosmegamind@gmail.com → Give Manager Access → Save", fieldType: "description_text", dependsOn: "yt_invite_toggle" },
 
   { id: "sma_header_gmb", name: "gmb_header", label: "Google My Business", fieldType: "header", hasToggle: true },
   { id: "sma_gmb_access_title", name: "gmb_access_toggle", label: "Access of Google My Business", fieldType: "toggle" },
@@ -442,29 +442,38 @@ export const socialMediaAccessFields = [
   { id: "sma_gmbb", name: "google_business_password", label: "Password", fieldType: "password", placeholder: "Password", dependsOn: "gmb_access_toggle" },
   { id: "sma_gmb_or", name: "gmb_or", label: "Or", fieldType: "or_divider" },
   { id: "sma_gmb_invite_title", name: "gmb_invite_toggle", label: "Provide access via an official platform invite", fieldType: "toggle" },
-  { id: "sma_gmb_invite_desc", name: "gmb_invite_desc", label: "Google Business Profile ->Three Button click -> Business Profile Setting -> People and Access -> Add -> Email Id - Studiosmegamind@gmail.com -> Access – Owner -> Invite", fieldType: "description_text", dependsOn: "gmb_invite_toggle" },
+  { id: "sma_gmb_invite_desc", name: "gmb_invite_desc", label: "Google Business Profile → Click on Three Dot Menu → Business Profile Setting → People and Access → Add → Email Id - Studiosmegamind@gmail.com → Access – Owner → Invite", fieldType: "description_text", dependsOn: "gmb_invite_toggle" },
 ];
 
 export const ppcSpecificFields = [
+
+  { id: "ppc_header_bm", name: "bm_header", label: "Meta Business Manager", fieldType: "header", hasToggle: true   },
+  { id: "ppc_bm_access_title", name: "bm_access_toggle", label: "Access of Meta Business Manager", fieldType: "toggle" },
+  { id: "ppc_bma", name: "bm_email", label: "User Id", fieldType: "text", placeholder:  " User Id", dependsOn: "bm_access_toggle" },
+  { id: "ppc_bmb", name: "bm_password", label: "Password", fieldType: "password", placeholder: "Password", dependsOn: "bm_access_toggle" },
+  { id: "ppc_bm_or", name: "bm_or", label: "Or", fieldType: "or_divider" },
+  { id: "ppc_bm_invite_title", name: "bm_invite_toggle", label: "Provide access via an official platform invite", fieldType: "toggle" },
+  { id: "ppc_bm_invite_desc", name: "bm_invite_desc", label: "Setting – Users – People → Click on Invite → Add Email IDs → Studiosmegamind@gmail.com & Vishnuklyd123@gmail.com → Click on Everything to Grant Full Access (Business Manager + Ads Manager + Facebook + Instagram)", fieldType: "description_text", dependsOn: "bm_invite_toggle" },
+
   { id: "ppc_header_gads", name: "google_ads_header", label: "Google Ads", fieldType: "header", hasToggle: true },
   { id: "ppc_gads_access_title", name: "google_ads_access_toggle", label: "Access of Google Ads", fieldType: "toggle" },
-  { id: "ppc_gadsa", name: "google_ads_email", label: "User Id", fieldType: "text", placeholder: "User Id", dependsOn: "google_ads_access_toggle" },
+  { id: "ppc_gadsa", name: "google_ads_email", label: "User Id", fieldType: "text", placeholder:  " User Id", dependsOn: "google_ads_access_toggle" },
   { id: "ppc_gadsb", name: "google_ads_password", label: "Password", fieldType: "password", placeholder: "Password", dependsOn: "google_ads_access_toggle" },
   { id: "ppc_gads_or", name: "google_ads_or", label: "Or", fieldType: "or_divider" },
   { id: "ppc_gads_invite_title", name: "google_ads_invite_toggle", label: "Provide access via an official platform invite", fieldType: "toggle" },
-  { id: "ppc_gads_invite_desc", name: "google_ads_invite_desc", label: "Google Ads → admin → Access and security →Users-> Add User (Studiosmegamind@gmail.com) -> Admin Access", fieldType: "description_text", dependsOn: "google_ads_invite_toggle" },
+  { id: "ppc_gads_invite_desc", name: "google_ads_invite_desc", label: "Google Ads → Admin → Access and security → Users → Add User - Studiosmegamind@gmail.com → Admin Access", fieldType: "description_text", dependsOn: "google_ads_invite_toggle" },
 
   { id: "ppc_header_ga4", name: "ga4_header", label: "Google Analytics (GA4)", fieldType: "header", hasToggle: true },
   { id: "ppc_ga4_invite_title", name: "ga4_invite_toggle", label: "Provide access via an official platform invite", fieldType: "toggle" },
-  { id: "ppc_ga4_invite_desc", name: "ga4_invite_desc", label: "Google Analytics → Admin → Account Access Management → Add Users (Studiosmegamind@gmail.com) -> Administrator Role", fieldType: "description_text", dependsOn: "ga4_invite_toggle" },
+  { id: "ppc_ga4_invite_desc", name: "ga4_invite_desc", label: "Google Analytics → Admin → Account Access Management → Add Users - Studiosmegamind@gmail.com → Administrator Role", fieldType: "description_text", dependsOn: "ga4_invite_toggle" },
 
   { id: "ppc_header_gtm", name: "gtm_header", label: "Google Tag Manager", fieldType: "header", hasToggle: true },
   { id: "ppc_gtm_invite_title", name: "gtm_invite_toggle", label: "Provide access via an official platform invite", fieldType: "toggle" },
-  { id: "ppc_gtm_invite_desc", name: "gtm_invite_desc", label: "Google Tag Manager → Admin → User Management/Container permissions → Add User (Studiosmegamind@gmail.com) -> Administrator Role (Admin / User)", fieldType: "description_text", dependsOn: "gtm_invite_toggle" },
+  { id: "ppc_gtm_invite_desc", name: "gtm_invite_desc", label: "Google Tag Manager → Admin → User Management/Container permissions → Add User - Studiosmegamind@gmail.com → Administrator Role (Admin / User)", fieldType: "description_text", dependsOn: "gtm_invite_toggle" },
 
   { id: "ppc_header_gsc", name: "gsc_header", label: "Google Search Console", fieldType: "header", hasToggle: true },
   { id: "ppc_gsc_invite_title", name: "gsc_invite_toggle", label: "Provide access via an official platform invite", fieldType: "toggle" },
-  { id: "ppc_gsc_invite_desc", name: "gsc_invite_desc", label: "Google Search Console → Settings → Users & Permissions → Add User (Studiosmegamind@gmail.com) -> Full User / Owner", fieldType: "description_text", dependsOn: "gsc_invite_toggle" },
+  { id: "ppc_gsc_invite_desc", name: "gsc_invite_desc", label: "Google Search Console → Settings → Users & Permissions → Add User - Studiosmegamind@gmail.com → Full User / Owner", fieldType: "description_text", dependsOn: "gsc_invite_toggle" },
 ];
 
 export const ppcAccessFields = [
@@ -700,7 +709,7 @@ export const accountDetailsFields = [
   { id: "acc_1a", name: "youtube_email", label: "Email Id", fieldType: "email", placeholder: "Email Id" },
   { id: "acc_1b", name: "youtube_password", label: "Password", fieldType: "password", placeholder: "Password" },
   { id: "acc_1_or", name: "youtube_or", label: "Or", fieldType: "or_divider" },
-  { id: "acc_1_invite_desc", name: "youtube_invite_desc", label: "YouTube -> YouTube Studio -> Setting -> Permissions -> Invite -> add the email id- Studiosmegamind@gmail.com & Give Manager Access -> Save", fieldType: "description_text" },
+  { id: "acc_1_invite_desc", name: "youtube_invite_desc", label: "YouTube → YouTube Studio → Setting → Permissions → Invite → add the email id- Studiosmegamind@gmail.com & Give Manager Access → Save", fieldType: "description_text" },
 
   { id: "acc_header_2", name: "google_ads_header", label: "Google Ads", fieldType: "subheader" },
   {
