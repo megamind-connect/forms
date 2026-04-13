@@ -461,105 +461,77 @@ export function useOnboarding() {
       };
 
       if (isClientOnboarding) {
-        payload = {
-          clientId: clientId,
-          brandName: formData.brand_name,
-          legalName: formData.registered_legal_name,
-          legalStructure: formData.legal_structure === 'other' ? formData.legal_structure_other : formData.legal_structure,
-          industryCategory: formData.industry_category === 'other' ? formData.industry_category_other : formData.industry_category,
-          gstin: formData.gstin,
-          registeredBusinessAddress: formData.registered_business_address,
-          officialBillingAddress: formData.official_billing_address,
-          businessEmail: formData.business_email_id,
-          landlineNumbers: Array.isArray(formData.business_landline_numbers) ? formData.business_landline_numbers : [],
-          mobileNumbers: Array.isArray(formData.business_mobile_numbers) ? formData.business_mobile_numbers : [],
-          whatsappBusiness: formData.whatsapp_business_number,
-          whatsappApiLink: formData.whatsapp_business_link,
-          websiteUrl: formData.website_url,
-          yearOfEstablishment: formData.year_of_establishment,
-          companyPan: formData.company_pan_number,
-          companyTan: formData.company_tan_number,
-          companyRegNumber: formData.company_registration_number,
+        // Build FormData for multipart/form-data submission (required for file uploads)
+        const fd = new FormData();
 
-          // --- Client Feedback Parameters ---
-          name: formData.full_name,
-          position_role: typeof formData.role_in_organisation === 'object' && formData.role_in_organisation !== null
-            ? (formData.role_in_organisation.selected === 'others' ? formData.role_in_organisation.otherText : formData.role_in_organisation.selected)
-            : formData.role_in_organisation,
-          overall_experience: formData.overall_experience_rating,
-          impact_assessment: formData.service_impact_rating,
-          quality_of_services: formData.service_quality_rating,
-          delivery_time: formData.delivery_time_option,
-          brand_strategy_alignment: formData.strategy_alignment_rating,
-          services_provided: formData.services_provided?.list || [],
-          other_service_description: formData.services_provided?.other_service_description,
-          services_align_with_goals: formData.goal_alignment_rating,
-          meet_deadlines_rating: formData.deadline_efficiency_rating,
-          feedback_understood_rating: formData.feedback_understanding_rating,
-          digital_marketing_results: formData.marketing_results_rating,
-          content_creation_rating: formData.brand_representation_rating,
-          surprised_deliverables: formData.pleasant_surprise,
-          team_responsiveness: formData.responsiveness_rating,
-          working_relationship_description: formData.experience_description,
-          additional_services_improvements: formData.additional_services,
-          likelihood_to_continue: formData.service_continuation_rating,
-          likelihood_to_recommend: formData.recommendation_likelihood_rating,
-          other_comments: formData.final_feedback_text,
+        // --- Step 2: General Info ---
+        fd.append('clientId', clientId);
+        fd.append('brandName', formData.brand_name || '');
+        fd.append('legalName', formData.registered_legal_name || '');
+        fd.append('legalStructure', formData.legal_structure === 'other' ? (formData.legal_structure_other || '') : (formData.legal_structure || ''));
+        fd.append('industryCategory', formData.industry_category === 'other' ? (formData.industry_category_other || '') : (formData.industry_category || ''));
+        fd.append('gstin', formData.gstin || '');
+        fd.append('registeredBusinessAddress', formData.registered_business_address || '');
+        fd.append('officialBillingAddress', formData.official_billing_address || '');
+        fd.append('businessEmail', formData.business_email_id || '');
+        fd.append('landlineNumbers', JSON.stringify(Array.isArray(formData.business_landline_numbers) ? formData.business_landline_numbers : []));
+        fd.append('mobileNumbers', JSON.stringify([]));
+        fd.append('whatsappBusiness', formData.whatsapp_business_number || '');
+        fd.append('whatsappApiLink', formData.whatsapp_business_link || '');
+        fd.append('websiteUrl', formData.website_url || '');
+        fd.append('yearOfEstablishment', formData.year_of_establishment || '');
+        fd.append('businessOperatingTimings', formData.business_operating_timings || '');
 
-          onboardingFiles: {
-            certificate_of_incorporation: formData.certificate_of_incorporation,
-            gst_registration_certificate: formData.gst_registration_certificate,
-            pan_card: formData.pan_card,
-            signed_contract_agreement: formData.signed_contract_agreement,
-            signed_nda: formData.signed_nda
+        // --- Step 3: Financial & Legal ---
+        fd.append('companyPan', formData.company_pan_number || '');
+        fd.append('companyTan', formData.company_tan_number || '');
+        fd.append('companyRegNumber', formData.company_registration_number || '');
+
+        // --- Step 4: Contact Info (stringified JSON — FormData can't send nested objects) ---
+        fd.append('contactInfo', JSON.stringify({
+          primary: {
+            name: formData.primary_contact_name || '',
+            email: formData.primary_contact_email || '',
+            phone: formData.primary_contact_phone || ''
           },
-          contactInfo: {
-            primary: {
-              name: formData.primary_contact_name,
-              email: formData.primary_contact_email,
-              phone: formData.primary_contact_phone
-            },
-            alternate: {
-              name: formData.alternate_contact_name,
-              email: formData.alternate_contact_email,
-              phone: formData.alternate_contact_phone
-            },
-            finance: {
-              name: formData.finance_contact_name,
-              email: formData.finance_contact_email,
-              phone: formData.finance_contact_phone
-            }
+          alternate: {
+            name: formData.alternate_contact_name || '',
+            email: formData.alternate_contact_email || '',
+            phone: formData.alternate_contact_phone || ''
           },
-          websiteTechDetails: {
-            hasDomain: formData.has_domain?.enabled || false,
-            domainName: formData.has_domain?.value || '',
-            hasCmsPlatform: formData.has_cms_platform?.enabled || false,
-            cmsPlatformName: formData.has_cms_platform?.value || '',
-            hasThirdPartyPlatform: formData.has_third_party_platform?.enabled || false,
-            thirdPartyPlatformName: formData.has_third_party_platform?.value || '',
-            formDataStorage: formData.form_data_storage,
-            hostingServerDetails: formData.hosting_server_details,
-            sourceCodeStorage: formData.source_code_storage,
-            currentWebsiteManagement: formData.current_website_management,
-            googleAnalyticsGa4: formData.google_analytics_ga4,
-            googleTagManager: formData.google_tag_manager,
-            googleSearchConsole: formData.google_search_console,
-            thirdPartyToolsIntegration: formData.third_party_tools_integration
-          },
-          verificationFiles: {
-            certificate_of_incorporation: formData.certificate_of_incorporation,
-            pan_card_company: formData.pan_card_company,
-            pan_card_proprietor: formData.pan_card_proprietor,
-            driving_license_proprietor: formData.driving_license_proprietor,
-            gst_registration_certificate: formData.gst_registration_certificate
-          },
-          customerContact: {
-            contact_number_customer_query: formData.contact_number_customer_query,
-            email_customer_id: formData.email_customer_id,
-            contact_number_business: formData.contact_number_business,
-            email_business: formData.email_business
+          finance: {
+            name: formData.finance_contact_name || '',
+            email: formData.finance_contact_email || '',
+            phone: formData.finance_contact_phone || ''
           }
-        };
+        }));
+
+        // --- Step 3: File Uploads (Financial & Legal documents) ---
+        if (formData.certificate_of_incorporation instanceof File)
+          fd.append('certificateOfIncorporation', formData.certificate_of_incorporation);
+        if (formData.gst_registration_certificate instanceof File)
+          fd.append('gstRegistrationCertificate', formData.gst_registration_certificate);
+        if (formData.pan_card instanceof File)
+          fd.append('panCardCompany', formData.pan_card); // single PAN field maps to panCardCompany
+        if (formData.signed_contract_agreement instanceof File)
+          fd.append('signedContract', formData.signed_contract_agreement);
+        if (formData.signed_nda instanceof File)
+          fd.append('signedNda', formData.signed_nda);
+
+        // --- Submit ---
+        const onboardingEndpoint = `/api/v1/client/onboarding/${clientId}`;
+        try {
+          await apiClient.post(onboardingEndpoint, fd, {
+            headers: { 'Content-Type': 'multipart/form-data' }
+          });
+          toast.success('Thank you! Your information has been submitted.');
+          setStep(1);
+          setFormData({});
+        } catch (err) {
+          console.error(err);
+          toast.error('Something went wrong. Please try again.');
+        }
+        return;
       } else if (!isBrandIdentityPage) {
         payload = {
           ...payload,
@@ -700,7 +672,7 @@ export function useOnboarding() {
 
       console.log("Dataaaa", finalPayload);
       try {
-        await apiClient.post(endpoint, payload);
+        await apiClient.post(endpoint, finalPayload);
         toast.success("Thank you! Your information has been submitted.");
         setStep(1);
         setFormData({});
