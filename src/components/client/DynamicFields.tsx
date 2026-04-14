@@ -301,38 +301,40 @@ export default function DynamicField({ field, value, onChange }: DynamicFieldPro
 
             /* ---------------------------- OTHER OPTION (INLINE INPUT) ---------------------------- */
             if (opt.value === "other") {
+              const isSelected = selected.includes("other");
               return (
-                <div key="other-input" className="flex items-center gap-3">
-
-                  {/* Checkbox */}
-                  <div
-                    onClick={() => toggleItem("other")}
-                    className={`w-5 h-5 border-2 rounded-md ${selected.includes("other")
-                      ? "border-[#E31212] bg-[#E31212]"
-                      : "border-[#E31212] bg-white"
-                      } flex items-center justify-center cursor-pointer transition-all`}
-                  >
-                    {selected.includes("other") && (
-                      <span className="text-white text-sm font-bold">✓</span>
-                    )}
+                <div key="other-input" className="flex flex-col gap-2">
+                  <div className="flex items-center gap-3">
+                    {/* Checkbox */}
+                    <div
+                      onClick={() => toggleItem("other")}
+                      className={`w-5 h-5 border-2 rounded-md ${isSelected
+                        ? "border-[#E31212] bg-[#E31212]"
+                        : "border-[#E31212] bg-white"
+                        } flex items-center justify-center cursor-pointer transition-all`}
+                    >
+                      {isSelected && (
+                        <span className="text-white text-sm font-bold">✓</span>
+                      )}
+                    </div>
+                    <span className="text-sm text-[#8F8881] md:text-lg">Others…</span>
                   </div>
 
-                  {/* Always-visible input */}
-                  <input
-                    type="text"
-                    placeholder="Others..."
-                    className="flex-1 border-b border-gray-400 outline-none text-sm md:text-lg py-1 placeholder:text-gray-400"
-                    value={value?.other_service_description || ""}
-                    onChange={(e) =>
-                      onChange({
-                        list: selected.includes("other")
-                          ? selected
-                          : [...selected, "other"],
-
-                        other_service_description: e.target.value,
-                      })
-                    }
-                  />
+                  {/* Conditional input */}
+                  {isSelected && (
+                    <input
+                      type="text"
+                      placeholder="Please specify other services..."
+                      className="flex-1 border-b border-gray-400 outline-none text-sm md:text-lg py-1 text-[#8F8881] placeholder:text-gray-400 ml-8"
+                      value={value?.other_service_description || ""}
+                      onChange={(e) =>
+                        onChange({
+                          list: selected,
+                          other_service_description: e.target.value,
+                        })
+                      }
+                    />
+                  )}
                 </div>
               );
             }

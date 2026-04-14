@@ -357,6 +357,9 @@ export default function RetainerFeedbackPage() {
             delivery_time: formData.delivery_time || "",
             brand_strategy: formData.brand_strategy || "",
             services_provided: formData.services_provided?.list || [],
+            other_service_description: formData.services_provided?.list?.includes("other")
+                ? formData.services_provided?.other_service_description
+                : null,
             service_align_buisness: formData.service_align_buisness || "",
             rate_ability_deadlines: formData.rate_ability_deadlines || "",
             feedback_requests_understanding: formData.feedback_requests_understanding || "",

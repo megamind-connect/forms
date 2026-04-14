@@ -330,6 +330,9 @@ export default function OneTimerFeedbackPage() {
             delivery_time: formData.delivery_time || "",
             brand_strategy: formData.brand_strategy || "",
             services_provided: formData.services_provided?.list || [],
+            other_service_description: formData.services_provided?.list?.includes("other")
+                ? formData.services_provided?.other_service_description
+                : null,
             service_align_buisness: formData.service_align_buisness || "",
             feedback_requests: formData.feedback_requests || "",
             content_creation: formData.content_creation || "",
