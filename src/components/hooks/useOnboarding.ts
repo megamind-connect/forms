@@ -563,8 +563,8 @@ export function useOnboarding() {
         payload = {
           clientId: clientId,
           foundingVision: formData.founding_vision,
-          brandInspiration: formData.inspiration_origin,
-          coreValues: formData.brand_core_values,
+          brandInspiration: formData.founding_vision, // Shared text area with founding_vision based on label
+          coreValues: formData.inspiration_origin, // 'inspiration_origin' has the label "What are your brand's core values?"
           whatBrandDoes: formData.brand_description,
           brandStrengths: formData.brand_strengths_weaknesses,
           brandWeaknesses: formData.brand_strengths_weaknesses,
@@ -583,9 +583,10 @@ export function useOnboarding() {
           admiredBrands: formData.admired_brands,
           expectationsFromAgency: formData.expectations_creative_partner,
           previousAgencyExperience: formData.previous_agency_experience,
-          specificThemesIdeas: formData.specific_themes_ideas,
-          mandatoryElements: formData.mandatory_branding_elements,
+          specificThemesIdeas: formData.themes_ideas_concerns,
+          mandatoryElements: formData.mandatory_elements,
           assetTypes: {
+            company_deck: formData.company_deck,
             brand_logo_files: formData.brand_logo_files,
             brand_guidelines: formData.brand_guidelines,
             brochures_product_photos: formData.brochures_product_photos,
@@ -608,59 +609,11 @@ export function useOnboarding() {
       } else if (isOperationsOnboarding) {
         payload = {
           clientId: clientId,
-          assetTypes: {
-            brand_logo_files: formData.brand_logo_files,
-            brand_guidelines: formData.brand_guidelines,
-            brochures_product_photos: formData.brochures_product_photos,
-            past_campaign_reports: formData.past_campaign_reports,
-            moodboards_videos: formData.moodboards_videos,
-            current_image_assets: formData.current_image_assets,
-            current_video_assets: formData.current_video_assets
-          },
-          socialAccounts: {
-            instagram: formData.instagram_profile_url,
-            facebook: formData.facebook_page_url,
-            linkedin: formData.linkedin_profile_url,
-            twitter: formData.twitter_profile_url,
-            youtube: formData.youtube_channel_url,
-            google_my_business: formData.google_business_url,
-            website: formData.website_url_social,
-            additional: formData.additional_platforms
-          },
-          platformAccess: {
-            instagram: { email: formData.instagram_email, password: formData.instagram_password },
-            meta: { email: formData.meta_email, password: formData.meta_password },
-            meta_business_manager: { email: formData.bm_email, password: formData.bm_password },
-            linkedin: { email: formData.linkedin_email, password: formData.linkedin_password },
-            twitter: { email: formData.twitter_email, password: formData.twitter_password },
-            youtube: { email: formData.youtube_email, password: formData.youtube_password },
-            google_my_business: { email: formData.google_business_email, password: formData.google_business_password },
-            google_ads: { email: formData.google_ads_email, password: formData.google_ads_password },
-            google_analytics: { email: formData.google_analytics_email, password: formData.google_analytics_password },
-            google_tag_manager: { email: formData.google_tag_manager_email, password: formData.google_tag_manager_password },
-            google_search_console: { email: formData.google_search_console_email, password: formData.google_search_console_password }
-          },
-          websiteTechDetails: {
-            hasDomain: formData.has_domain?.enabled || false,
-            domainName: formData.has_domain?.value || '',
-            hasCmsPlatform: formData.has_cms_platform?.enabled || false,
-            cmsPlatformName: formData.has_cms_platform?.value || '',
-            hasThirdPartyPlatform: formData.has_third_party_platform?.enabled || false,
-            thirdPartyPlatformName: formData.has_third_party_platform?.value || '',
-            formDataStorage: formData.form_data_storage,
-            hostingServerDetails: formData.hosting_server_details,
-            sourceCodeStorage: formData.source_code_storage,
-            currentWebsiteManagement: formData.current_website_management,
-            googleAnalyticsGa4: formData.ga4_invite_toggle,
-            googleTagManager: formData.gtm_invite_toggle,
-            googleSearchConsole: formData.gsc_invite_toggle,
-            thirdPartyToolsIntegration: formData.third_party_tools_integration
-          }
+          ...formData
         };
       }
 
-      const isFeedback = !isClientOnboarding && !isBrandIdentityPage && !isOperationsOnboarding;
-      const finalPayload = isFeedback ? payload : { data: payload };
+      const finalPayload = payload;
 
       const endpoint = isBrandIdentityPage
         ? `/api/v1/client/onboarding/${clientId}/brand-assets`
