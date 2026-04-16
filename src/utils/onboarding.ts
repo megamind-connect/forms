@@ -45,7 +45,7 @@ export const generalFields = [
     id: "landline",
     name: "business_landline_numbers",
     label: "Landline/ Mobile Number(s):",
-    placeholder: "Official business landline number",
+    placeholder: "Enter Here",
     fieldType: "array",
     optional: true,
   },

@@ -392,7 +392,20 @@ export function Step2Form({
             const isEnabled = formData[field.name] || false;
 
             const handleToggle = () => {
-              updateFormData({ [field.name]: !isEnabled });
+              const newValue = !isEnabled;
+              const updates: Record<string, any> = { [field.name]: newValue };
+              
+              if (newValue) {
+                if (field.name.endsWith('_access_toggle')) {
+                  const prefix = field.name.replace('_access_toggle', '');
+                  updates[`${prefix}_invite_toggle`] = false;
+                } else if (field.name.endsWith('_invite_toggle')) {
+                  const prefix = field.name.replace('_invite_toggle', '');
+                  updates[`${prefix}_access_toggle`] = false;
+                }
+              }
+              
+              updateFormData(updates);
               markFieldTouched(field.name);
             };
 
