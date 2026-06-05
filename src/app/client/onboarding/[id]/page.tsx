@@ -15,6 +15,7 @@ export default function ClientPage() {
   const {
     step,
     showSplash,
+    isLoading,
     generalFormFields,
     financialFields,
     contactFormFields,
@@ -138,6 +139,7 @@ export default function ClientPage() {
                 headerTitle="Contact Information"
                 buttonText="Submit"
                 isClientPage={true}
+                isLoading={isLoading}
                 />
             </div>
           )}

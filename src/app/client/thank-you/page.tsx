@@ -1,4 +1,4 @@
-// src/app/md-to-operation/thank-you/page.tsx
+// src/app/client-exit-feedback/thank-you/page.tsx
 import Image from "next/image";
 import React from "react";
 
@@ -14,7 +14,7 @@ const ThankYouPage = () => {
                     <p className="text-lg md:text-[42px] font-medium">We’ll address it shortly.</p>
                 </div>
 
-                {/* Dummy Illustration (Replace this image later) */}
+                {/* Dummy Illustration */}
                 <div>
                     <Image
                         src="/images/thankyou.png"

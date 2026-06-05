@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { usePathname, useParams, useSearchParams } from "next/navigation";
+import { usePathname, useParams, useSearchParams, useRouter } from "next/navigation";
 import {
   generalFields,
   clientPageGeneralFields,
@@ -57,9 +57,11 @@ export function useOnboarding() {
   const isOperationsOnboarding = pathname.includes("/operations/onboarding");
   const isClientOnboarding = pathname.includes("/client/onboarding") && !isBrandIdentityPage;
 
+  const router = useRouter();
   const [step, setStep] = useState(1);
   const [subStep, setSubStep] = useState(1);
   const [showSplash, setShowSplash] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
 
   // Parse operations types (e.g., "?type=social,ppc,website")
   const operationsTypes = typeParam ? typeParam.split(',').map(t => t.trim().toLowerCase()) : [];
@@ -521,15 +523,19 @@ export function useOnboarding() {
         // --- Submit ---
         const onboardingEndpoint = `/api/v1/client/onboarding/${clientId}`;
         try {
+          setIsLoading(true);
           await apiClient.post(onboardingEndpoint, fd, {
             headers: { 'Content-Type': 'multipart/form-data' }
           });
           toast.success('Thank you! Your information has been submitted.');
-          setStep(1);
+          router.push("/client/thank-you");
+          // setStep(1);
           setFormData({});
         } catch (err) {
           console.error(err);
           toast.error('Something went wrong. Please try again.');
+        } finally {
+          setIsLoading(false);
         }
         return;
       } else if (!isBrandIdentityPage) {
@@ -625,13 +631,25 @@ export function useOnboarding() {
 
       console.log("Dataaaa", finalPayload);
       try {
+        setIsLoading(true);
         await apiClient.post(endpoint, finalPayload);
         toast.success("Thank you! Your information has been submitted.");
-        setStep(1);
+        
+        if (isOperationsOnboarding) {
+          router.push("/operations/thank-you");
+        } else if (isClientOnboarding || isBrandIdentityPage) {
+          router.push("/client/thank-you");
+        } else {
+          router.push("/thank-you");
+        }
+
+        // setStep(1);
         setFormData({});
       } catch (err) {
         console.error(err);
         toast.error("Something went wrong. Please try again.");
+      } finally {
+        setIsLoading(false);
       }
       return;
     }
@@ -664,6 +682,7 @@ export function useOnboarding() {
     step,
     subStep,
     showSplash,
+    isLoading,
     formFields,
     generalFormFields,
     financialFields,

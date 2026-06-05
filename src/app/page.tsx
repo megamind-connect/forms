@@ -40,7 +40,7 @@ export default function HomePage() {
       {/* Footer Branding */}
       <div className="absolute bottom-10 left-0 w-full text-center">
         <p className="text-[10px] font-bold text-gray-300 uppercase tracking-widest">
-          © 2026 Megamind Studio
+          © {new Date().getFullYear()} Megamind Studio
         </p>
       </div>
     </div>

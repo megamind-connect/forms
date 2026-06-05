@@ -35,6 +35,7 @@ interface Step2FormProps {
   isClientPage?: boolean;
   buttonText?: string;
   hideToggleInput?: boolean;
+  isLoading?: boolean;
 }
 
 export function Step2Form({
@@ -49,7 +50,8 @@ export function Step2Form({
   headerTitle = "Brand Name",
   isClientPage = false,
   buttonText,
-  hideToggleInput = false
+  hideToggleInput = false,
+  isLoading = false
 }: Step2FormProps) {
   const [snackbar, setSnackbar] = useState<{ type: 'error' | 'success'; message: string } | null>(null);
 
@@ -574,12 +576,13 @@ export function Step2Form({
       {isClientPage ? (
         <Button
           onClick={handleSubmit}
+          isLoading={isLoading}
           className="w-full !bg-[#E31212] !text-white !font-medium !text-xl max-w-2xl mt-8 h-14 flex justify-center items-center px-4 hover:!bg-[#c40f0f]"
         >
           {buttonText || "Proceed"}
         </Button>
       ) : (
-        <Button onClick={handleSubmit} className="w-full !bg-white border !border-red !text-red !font-normal !text-lg max-w-2xl mt-8 flex justify-between items-center px-4 hover:bg-red-50">
+        <Button onClick={handleSubmit} isLoading={isLoading} className="w-full !bg-white border !border-red !text-red !font-normal !text-lg max-w-2xl mt-8 flex justify-between items-center px-4 hover:bg-red-50">
           {buttonText || "Next"} <span className="font-bold text-xl">&gt;</span>
         </Button>
       )}

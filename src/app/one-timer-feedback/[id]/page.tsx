@@ -255,6 +255,7 @@ export default function OneTimerFeedbackPage() {
     const [step, setStep] = useState(1);
     const [formData, setFormData] = useState<Record<string, any>>({});
     const [touched, setTouched] = useState<Record<string, boolean>>({});
+    const [isLoading, setIsLoading] = useState(false);
 
     const updateFormData = (updates: Record<string, any>) => {
         setFormData((prev) => ({ ...prev, ...updates }));
@@ -346,6 +347,7 @@ export default function OneTimerFeedbackPage() {
         };
 
         try {
+            setIsLoading(true);
             await apiClient.post(`/api/v1/feedback/one-timer`, payload, {
                 headers: {
                     "x-api-key": process.env.NEXT_PUBLIC_INTERNAL_API_KEY,
@@ -354,10 +356,12 @@ export default function OneTimerFeedbackPage() {
             toast.success("Thank you! Your feedback has been submitted.");
             router.push("/one-timer-feedback/thank-you");
             setFormData({});
-            setStep(1);
+            // setStep(1);
         } catch (err) {
             console.error("Submission error:", err);
             toast.error("Something went wrong. Please try again.");
+        } finally {
+            setIsLoading(false);
         }
     };
 
@@ -384,6 +388,7 @@ export default function OneTimerFeedbackPage() {
                 )}
                 <Button
                     onClick={handleNext}
+                    isLoading={step === STEPS_COUNT ? isLoading : undefined}
                     className="!bg-[#E31313] !text-white !font-bold !text-lg w-full max-w-2xl mx-auto"
                 >
                     {step === STEPS_COUNT ? "Submit" : "Next"}

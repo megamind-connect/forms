@@ -14,6 +14,7 @@ export default function ClientPage() {
     step,
     subStep,
     showSplash,
+    isLoading,
     generalFormFields,
     formData,
     step6Questions,
@@ -386,6 +387,7 @@ const step7Fields = [
               ))}
               <Button
                 onClick={handleNext}
+                isLoading={isLoading}
                 className="!bg-[#FFFBFB] !text-red border-red border !text-lg w-full max-w-2xl mx-auto"
               >
                 Submit

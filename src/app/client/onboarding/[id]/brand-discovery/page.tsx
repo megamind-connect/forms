@@ -42,6 +42,7 @@ export default function BrandIdentityPage() {
         markStep11FieldTouched,
         markAllStep9FieldsTouched,
         markAllStep11FieldsTouched,
+        isLoading,
     } = useOnboarding();
 
     return (
@@ -147,6 +148,7 @@ export default function BrandIdentityPage() {
                             markAllFieldsTouched={markAllStep11FieldsTouched}
                             headerTitle="Social & Digital Platform"
                             buttonText="Submit"
+                            isLoading={isLoading}
                         />
                     )}
                 </>

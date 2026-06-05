@@ -321,6 +321,7 @@ export default function ClientExitFeedbackPage() {
     const [step, setStep] = useState(1);
     const [formData, setFormData] = useState<Record<string, any>>({});
     const [touched, setTouched] = useState<Record<string, boolean>>({});
+    const [isLoading, setIsLoading] = useState(false);
 
     const updateFormData = (updates: Record<string, any>) => {
         setFormData((prev) => ({ ...prev, ...updates }));
@@ -417,18 +418,21 @@ export default function ClientExitFeedbackPage() {
         };
 
         try {
+            setIsLoading(true);
             await apiClient.post(`/api/v1/feedback/client-exit`, payload, {
                 headers: {
                     "x-api-key": process.env.NEXT_PUBLIC_INTERNAL_API_KEY,
                 },
             });
             toast.success("Thank you for your valuable feedback!");
-            router.push("/departmental-heads-to-md-feedback/thank-you");
+            router.push("/client-exit-feedback/thank-you");
             setFormData({});
-            setStep(1);
+            // setStep(1);
         } catch (err) {
             console.error("Submission error:", err);
             toast.error("Something went wrong. Please try again.");
+        } finally {
+            setIsLoading(false);
         }
     };
 
@@ -456,7 +460,11 @@ export default function ClientExitFeedbackPage() {
                 {step > 1 && (
                     <Button onClick={handleBack} className="!bg-white !text-black border border-gray-300 !text-lg w-full max-w-2xl mx-auto">Back</Button>
                 )}
-                <Button onClick={handleNext} className="!bg-[#E31313] !text-white !font-bold !text-lg w-full max-w-2xl mx-auto">
+                <Button
+                    onClick={handleNext}
+                    isLoading={step === STEPS_COUNT ? isLoading : undefined}
+                    className="!bg-[#E31313] !text-white !font-bold !text-lg w-full max-w-2xl mx-auto"
+                >
                     {step === STEPS_COUNT ? "Submit" : "Next"}
                 </Button>
             </div>

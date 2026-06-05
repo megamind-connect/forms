@@ -8,6 +8,7 @@ import DynamicField from "@/components/shared/DynamicField";
 import apiClient from "@/lib/api";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
+import { Button } from "@/components/ui/Button";
 
 interface FormField {
   id: string;
@@ -21,6 +22,7 @@ interface FormField {
 
 export default function Employee() {
   const [formData, setFormData] = useState<Record<string, any>>({});
+  const [isLoading, setIsLoading] = useState(false);
 
   const router = useRouter();
 
@@ -284,6 +286,7 @@ export default function Employee() {
 
 
     try {
+      setIsLoading(true);
       const res = await apiClient.post(`/api/v1/feedback/employee-to-manager`,
         payload,
         {
@@ -298,6 +301,8 @@ export default function Employee() {
     } catch (err: any) {
       console.error("Submission error:", err);
       toast.error("Something went wrong. Please check required fields or API schema.");
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -349,13 +354,14 @@ export default function Employee() {
               );
             })}
 
-            <button
+            <Button
               type="submit"
-              className=" text-center cursor-pointer mx-auto px-5 py-2 bg-[#F43F46] text-white text-[17px] rounded-full font-semibold  gap-2 flex items-center justify-center"
+              isLoading={isLoading}
+              className="text-center cursor-pointer mx-auto px-5 py-2 bg-[#F43F46] text-white text-[17px] rounded-full font-semibold gap-2 flex items-center justify-center"
             >
-              <Image width={20} height={20} alt="submitlogo" src="/svgs/submit-logo.svg" />
+              {!isLoading && <Image width={20} height={20} alt="submitlogo" src="/svgs/submit-logo.svg" />}
               Submit
-            </button>
+            </Button>
 
             <div className="mt-8 text-center text-gray-600 text-sm max-w-2xl mx-auto">
               <p>This feedback form is used to review and evaluate individual employee performance based on different criteria. It helps the organization understand performance levels and areas for improvement.</p>

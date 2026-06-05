@@ -11,6 +11,7 @@ export default function OperationsOnboardingPage() {
     const {
         step,
         showSplash,
+        isLoading,
         assetFields,
         socialFields,
         socialAccessFields,
@@ -75,6 +76,7 @@ This form collects all required platform access, account credentials and technic
                             headerTitle="Asset Types"
                             buttonText={operationsStepsConfig.length === 0 ? "Submit" : "Next"}
                             isClientPage={true}
+                            isLoading={operationsStepsConfig.length === 0 ? isLoading : undefined}
                         />
                     )}
 
@@ -96,6 +98,7 @@ This form collects all required platform access, account credentials and technic
                                 headerTitle={config.title}
                                 buttonText={isLastStep ? "Submit" : "Next"}
                                 isClientPage={true}
+                                isLoading={isLastStep ? isLoading : undefined}
                             />
                         );
                     })}
