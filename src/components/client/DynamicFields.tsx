@@ -415,6 +415,30 @@ export default function DynamicField({ field, value, onChange }: DynamicFieldPro
     );
   }
 
+    // ✅ Select Field (True Dropdown)
+  if (fieldType === "select" && options) {
+    return (
+      <div className="w-full flex flex-col rounded-sm gap-4 bg-white p-5 md:p-10">
+        <label className="text-base md:text-[24px] font-medium text-[#202020] mb-1">
+          {label} <span className="text-red-500">*</span>
+        </label>
+        
+        <select
+          className="border-b border-gray-300 text-[#202020] focus:border-gray-800 outline-none py-1 text-lg font-medium bg-transparent cursor-pointer"
+          value={value || ""}
+          onChange={(e) => onChange(e.target.value)}
+        >
+          <option value="" disabled hidden>{placeholder || "Select an option"}</option>
+          {options.map((opt) => (
+            <option key={opt.value} value={opt.value} className="text-base">
+              {opt.label}
+            </option>
+          ))}
+        </select>
+      </div>
+    );
+  }
+
   /* ---------------------------- PHONE INPUT ---------------------------- */
   if (fieldType === "phone") {
     return (
